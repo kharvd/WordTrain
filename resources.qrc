@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/add.png</file>
+        <file>icons/new.png</file>
+        <file>icons/open.png</file>
+        <file>icons/pref.png</file>
+        <file>icons/properties.png</file>
+        <file>icons/quit.png</file>
+        <file>icons/remove.png</file>
+        <file>icons/save.png</file>
+        <file>icons/edit.png</file>
+        <file>icons/start_quiz.png</file>
+        <file>icons/view.png</file>
+    </qresource>
+</RCC>
