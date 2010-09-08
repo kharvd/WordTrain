@@ -29,42 +29,47 @@ const WordCard& NewEditCardDialog::getNewCard()
     mNewCard.setLearned(chckLearned->isChecked());
     mNewCard.clearExamples();
 
-    for (int i = 0; (i < examplesCount()) && (i <= maxExamples); i++) {
-        Example ex = getExampleAt(i);
+    for (int i = 0; (i < wgtExamples->examplesCount())
+        && (i <= ExamplesWidget::maxExamples); i++)
+    {
+        Example ex = wgtExamples->getExampleAt(i);
         if (!ex.first.isEmpty()) {
-            mNewCard.addExample(getExampleAt(i));
+            mNewCard.addExample(wgtExamples->getExampleAt(i));
         }
     }
 
     return mNewCard;
 }
 
-int NewEditCardDialog::examplesCount() {
-    return (ltExamples->count() / 4);
-}
+//int NewEditCardDialog::examplesCount() {
+//    return (ltExamples->count() / 4);
+//}
 
 void NewEditCardDialog::addExample() {
-    int count = examplesCount();
-    if(++count <= maxExamples) {
-        QLabel* lbl1 = new QLabel(tr("Example %1:").arg(count));
-        QLineEdit* txt1 = new QLineEdit();
-        QLabel* lbl2 = new QLabel(tr("Translation %1:").arg(count));
-        QLineEdit* txt2 = new QLineEdit();
+    //    int count = examplesCount();
+    //    if(++count <= maxExamples) {
+    //        QLabel* lbl1 = new QLabel(tr("Example %1:").arg(count));
+    //        QLineEdit* txt1 = new QLineEdit();
+    //        QLabel* lbl2 = new QLabel(tr("Translation %1:").arg(count));
+    //        QLineEdit* txt2 = new QLineEdit();
 
-        ltExamples->addWidget(lbl1);
-        ltExamples->addWidget(txt1);
-        ltExamples->addWidget(lbl2);
-        ltExamples->addWidget(txt2);
-    }
-    if (count == maxExamples) {
+    //        ltExamples->addWidget(lbl1);
+    //        ltExamples->addWidget(txt1);
+    //        ltExamples->addWidget(lbl2);
+    //        ltExamples->addWidget(txt2);
+    //    }
+    //    if (count == maxExamples) {
+    //        btnAddExample->setEnabled(false);
+    //    }
+    wgtExamples->addExample();
+    if (!wgtExamples->canAdd()) {
         btnAddExample->setEnabled(false);
     }
-
 }
 
 void NewEditCardDialog::createInterface()
 {
-    resize(500, 250);
+    resize(500, 300);
 
     QLabel* lblWord = new QLabel(tr("Word:"));
     txtWord = new QLineEdit();
@@ -90,7 +95,26 @@ void NewEditCardDialog::createInterface()
     btnAddExample = new QPushButton(tr("Add example"));
     connect(btnAddExample, SIGNAL(clicked()), SLOT(addExample()));
 
-    ltExamples = new QVBoxLayout;
+
+
+    wgtExamples = new ExamplesWidget();
+
+    QVBoxLayout *exLayout = new QVBoxLayout();
+    exLayout->addWidget(wgtExamples);
+
+
+    //    ltExamples = new QVBoxLayout;
+    //    ltExamples->setAlignment(Qt::AlignTop);
+
+    //    QGroupBox *grExamples = new QGroupBox();
+    //    grExamples->setLayout(ltExamples);
+    //    grExamples->setFlat(true);
+
+    QScrollArea *scrollExamples = new QScrollArea();
+    //    scrollExamples->setWidget(grExamples);
+    //    scrollExamples->setWidgetResizable(true);
+    scrollExamples->setWidget(wgtExamples);
+    scrollExamples->setAlignment(Qt::AlignTop);
 
     btnOk = new QPushButton(tr("OK"));
     btnOk->setDefault(true);
@@ -109,12 +133,11 @@ void NewEditCardDialog::createInterface()
     fLayout->addRow(lblCategory, cmbCategory);
     fLayout->addRow(lblGender, cmbGender);
     fLayout->addRow(lblExamples, btnAddExample);
-    fLayout->addRow(ltExamples);
 
     QVBoxLayout* hLayout = new QVBoxLayout();
     hLayout->addLayout(fLayout);
+    hLayout->addWidget(wgtExamples);
     hLayout->addWidget(chckLearned);
-    hLayout->addStretch(1);
 
     QGroupBox* grBox = new QGroupBox(windowTitle());
     grBox->setLayout(hLayout);
@@ -141,36 +164,38 @@ void NewEditCardDialog::fillForm()
     cmbGender->setCurrentIndex(mNewCard.gender());
     chckLearned->setChecked(mNewCard.isLearned());
 
-    for (int i = 0; i < (mNewCard.examplesSize()) && (i <= maxExamples); i++) {
-        addExample();
-        setExampleAt(i, mNewCard.exampleAt(i));
+    for (int i = 0; i < (mNewCard.examplesSize())
+        && (i <= ExamplesWidget::maxExamples); i++)
+    {
+        wgtExamples->addExample();
+        wgtExamples->setExampleAt(i, mNewCard.exampleAt(i));
     }
 }
 
-void NewEditCardDialog::setExampleAt(int index, Example ex) {
-    QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
-                                                  (index * 4 + 1)->widget());
-    Q_ASSERT(example);
+//void NewEditCardDialog::setExampleAt(int index, Example ex) {
+//    QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
+//                                                  (index * 4 + 1)->widget());
+//    Q_ASSERT(example);
 
-    QLineEdit* translation = qobject_cast<QLineEdit *>(ltExamples->itemAt
-                                                  (index * 4 + 3)->widget());
-    Q_ASSERT(translation);
+//    QLineEdit* translation = qobject_cast<QLineEdit *>(ltExamples->itemAt
+//                                                  (index * 4 + 3)->widget());
+//    Q_ASSERT(translation);
 
-    example->setText(ex.first);
-    translation->setText(ex.second);
-}
+//    example->setText(ex.first);
+//    translation->setText(ex.second);
+//}
 
-Example NewEditCardDialog::getExampleAt(int index) {
-    QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
-                                                  (index * 4 + 1)->widget());
-    Q_ASSERT(example);
+//Example NewEditCardDialog::getExampleAt(int index) {
+//    QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
+//                                                  (index * 4 + 1)->widget());
+//    Q_ASSERT(example);
 
-    QLineEdit* translation = qobject_cast<QLineEdit *>(ltExamples->itemAt
-                                                  (index * 4 + 3)->widget());
-    Q_ASSERT(translation);
+//    QLineEdit* translation = qobject_cast<QLineEdit *>(ltExamples->itemAt
+//                                                  (index * 4 + 3)->widget());
+//    Q_ASSERT(translation);
 
-    Example tmp;
-    tmp.first = example->text();
-    tmp.second = translation->text();
-    return tmp;
-}
+//    Example tmp;
+//    tmp.first = example->text();
+//    tmp.second = translation->text();
+//    return tmp;
+//}

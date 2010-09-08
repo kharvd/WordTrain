@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include <QtGui>
 #include "mainwindow.h"
+#include "exampleswidget.h"
 
 int main(int argc, char *argv[])
 {

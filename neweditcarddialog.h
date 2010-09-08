@@ -3,6 +3,7 @@
 
 #include <QtGui>
 #include "wordscard.h"
+#include "exampleswidget.h"
 
 // Create new card or edit existing one
 class NewEditCardDialog : public QDialog
@@ -26,11 +27,10 @@ private:
     /* Fills the form with current card's content */
     void fillForm();
 
-    void setExampleAt(int index, Example ex);
-    Example getExampleAt(int index);
-    int examplesCount();
+//    void setExampleAt(int index, Example ex);
+//    Example getExampleAt(int index);
+//    int examplesCount();
 
-    const static int maxExamples = 3;
     QLineEdit* txtWord;
     QLineEdit* txtTranscription;
     QLineEdit* txtTranslation;
@@ -41,7 +41,9 @@ private:
     QPushButton* btnAddExample;
     QPushButton* btnOk;
     QPushButton* btnCancel;
-    QVBoxLayout* ltExamples;
+    ExamplesWidget* wgtExamples;
+//    QVBoxLayout* ltExamples;
+
 
     /* Temporary card for holding new values */
     WordCard mNewCard;
