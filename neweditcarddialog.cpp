@@ -41,26 +41,12 @@ const WordCard& NewEditCardDialog::getNewCard()
     return mNewCard;
 }
 
-//int NewEditCardDialog::examplesCount() {
-//    return (ltExamples->count() / 4);
-//}
-
 void NewEditCardDialog::addExample() {
-    //    int count = examplesCount();
-    //    if(++count <= maxExamples) {
-    //        QLabel* lbl1 = new QLabel(tr("Example %1:").arg(count));
-    //        QLineEdit* txt1 = new QLineEdit();
-    //        QLabel* lbl2 = new QLabel(tr("Translation %1:").arg(count));
-    //        QLineEdit* txt2 = new QLineEdit();
+    scrollExamples->show();
+    int optimalHeight = height() + 66;
+    optimalHeight = (optimalHeight > 500) ? 500 : optimalHeight;
+    resize(width(), optimalHeight);
 
-    //        ltExamples->addWidget(lbl1);
-    //        ltExamples->addWidget(txt1);
-    //        ltExamples->addWidget(lbl2);
-    //        ltExamples->addWidget(txt2);
-    //    }
-    //    if (count == maxExamples) {
-    //        btnAddExample->setEnabled(false);
-    //    }
     wgtExamples->addExample();
     if (!wgtExamples->canAdd()) {
         btnAddExample->setEnabled(false);
@@ -69,8 +55,7 @@ void NewEditCardDialog::addExample() {
 
 void NewEditCardDialog::createInterface()
 {
-    resize(500, 300);
-
+    resize(600, 300);
     QLabel* lblWord = new QLabel(tr("Word:"));
     txtWord = new QLineEdit();
 
@@ -95,26 +80,13 @@ void NewEditCardDialog::createInterface()
     btnAddExample = new QPushButton(tr("Add example"));
     connect(btnAddExample, SIGNAL(clicked()), SLOT(addExample()));
 
-
-
     wgtExamples = new ExamplesWidget();
-
-    QVBoxLayout *exLayout = new QVBoxLayout();
-    exLayout->addWidget(wgtExamples);
-
-
-    //    ltExamples = new QVBoxLayout;
-    //    ltExamples->setAlignment(Qt::AlignTop);
-
-    //    QGroupBox *grExamples = new QGroupBox();
-    //    grExamples->setLayout(ltExamples);
-    //    grExamples->setFlat(true);
-
-    QScrollArea *scrollExamples = new QScrollArea();
-    //    scrollExamples->setWidget(grExamples);
-    //    scrollExamples->setWidgetResizable(true);
+    scrollExamples = new QScrollArea;
+    scrollExamples->setWidgetResizable(true);
     scrollExamples->setWidget(wgtExamples);
+    scrollExamples->setFrameStyle(QFrame::NoFrame);
     scrollExamples->setAlignment(Qt::AlignTop);
+    scrollExamples->hide();
 
     btnOk = new QPushButton(tr("OK"));
     btnOk->setDefault(true);
@@ -136,7 +108,7 @@ void NewEditCardDialog::createInterface()
 
     QVBoxLayout* hLayout = new QVBoxLayout();
     hLayout->addLayout(fLayout);
-    hLayout->addWidget(wgtExamples);
+    hLayout->addWidget(scrollExamples);
     hLayout->addWidget(chckLearned);
 
     QGroupBox* grBox = new QGroupBox(windowTitle());
@@ -167,35 +139,7 @@ void NewEditCardDialog::fillForm()
     for (int i = 0; i < (mNewCard.examplesSize())
         && (i <= ExamplesWidget::maxExamples); i++)
     {
-        wgtExamples->addExample();
+        addExample();
         wgtExamples->setExampleAt(i, mNewCard.exampleAt(i));
     }
 }
-
-//void NewEditCardDialog::setExampleAt(int index, Example ex) {
-//    QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
-//                                                  (index * 4 + 1)->widget());
-//    Q_ASSERT(example);
-
-//    QLineEdit* translation = qobject_cast<QLineEdit *>(ltExamples->itemAt
-//                                                  (index * 4 + 3)->widget());
-//    Q_ASSERT(translation);
-
-//    example->setText(ex.first);
-//    translation->setText(ex.second);
-//}
-
-//Example NewEditCardDialog::getExampleAt(int index) {
-//    QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
-//                                                  (index * 4 + 1)->widget());
-//    Q_ASSERT(example);
-
-//    QLineEdit* translation = qobject_cast<QLineEdit *>(ltExamples->itemAt
-//                                                  (index * 4 + 3)->widget());
-//    Q_ASSERT(translation);
-
-//    Example tmp;
-//    tmp.first = example->text();
-//    tmp.second = translation->text();
-//    return tmp;
-//}

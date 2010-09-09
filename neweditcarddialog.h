@@ -42,6 +42,7 @@ private:
     QPushButton* btnOk;
     QPushButton* btnCancel;
     ExamplesWidget* wgtExamples;
+    QScrollArea *scrollExamples;
 //    QVBoxLayout* ltExamples;
 
 
