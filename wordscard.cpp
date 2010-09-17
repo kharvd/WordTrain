@@ -143,7 +143,7 @@ QStringList WordCard::lexCategoriesShortStrings()
 QStringList WordCard::genderShortStrings()
 {
     static const QStringList list =
-            (QStringList() << tr("None") << tr("m.") << tr("f.")
+            (QStringList() << tr("—") << tr("m.") << tr("f.")
              << tr("n.") << tr("common"));
 
     return list;
@@ -163,4 +163,12 @@ QString WordCard::lexCategoriesShortString(LexicalCategory cat) {
 
 QString WordCard::genderShortString(Gender gen) {
     return genderShortStrings().at((int) gen);
+}
+
+QString WordCard::lexCategoriesShortString() {
+    return lexCategoriesShortStrings().at((int) mCategory);
+}
+
+QString WordCard::genderShortString() {
+    return genderShortStrings().at((int) mGender);
 }

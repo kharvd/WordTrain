@@ -84,6 +84,11 @@ public:
     static QStringList genderShortStrings();
     static QString genderShortString(Gender gen);
 
+    // Returns short string interpretations of LexicalCategory
+    QString lexCategoriesShortString();
+    // String short interpretations of Gender
+    QString genderShortString();
+
 
 private:
     QString mWord;

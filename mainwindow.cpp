@@ -137,7 +137,22 @@ void MainWindow::editCard()
 
 /* slot */
 void MainWindow::viewCard() {
+    int curr = tableWords->currentRow();
+    if (!isInRange(curr)) {
+        return;
+    }
 
+    WordCardWidget *viewDlg = new WordCardWidget(&mCards);
+    viewDlg->setCurrentWord(curr);
+
+    viewDlg->exec();
+
+    if (viewDlg->isModified()) {
+        setWindowModified(true);
+        updateTable();
+    }
+
+    delete viewDlg;
 }
 
 /* slot */
@@ -204,7 +219,7 @@ void MainWindow::createTableWidget() {
 
     tableWords->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableWords->installEventFilter(this);
-    connect(tableWords, SIGNAL(doubleClicked(QModelIndex)), SLOT(editCard()));
+    connect(tableWords, SIGNAL(doubleClicked(QModelIndex)), SLOT(viewCard()));
 
     tableWords->hide();
     setCentralWidget(tableWords);
