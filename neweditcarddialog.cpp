@@ -56,6 +56,7 @@ void NewEditCardDialog::addExample() {
 void NewEditCardDialog::createInterface()
 {
     resize(600, 300);
+    setWindowFlags(Qt::Window);
     QLabel* lblWord = new QLabel(tr("Word:"));
     txtWord = new QLineEdit();
 

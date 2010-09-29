@@ -165,6 +165,7 @@ void MainWindow::deleteCard()
     mCards.removeAt(curr);
     setWindowModified(true);
     updateTable();
+    tableWords->setCurrentCell(curr - 1, 0);
 }
 
 /* slot */

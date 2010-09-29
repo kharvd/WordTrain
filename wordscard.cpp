@@ -143,7 +143,7 @@ QStringList WordCard::lexCategoriesShortStrings()
 QStringList WordCard::genderShortStrings()
 {
     static const QStringList list =
-            (QStringList() << tr("—") << tr("m.") << tr("f.")
+            (QStringList() << tr("") << tr("m.") << tr("f.")
              << tr("n.") << tr("common"));
 
     return list;

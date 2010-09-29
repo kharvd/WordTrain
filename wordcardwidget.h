@@ -5,24 +5,20 @@
 #include "wordscard.h"
 #include "neweditcarddialog.h"
 
-enum WordCardShowMode { SM_HideNone, SM_HideTranslation, SM_HideWord, SM_HideRandom };
-
 class WordCardWidget : public QDialog
 {
     Q_OBJECT
 
 public:
-    WordCardWidget(const WordsPtrSet & cards, WordCardShowMode mode
-                   = SM_HideNone, QWidget *parent = 0);
-    WordCardWidget(WordsSet *cards, WordCardShowMode mode
-                   = SM_HideNone, QWidget *parent = 0);
+    WordCardWidget(const WordsPtrSet & cards, QWidget *parent = 0);
+    WordCardWidget(WordsSet *cards, QWidget *parent = 0);
 
-    void setCurrentWord(int index);
+    void setCurrentWord(int index, bool faceSide = true);
     bool isModified();
 
 private slots:
     void nextWord();
-    void showAnswer();
+    void showOtherSide();
     void prevWord();
     void editCard();
     void setCardLearned();
@@ -35,14 +31,14 @@ private:
     void setLearnedButtonText();
 
     QPushButton *btnPrevious;
-    QPushButton *btnAnswer;
+    QPushButton *btnTurn;
     QPushButton *btnNext;
     QPushButton *btnEdit;
     QPushButton *btnLearned;
     QTextEdit *txtCardText;
 
+    bool isFace;
     bool mModified;
-    WordCardShowMode mShowMode;
     int mCurrCard;
     WordsPtrSet mCards;
 };
