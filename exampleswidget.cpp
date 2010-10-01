@@ -25,13 +25,11 @@ bool ExamplesWidget::canAdd() {
 void ExamplesWidget::addExample() {
     int num = examplesCount() + 1;
     if(canAdd()) {
-        QLabel* lbl1 = new QLabel(tr("Example %1:").arg(num));
         QLineEdit* txt1 = new QLineEdit();
-        QLabel* lbl2 = new QLabel(tr("Translation %1:").arg(num));
         QLineEdit* txt2 = new QLineEdit();
 
-        ltExamples->addRow(lbl1, txt1);
-        ltExamples->addRow(lbl2, txt2);
+        ltExamples->addRow(tr("Example %1:").arg(num), txt1);
+        ltExamples->addRow(tr("Translation %1:").arg(num), txt2);
     }
 }
 

@@ -26,6 +26,7 @@ private slots:
 private:
     void createInterface();
     void enableButtons();
+    QString getCSS();
 
     /* Convenience func for setting "Learned" button text */
     void setLearnedButtonText();

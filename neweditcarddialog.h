@@ -27,10 +27,6 @@ private:
     /* Fills the form with current card's content */
     void fillForm();
 
-//    void setExampleAt(int index, Example ex);
-//    Example getExampleAt(int index);
-//    int examplesCount();
-
     QLineEdit* txtWord;
     QLineEdit* txtTranscription;
     QLineEdit* txtTranslation;
@@ -43,8 +39,6 @@ private:
     QPushButton* btnCancel;
     ExamplesWidget* wgtExamples;
     QScrollArea *scrollExamples;
-//    QVBoxLayout* ltExamples;
-
 
     /* Temporary card for holding new values */
     WordCard mNewCard;

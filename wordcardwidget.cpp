@@ -29,7 +29,7 @@ void WordCardWidget::createInterface()
 {
     setWindowTitle(tr("View card"));
     setWindowFlags(Qt::Window);
-    resize(400, 360);
+    setFixedSize(400, 360);
 
     btnPrevious = new QPushButton(tr("Previous"));
     connect(btnPrevious, SIGNAL(clicked()), this, SLOT(prevWord()));
@@ -85,6 +85,16 @@ void WordCardWidget::setLearnedButtonText()
     }
 }
 
+QString WordCardWidget::getCSS() {
+    QFile file(":/style.css");
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return QString();
+
+    QTextStream stream(&file);
+    return stream.readAll();
+}
+
 void WordCardWidget::setCurrentWord(int index, bool faceSide)
 {
     mCurrCard = index;
@@ -103,64 +113,61 @@ void WordCardWidget::setCurrentWord(int index, bool faceSide)
 
 
     QString htmlCard;
-    htmlCard.append("<body style=\"font-size:9pt;\">");
+    htmlCard.append("<head><style type=\"text/css\">");
+    htmlCard.append(getCSS());
+    htmlCard.append("</style></head><body style=\"font-size:9pt;\">");
 
     if (faceSide) {
+        // SHIT: Trying to align this fucked up QTextEdit
+        htmlCard.append("<br />");
+        htmlCard.append("<br />");
+        htmlCard.append("<br />");
+        htmlCard.append("<br />");
+
         // Word and its gender
-        htmlCard.append(QString("<p style=\"text-align:center; padding-top:50%;"
-                        "margin-bottom:0px;font-size:15pt;\">"
-                        "<b>%1</b><span style=\"font-size:12pt\"> %2</span></p>")
+        htmlCard.append(QString("<p class=\"word\" align=\"center\"><b>%1</b>"
+                                "<span style=\"font-size:12pt\"> %2</span></p>")
                 .arg(mCards[index]->word(), mCards[index]->genderShortString()));
 
 
         // Category
-        htmlCard.append(QString("<p style=\"text-align:center; margin-top:0px;"
-                                "margin-bottom:12px;\">%1"
-                                "</p>")
+        htmlCard.append(QString("<p class=\"category\" align=\"center\">%1</p>")
                 .arg(mCards[index]->lexCategoriesShortString()));
 
         // Transcription
-        htmlCard.append(QString("<p style=\"text-align:center; margin-top:0px;"
-                                "margin-bottom:12px; font-style:italic;"
-                                "font-size:12pt;\">[%1]"
-                                "</p>")
+        htmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
+                                "[%1]</p>")
                 .arg(mCards[index]->transcription()));
     }
     else
     {
-        htmlCard.append(QString("<p style=\"text-align:center;margin-top:12px;"
-                        "margin-bottom:0px;font-size:15pt;\"><b>%1</b>"
-                        "<span style=\"font-size:12pt\"> %2</span></p>")
+        htmlCard.append(QString("<p class=\"word\" align=\"center\"><b>%1</b>"
+                                "<span style=\"font-size:12pt\"> %2</span></p>")
                 .arg(mCards[index]->word(), mCards[index]->genderShortString()));
 
         // Plural
-        htmlCard.append(QString("<p style=\"text-align:center; margin-top:0px;"
-                                "margin-bottom:0px;\">%1</p>")
+        htmlCard.append(QString("<p class=\"plural\" align=\"center\">%1</p>")
                 .arg(mCards[index]->plural()));
 
         // Category
-        htmlCard.append(QString("<p style=\"text-align:center; margin-top:0px;"
-                                "margin-bottom:12px;\">%1</p>")
+        htmlCard.append(QString("<p class=\"category\" align=\"center\">%1</p>")
                 .arg(mCards[index]->lexCategoriesShortString()));
 
         // Transcription
-        htmlCard.append(QString("<p style=\"text-align:center; margin-top:0px;"
-                                "margin-bottom:12px; font-style:italic;"
-                                "font-size:12pt;\">[%1]</p>")
+        htmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
+                                "[%1]</p>")
                 .arg(mCards[index]->transcription()));
 
         // Translation
-        htmlCard.append(QString("<p style=\"text-align:center; margin-top:12px;"
-                               "margin-bottom:12px;font-size:12pt;\"><b>%1</b></p>")
+        htmlCard.append(QString("<p class=\"translation\" align=\"center\">"
+                                "<b>%1</b></p>")
                 .arg(mCards[index]->translation()));
 
         // Examples
-        htmlCard.append("<p style=\"margin-top:12px;margin-bottom:12px;"
-                        "font-size:8pt;font-style:italic;\">Examples:</p>");
+        htmlCard.append("<p class=\"examples\">Examples:</p>");
 
         for (int i = 0; i < mCards[index]->examplesSize(); i++) {
-            htmlCard.append(QString("<p style=\"margin-top:12px;margin-bottom:12px;"
-                                    "font-style:italic;\">%1. %2<br />— %3</p>")
+            htmlCard.append(QString("<p class=\"example\">%1. %2<br />— %3</p>")
                             .arg(i + 1).arg(mCards[index]->exampleAt(i).first,
                                         mCards[index]->exampleAt(i).second));
         }
@@ -168,7 +175,7 @@ void WordCardWidget::setCurrentWord(int index, bool faceSide)
 
     htmlCard.append("</body>");
 
-    txtCardText->setText(htmlCard);
+    txtCardText->setHtml(htmlCard);
 }
 
 bool WordCardWidget::isModified()
@@ -176,8 +183,15 @@ bool WordCardWidget::isModified()
     return mModified;
 }
 
+void WordCardWidget::prevWord()
+{
+    isFace = true;
+    setCurrentWord(mCurrCard - 1);
+}
+
 void WordCardWidget::nextWord()
 {
+    isFace = true;
     setCurrentWord(mCurrCard + 1);
 }
 
@@ -185,11 +199,6 @@ void WordCardWidget::showOtherSide()
 {
     isFace = !isFace;
     setCurrentWord(mCurrCard, isFace);
-}
-
-void WordCardWidget::prevWord()
-{
-    setCurrentWord(mCurrCard - 1);
 }
 
 void WordCardWidget::editCard()

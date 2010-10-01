@@ -137,22 +137,7 @@ void MainWindow::editCard()
 
 /* slot */
 void MainWindow::viewCard() {
-    int curr = tableWords->currentRow();
-    if (!isInRange(curr)) {
-        return;
-    }
-
-    WordCardWidget *viewDlg = new WordCardWidget(&mCards);
-    viewDlg->setCurrentWord(curr);
-
-    viewDlg->exec();
-
-    if (viewDlg->isModified()) {
-        setWindowModified(true);
-        updateTable();
-    }
-
-    delete viewDlg;
+    showCard(tableWords->currentRow());
 }
 
 /* slot */
@@ -185,13 +170,15 @@ void MainWindow::importSet()
 /* slot */
 void MainWindow::startTraining()
 {
-
+    showCard(0);
 }
 
 /* slot */
 void MainWindow::startQuiz()
 {
-
+    StartQuizDialog* dlg = new StartQuizDialog();
+    dlg->exec();
+    delete dlg;
 }
 
 /* slot */
@@ -546,6 +533,25 @@ void MainWindow::setAutoEditActionsState()
     actionImportSet->setEnabled(state);
     actionStartTraining->setEnabled(state);
     actionStartQuiz->setEnabled(state);
+}
+
+void MainWindow::showCard(int index)
+{
+    if (!isInRange(index)) {
+        return;
+    }
+
+    WordCardWidget *viewDlg = new WordCardWidget(&mCards);
+    viewDlg->setCurrentWord(index);
+
+    viewDlg->exec();
+
+    if (viewDlg->isModified()) {
+        setWindowModified(true);
+        updateTable();
+    }
+
+    delete viewDlg;
 }
 
 bool MainWindow::isInRange(int curr)

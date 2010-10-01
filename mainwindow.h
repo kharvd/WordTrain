@@ -6,6 +6,7 @@
 #include "xmlwriter.h"
 #include "wordscard.h"
 #include "wordcardwidget.h"
+#include "startquizdialog.h"
 
 class MainWindow : public QMainWindow
 {
@@ -53,6 +54,7 @@ private:
     void clearCards();
     bool isFileOpened();
     void updateTable();
+    void showCard(int index);
 
     /* Checks whether 'curr' is not out of range of mCards */
     bool isInRange(int curr);

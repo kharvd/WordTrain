@@ -11,5 +11,6 @@
         <file>icons/edit.png</file>
         <file>icons/start_quiz.png</file>
         <file>icons/view.png</file>
+        <file>style.css</file>
     </qresource>
 </RCC>

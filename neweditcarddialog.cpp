@@ -57,27 +57,18 @@ void NewEditCardDialog::createInterface()
 {
     resize(600, 300);
     setWindowFlags(Qt::Window);
-    QLabel* lblWord = new QLabel(tr("Word:"));
     txtWord = new QLineEdit();
 
-    QLabel* lblTranscription = new QLabel(tr("Transcription:"));
     txtTranscription = new QLineEdit();
-
-    QLabel* lblTranslation = new QLabel(tr("Translation:"));
     txtTranslation = new QLineEdit();
-
-    QLabel* lblPlural = new QLabel(tr("Plural:"));
     txtPlural = new QLineEdit();
 
-    QLabel* lblCategory = new QLabel(tr("Category:"));
     cmbCategory = new QComboBox();
     cmbCategory->addItems(WordCard::lexCategoriesStrings());
 
-    QLabel* lblGender = new QLabel(tr("Gender:"));
     cmbGender = new QComboBox();
     cmbGender->addItems(WordCard::genderStrings());
 
-    QLabel* lblExamples = new QLabel(tr("Examples:"));
     btnAddExample = new QPushButton(tr("Add example"));
     connect(btnAddExample, SIGNAL(clicked()), SLOT(addExample()));
 
@@ -99,13 +90,13 @@ void NewEditCardDialog::createInterface()
     chckLearned->setChecked(false);
 
     QFormLayout* fLayout = new QFormLayout();
-    fLayout->addRow(lblWord, txtWord);
-    fLayout->addRow(lblTranscription, txtTranscription);
-    fLayout->addRow(lblTranslation, txtTranslation);
-    fLayout->addRow(lblPlural, txtPlural);
-    fLayout->addRow(lblCategory, cmbCategory);
-    fLayout->addRow(lblGender, cmbGender);
-    fLayout->addRow(lblExamples, btnAddExample);
+    fLayout->addRow(tr("Word:"), txtWord);
+    fLayout->addRow(tr("Transcription:"), txtTranscription);
+    fLayout->addRow(tr("Translation:"), txtTranslation);
+    fLayout->addRow(tr("Plural:"), txtPlural);
+    fLayout->addRow(tr("Category:"), cmbCategory);
+    fLayout->addRow(tr("Gender:"), cmbGender);
+    fLayout->addRow(tr("Examples:"), btnAddExample);
 
     QVBoxLayout* hLayout = new QVBoxLayout();
     hLayout->addLayout(fLayout);
