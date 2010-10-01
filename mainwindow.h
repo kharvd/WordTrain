@@ -5,7 +5,7 @@
 #include "xmlreader.h"
 #include "xmlwriter.h"
 #include "wordscard.h"
-#include "wordcardwidget.h"
+#include "viewcarddialog.h"
 #include "startquizdialog.h"
 
 class MainWindow : public QMainWindow

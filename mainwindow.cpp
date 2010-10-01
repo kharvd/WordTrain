@@ -541,7 +541,7 @@ void MainWindow::showCard(int index)
         return;
     }
 
-    WordCardWidget *viewDlg = new WordCardWidget(&mCards);
+    ViewCardDialog *viewDlg = new ViewCardDialog(&mCards);
     viewDlg->setCurrentWord(index);
 
     viewDlg->exec();

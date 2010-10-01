@@ -1,24 +1,24 @@
-#ifndef WORDCARDWIDGET_H
-#define WORDCARDWIDGET_H
+#ifndef VIEWCARDDIALOG_H
+#define VIEWCARDDIALOG_H
 
 #include <QtGui>
 #include "wordscard.h"
 #include "neweditcarddialog.h"
+#include "cardwidget.h"
 
-class WordCardWidget : public QDialog
+class ViewCardDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    WordCardWidget(const WordsPtrSet & cards, QWidget *parent = 0);
-    WordCardWidget(WordsSet *cards, QWidget *parent = 0);
+    ViewCardDialog(const WordsPtrSet & cards, QWidget *parent = 0);
+    ViewCardDialog(WordsSet *cards, QWidget *parent = 0);
 
-    void setCurrentWord(int index, bool faceSide = true);
+    void setCurrentWord(int index);
     bool isModified();
 
 private slots:
     void nextWord();
-    void showOtherSide();
     void prevWord();
     void editCard();
     void setCardLearned();
@@ -26,7 +26,6 @@ private slots:
 private:
     void createInterface();
     void enableButtons();
-    QString getCSS();
 
     /* Convenience func for setting "Learned" button text */
     void setLearnedButtonText();
@@ -36,12 +35,11 @@ private:
     QPushButton *btnNext;
     QPushButton *btnEdit;
     QPushButton *btnLearned;
-    QTextEdit *txtCardText;
+    CardWidget *cardText;
 
-    bool isFace;
     bool mModified;
     int mCurrCard;
     WordsPtrSet mCards;
 };
 
-#endif // WORDCARDWIDGET_H
+#endif // VIEWCARDDIALOG_H

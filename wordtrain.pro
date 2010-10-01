@@ -12,17 +12,19 @@ SOURCES += main.cpp \
     xmlreader.cpp \
     xmlwriter.cpp \
     neweditcarddialog.cpp \
-    wordcardwidget.cpp \
     exampleswidget.cpp \
     startquizdialog.cpp \
-    answerwidget.cpp
+    answerwidget.cpp \
+    viewcarddialog.cpp \
+    cardwidget.cpp
 HEADERS += mainwindow.h \
     wordscard.h \
     xmlreader.h \
     xmlwriter.h \
     neweditcarddialog.h \
-    wordcardwidget.h \
     exampleswidget.h \
     startquizdialog.h \
-    answerwidget.h
+    answerwidget.h \
+    viewcarddialog.h \
+    cardwidget.h
 RESOURCES += resources.qrc

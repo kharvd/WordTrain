@@ -149,26 +149,32 @@ QStringList WordCard::genderShortStrings()
     return list;
 }
 
-QString WordCard::lexCategoriesString(LexicalCategory cat) {
+QString WordCard::lexCategoriesString(LexicalCategory cat)
+{
     return lexCategoriesStrings().at((int) cat);
 }
 
-QString WordCard::genderString(Gender gen) {
+QString WordCard::genderString(Gender gen)
+{
     return genderStrings().at((int) gen);
 }
 
-QString WordCard::lexCategoriesShortString(LexicalCategory cat) {
+QString WordCard::lexCategoriesShortString(LexicalCategory cat)
+{
     return lexCategoriesShortStrings().at((int) cat);
 }
 
-QString WordCard::genderShortString(Gender gen) {
+QString WordCard::genderShortString(Gender gen)
+{
     return genderShortStrings().at((int) gen);
 }
 
-QString WordCard::lexCategoriesShortString() {
+QString WordCard::lexCategoriesShortString() const
+{
     return lexCategoriesShortStrings().at((int) mCategory);
 }
 
-QString WordCard::genderShortString() {
+QString WordCard::genderShortString() const
+{
     return genderShortStrings().at((int) mGender);
 }

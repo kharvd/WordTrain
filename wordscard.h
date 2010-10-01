@@ -85,9 +85,9 @@ public:
     static QString genderShortString(Gender gen);
 
     // Returns short string interpretations of LexicalCategory
-    QString lexCategoriesShortString();
+    QString lexCategoriesShortString() const;
     // String short interpretations of Gender
-    QString genderShortString();
+    QString genderShortString() const;
 
 
 private:
