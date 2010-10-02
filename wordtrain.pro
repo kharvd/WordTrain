@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     startquizdialog.cpp \
     answerwidget.cpp \
     viewcarddialog.cpp \
-    cardwidget.cpp
+    cardwidget.cpp \
+    wordschooser.cpp
 HEADERS += mainwindow.h \
     wordscard.h \
     xmlreader.h \
@@ -26,5 +27,6 @@ HEADERS += mainwindow.h \
     startquizdialog.h \
     answerwidget.h \
     viewcarddialog.h \
-    cardwidget.h
+    cardwidget.h \
+    wordschooser.h
 RESOURCES += resources.qrc

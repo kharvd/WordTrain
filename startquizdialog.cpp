@@ -1,8 +1,11 @@
 #include "startquizdialog.h"
 
-StartQuizDialog::StartQuizDialog(QWidget *parent) :
+StartQuizDialog::StartQuizDialog(WordsSet * words, QWidget *parent) :
     QDialog(parent)
 {
+    for (int i = 0; i < words->size(); i++) {
+        mWords.push_back(&words[0][i]);
+    }
     createInterface();
     setWindowTitle(tr("Start test"));
 }
@@ -103,4 +106,12 @@ void StartQuizDialog::createInterface()
     ltMain->addLayout(ltBtns);
 
     setLayout(ltMain);
+}
+
+WordsPtrSet StartQuizDialog::getWords()
+{
+    WordsChooser chooser(mWords, radioRandomOrder->isChecked(),
+                         chckIncLearned->isChecked(),
+                         txtNumWords->text().toInt());
+    return chooser.getWords();
 }

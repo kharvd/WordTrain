@@ -176,8 +176,20 @@ void MainWindow::startTraining()
 /* slot */
 void MainWindow::startQuiz()
 {
-    StartQuizDialog* dlg = new StartQuizDialog();
-    dlg->exec();
+    StartQuizDialog* dlg = new StartQuizDialog(&mCards);
+    if (dlg->exec()) {
+        ViewCardDialog *viewDlg = new ViewCardDialog(dlg->getWords());
+        viewDlg->setCurrentWord(0);
+
+        viewDlg->exec();
+
+        if (viewDlg->isModified()) {
+            setWindowModified(true);
+            updateTable();
+        }
+
+        delete viewDlg;
+    }
     delete dlg;
 }
 
@@ -399,8 +411,6 @@ void MainWindow::setCurrentFile(const QString &fileName)
         setWindowTitle(shownName + "[*]" + " \u2014 "
                        + qApp->applicationName());
     }
-
-
 }
 
 void MainWindow::loadFile(const QString &fileName, bool import)

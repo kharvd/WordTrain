@@ -1,14 +1,16 @@
 #ifndef STARTQUIZDIALOG_H
 #define STARTQUIZDIALOG_H
 
-#include <QDialog>
 #include <QtGui>
+#include "wordschooser.h"
+#include "wordscard.h"
 
 class StartQuizDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit StartQuizDialog(QWidget *parent = 0);
+    explicit StartQuizDialog(WordsSet * words, QWidget *parent = 0);
+    WordsPtrSet getWords();
 
 private:
     void createInterface();
@@ -26,6 +28,7 @@ private:
     QLineEdit *txtNumWords;
     QPushButton *btnOk;
     QPushButton *btnCancel;
+    WordsPtrSet mWords;
 signals:
 
 public slots:
