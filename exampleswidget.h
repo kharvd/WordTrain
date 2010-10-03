@@ -16,14 +16,12 @@ public:
     bool canAdd();
 
     const static int maxExamples = 50;
+
 private:
     QFormLayout *ltExamples;
 
-signals:
-
 public slots:
     void addExample();
-
 };
 
 #endif // EXAMPLESWIDGET_H

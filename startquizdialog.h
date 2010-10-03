@@ -4,6 +4,7 @@
 #include <QtGui>
 #include "wordschooser.h"
 #include "wordscard.h"
+#include "quizdialog.h"
 
 class StartQuizDialog : public QDialog
 {
@@ -11,10 +12,12 @@ class StartQuizDialog : public QDialog
 public:
     explicit StartQuizDialog(WordsSet * words, QWidget *parent = 0);
     WordsPtrSet getWords();
+    QuizMode getMode();
 
 private:
     void createInterface();
 
+    QButtonGroup *grpMode;
     QRadioButton *radioMultiChoiceMode;
     QRadioButton *radioNoChoiceMode;
     QRadioButton *radioRandomOrder;
@@ -29,10 +32,6 @@ private:
     QPushButton *btnOk;
     QPushButton *btnCancel;
     WordsPtrSet mWords;
-signals:
-
-public slots:
-
 };
 
 #endif // STARTQUIZDIALOG_H

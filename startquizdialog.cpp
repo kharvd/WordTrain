@@ -17,10 +17,14 @@ void StartQuizDialog::createInterface()
     // Mode
     radioMultiChoiceMode = new QRadioButton(tr("Multiple choice"));
     radioNoChoiceMode = new QRadioButton(tr("Without choice"));
-    QButtonGroup *grpMode = new QButtonGroup(this);
+
+    grpMode = new QButtonGroup(this);
     grpMode->addButton(radioMultiChoiceMode);
     grpMode->addButton(radioNoChoiceMode);
-    radioMultiChoiceMode->setEnabled(false);
+    grpMode->setId(radioMultiChoiceMode, 0);
+    grpMode->setId(radioNoChoiceMode, 1);
+
+     radioMultiChoiceMode->setEnabled(false);
     radioNoChoiceMode->setChecked(true);
 
     QVBoxLayout *ltRadioMode = new QVBoxLayout;
@@ -114,4 +118,10 @@ WordsPtrSet StartQuizDialog::getWords()
                          chckIncLearned->isChecked(),
                          txtNumWords->text().toInt());
     return chooser.getWords();
+}
+
+QuizMode StartQuizDialog::getMode()
+{
+    qDebug() << grpMode->checkedId();
+    return (QuizMode)grpMode->checkedId();
 }

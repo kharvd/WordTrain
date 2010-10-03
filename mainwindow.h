@@ -7,6 +7,7 @@
 #include "wordscard.h"
 #include "viewcarddialog.h"
 #include "startquizdialog.h"
+#include "quizdialog.h"
 
 class MainWindow : public QMainWindow
 {

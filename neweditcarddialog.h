@@ -17,8 +17,6 @@ public:
     NewEditCardDialog(const WordCard &card, QWidget *parent = 0);
     const WordCard& getNewCard();
 
-signals:
-
 public slots:
     void addExample();
 

@@ -178,17 +178,9 @@ void MainWindow::startQuiz()
 {
     StartQuizDialog* dlg = new StartQuizDialog(&mCards);
     if (dlg->exec()) {
-        ViewCardDialog *viewDlg = new ViewCardDialog(dlg->getWords());
-        viewDlg->setCurrentWord(0);
-
-        viewDlg->exec();
-
-        if (viewDlg->isModified()) {
-            setWindowModified(true);
-            updateTable();
-        }
-
-        delete viewDlg;
+        QuizDialog *quizDlg = new QuizDialog(dlg->getWords(), dlg->getMode());
+        quizDlg->exec();
+        delete quizDlg;
     }
     delete dlg;
 }

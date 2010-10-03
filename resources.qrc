@@ -12,5 +12,7 @@
         <file>icons/start_quiz.png</file>
         <file>icons/view.png</file>
         <file>style.css</file>
+        <file>icons/correct.png</file>
+        <file>icons/incorrect.png</file>
     </qresource>
 </RCC>
