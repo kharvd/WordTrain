@@ -1,0 +1,42 @@
+.word {
+    margin-bottom: 0px;
+    font-size: 15pt;
+}
+
+.plural {
+    margin-top: 0px;
+    margin-bottom:0px;
+}
+
+.category {
+    margin-top:0px;
+    margin-bottom: 12px;
+}
+
+.transcription {
+    margin-top:0px;
+    margin-bottom: 12px; 
+    font-style: italic;
+    font-size:12pt;
+}
+
+.translation {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+.examples {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    font-size:8pt;
+    font-style:italic;
+}
+
+.example {
+    margin-top:12px;
+    margin-bottom:12px;    
+    font-style:italic;
+}
+
