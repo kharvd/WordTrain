@@ -12,12 +12,14 @@ class StartQuizDialog : public QDialog
 public:
     explicit StartQuizDialog(WordsSet * words, QWidget *parent = 0);
     WordsPtrSet getWords();
-    QuizMode getMode();
+    ChoiceMode getChoiceMode();
+    HideMode getHideMode();
 
 private:
     void createInterface();
 
-    QButtonGroup *grpMode;
+    QButtonGroup *grpChoiceMode;
+    QButtonGroup *grpHideMode;
     QRadioButton *radioMultiChoiceMode;
     QRadioButton *radioNoChoiceMode;
     QRadioButton *radioRandomOrder;
@@ -26,8 +28,6 @@ private:
     QRadioButton *radioTranslationHide;
     QRadioButton *radioRandomHide;
     QCheckBox *chckIncLearned;
-    QCheckBox *chckExamples;
-    QCheckBox *chckTranscription;
     QLineEdit *txtNumWords;
     QPushButton *btnOk;
     QPushButton *btnCancel;

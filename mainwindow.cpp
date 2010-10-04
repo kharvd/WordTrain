@@ -178,7 +178,9 @@ void MainWindow::startQuiz()
 {
     StartQuizDialog* dlg = new StartQuizDialog(&mCards);
     if (dlg->exec()) {
-        QuizDialog *quizDlg = new QuizDialog(dlg->getWords(), dlg->getMode());
+        QuizDialog *quizDlg = new QuizDialog(dlg->getWords(),
+                                             dlg->getChoiceMode(),
+                                             dlg->getHideMode());
         quizDlg->exec();
         delete quizDlg;
     }

@@ -2,20 +2,24 @@
 #define QUIZDIALOG_H
 
 #include <QtGui>
+#include <cstdlib>
 #include "wordscard.h"
 #include "neweditcarddialog.h"
 #include "cardwidget.h"
 #include "answerwidget.h"
 #include "lineanswerwidget.h"
 
-enum QuizMode { Mode_MultiChoice = 0, Mode_NoChoice };
+enum ChoiceMode { Choice_MultiChoice = 0, Choice_NoChoice };
+enum HideMode { Hide_Translation = 0, Hide_Word, Hide_Random };
 
 class QuizDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QuizDialog(const WordsPtrSet & cards, QuizMode mode, QWidget *parent = 0);
-    QuizDialog(WordsSet *cards, QuizMode mode, QWidget *parent = 0);
+    QuizDialog(const WordsPtrSet & cards, ChoiceMode choice,
+               HideMode hide, QWidget *parent = 0);
+    QuizDialog(WordsSet *cards, ChoiceMode choice,
+               HideMode hide, QWidget *parent = 0);
 
 private slots:
     void nextCheckWord();
@@ -31,7 +35,9 @@ private:
     CardWidget *cardText;
     AnswerWidget *wgtAnswer;
 
-    QuizMode mMode;
+    HideMode mHideMode;
+    ChoiceMode mChoiceMode;
+    bool mHideTranslation;
     bool mThatsAll; // If there is no more words
     bool mAnswered; // If "Check" has been clicked
     int mCurrCard;

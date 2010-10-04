@@ -6,8 +6,9 @@ StartQuizDialog::StartQuizDialog(WordsSet * words, QWidget *parent) :
     for (int i = 0; i < words->size(); i++) {
         mWords.push_back(&words[0][i]);
     }
-    createInterface();
+
     setWindowTitle(tr("Start test"));
+    createInterface();
 }
 
 void StartQuizDialog::createInterface()
@@ -18,11 +19,9 @@ void StartQuizDialog::createInterface()
     radioMultiChoiceMode = new QRadioButton(tr("Multiple choice"));
     radioNoChoiceMode = new QRadioButton(tr("Without choice"));
 
-    grpMode = new QButtonGroup(this);
-    grpMode->addButton(radioMultiChoiceMode);
-    grpMode->addButton(radioNoChoiceMode);
-    grpMode->setId(radioMultiChoiceMode, 0);
-    grpMode->setId(radioNoChoiceMode, 1);
+    grpChoiceMode = new QButtonGroup(this);
+    grpChoiceMode->addButton(radioMultiChoiceMode, 0);
+    grpChoiceMode->addButton(radioNoChoiceMode, 1);
 
      radioMultiChoiceMode->setEnabled(false);
     radioNoChoiceMode->setChecked(true);
@@ -38,7 +37,7 @@ void StartQuizDialog::createInterface()
     QLabel *lblNumWords = new QLabel(
             tr("Number of words (-1 for all words):"));
 
-    txtNumWords = new QLineEdit();
+    txtNumWords = new QLineEdit("-1");
     QIntValidator *validator = new QIntValidator(-1, 1000, this);
     txtNumWords->setValidator(validator);
 
@@ -67,13 +66,14 @@ void StartQuizDialog::createInterface()
     ltFormQuiz->addRow(tr("Order:", "Quiz"), ltRadioOrder);
 
     // Hiding
-    radioTranslationHide = new QRadioButton(tr("Transcription", "Hide"));
+    radioTranslationHide = new QRadioButton(tr("Translation", "Hide"));
     radioWordHide = new QRadioButton(tr("Word", "Hide"));
     radioRandomHide = new QRadioButton(tr("Random", "Hide"));
-    QButtonGroup *grpHide = new QButtonGroup(this);
-    grpHide->addButton(radioTranslationHide);
-    grpHide->addButton(radioWordHide);
-    grpHide->addButton(radioRandomHide);
+    grpHideMode = new QButtonGroup(this);
+    grpHideMode->addButton(radioTranslationHide, 0);
+    grpHideMode->addButton(radioWordHide, 1);
+    grpHideMode->addButton(radioRandomHide, 2);
+
     radioTranslationHide->setChecked(true);
 
     QVBoxLayout *ltRadioHide = new QVBoxLayout;
@@ -82,14 +82,6 @@ void StartQuizDialog::createInterface()
     ltRadioHide->addWidget(radioRandomHide);
 
     ltFormQuiz->addRow(tr("Hide:", "Quiz"), ltRadioHide);
-
-    // Show examples
-    chckExamples = new QCheckBox(tr("Examples", "Quiz"));
-    ltFormQuiz->addRow(chckExamples);
-
-    // Show transcription
-    chckTranscription = new QCheckBox(tr("Transcrption", "Quiz"));
-    ltFormQuiz->addRow(chckTranscription);
 
     // Main stuff
     QGroupBox *grpBox = new QGroupBox(windowTitle());
@@ -120,8 +112,11 @@ WordsPtrSet StartQuizDialog::getWords()
     return chooser.getWords();
 }
 
-QuizMode StartQuizDialog::getMode()
+ChoiceMode StartQuizDialog::getChoiceMode()
 {
-    qDebug() << grpMode->checkedId();
-    return (QuizMode)grpMode->checkedId();
+    return (ChoiceMode)grpChoiceMode->checkedId();
+}
+
+HideMode StartQuizDialog::getHideMode() {
+    return (HideMode)grpHideMode->checkedId();
 }
