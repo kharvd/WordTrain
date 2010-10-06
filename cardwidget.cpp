@@ -4,6 +4,7 @@ CardWidget::CardWidget(QWidget *parent) :
     QWidget(parent)
 {
     txtCard = new QTextEdit();
+    txtCard->setReadOnly(true);
     QHBoxLayout* lt = new QHBoxLayout;
     lt->addWidget(txtCard);
     lt->setMargin(0);
@@ -12,10 +13,10 @@ CardWidget::CardWidget(QWidget *parent) :
     mFace = true;
 }
 
-void CardWidget::showWord(const WordCard& card, bool faceSide)
+void CardWidget::showWord(const WordCard& card, bool faceSide, bool showForeign)
 {
     mFace = faceSide;
-    currCard = card;
+    mCurrWord = card;
 
     htmlCard.clear();
 
@@ -26,7 +27,7 @@ void CardWidget::showWord(const WordCard& card, bool faceSide)
     if (faceSide) {
         showFace(card);
     } else {
-        showBack(card);
+        showBack(card, showForeign);
     }
 
     htmlCard.append("</body>");
@@ -34,10 +35,15 @@ void CardWidget::showWord(const WordCard& card, bool faceSide)
     txtCard->setHtml(htmlCard);
 }
 
+void CardWidget::showWord(bool faceSide, bool showForeign)
+{
+    showWord(mCurrWord, faceSide, showForeign);
+}
+
 void CardWidget::showOtherSide()
 {
     mFace = !mFace;
-    showWord(currCard, mFace);
+    showWord(mCurrWord, mFace);
 }
 
 QString CardWidget::getCSS() {
@@ -74,25 +80,34 @@ void CardWidget::showFace(const WordCard& card)
                     .arg(card.transcription()));
 }
 
-void CardWidget::showBack(const WordCard& card)
+void CardWidget::showBack(const WordCard& card, bool showForeign)
 {
-    // Word and its gender
-    htmlCard.append(QString("<p class=\"word\" align=\"center\"><b>%1</b>"
-                            "<span style=\"font-size:12pt\"> %2</span></p>")
-            .arg(card.word(), card.genderShortString()));
+    if (showForeign) {
+        // Word and its gender
+        htmlCard.append(QString("<p class=\"word\" align=\"center\"><b>%1</b>"
+                                "<span style=\"font-size:12pt\"> %2</span></p>")
+                .arg(card.word(), card.genderShortString()));
 
-    // Plural
-    htmlCard.append(QString("<p class=\"plural\" align=\"center\">%1</p>")
-            .arg(card.plural()));
+        // Plural
+        htmlCard.append(QString("<p class=\"plural\" align=\"center\">%1</p>")
+                .arg(card.plural()));
 
-    // Category
-    htmlCard.append(QString("<p class=\"category\" align=\"center\">%1</p>")
-            .arg(card.lexCategoriesShortString()));
+        // Category
+        htmlCard.append(QString("<p class=\"category\" align=\"center\">%1</p>")
+                .arg(card.lexCategoriesShortString()));
 
-    // Transcription
-    htmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
-                            "[%1]</p>")
-            .arg(card.transcription()));
+        // Transcription
+        htmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
+                                "[%1]</p>")
+                .arg(card.transcription()));
+    } else {
+        // SHIT: Trying to align this fucked up QTextEdit
+        htmlCard.append("<br />");
+        htmlCard.append("<br />");
+        htmlCard.append("<br />");
+        htmlCard.append("<br />");
+    }
+
 
     // Translation
     htmlCard.append(QString("<p class=\"translation\" align=\"center\">"
@@ -103,8 +118,14 @@ void CardWidget::showBack(const WordCard& card)
     htmlCard.append("<p class=\"examples\">Examples:</p>");
 
     for (int i = 0; i < card.examplesSize(); i++) {
-        htmlCard.append(QString("<p class=\"example\">%1. %2<br />— %3</p>")
-                        .arg(i + 1).arg(card.exampleAt(i).first,
-                                    card.exampleAt(i).second));
+        if (showForeign) {
+            htmlCard.append(QString("<p class=\"example\">%1. %2<br />— %3</p>")
+                            .arg(i + 1).arg(card.exampleAt(i).first,
+                                        card.exampleAt(i).second));
+        } else {
+            htmlCard.append(QString("<p class=\"example\">%1. %2</p>")
+                            .arg(i + 1).arg(card.exampleAt(i).second));
+        }
+
     }
 }

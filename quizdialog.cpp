@@ -11,6 +11,11 @@ QuizDialog::QuizDialog(const WordsPtrSet & cards, ChoiceMode choice,
     mThatsAll = false;
     mChoiceMode = choice;
     mHideMode = hide;
+    if (mHideMode == Hide_Translation) {
+        mHideTranslation = true;
+    } else {
+        mHideTranslation = false;
+    }
     createInterface();
     setCurrentWord(0);
 }
@@ -105,11 +110,11 @@ void QuizDialog::setCurrentWord(int index)
         cardText->showWord(*(mCards[index]));
         break;
     case Hide_Word:
-        cardText->showWord(*(mCards[index]), false);
+        cardText->showWord(*(mCards[index]), false, false);
         break;
     case Hide_Random:
         mHideTranslation = qrand() % 2;
-        cardText->showWord(*(mCards[index]), mHideTranslation);
+        cardText->showWord(*(mCards[index]), mHideTranslation, mHideTranslation);
         break;
     }
 }
@@ -125,7 +130,12 @@ void QuizDialog::nextCheckWord()
         mAnswered = false;
         setCurrentWord(mCurrCard + 1);
     } else {
-        cardText->showOtherSide();
+        if (!mHideTranslation) {
+            cardText->showWord(false, true);
+        } else {
+            cardText->showOtherSide();
+        }
+
         QString correctAnswer
                 = mHideTranslation ? mCards.at(mCurrCard)->translation()
                                    : mCards.at(mCurrCard)->word();
