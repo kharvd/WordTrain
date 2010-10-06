@@ -34,7 +34,8 @@ WordsPtrSet WordsChooser::getFirstNOf(int number, bool includeLearned) {
     number = (number == -1) ? mWords.size() : number;
 
     for (int i = 0, n = 0; (i < mWords.size()) && (n < number); i++) {
-        if (!(!includeLearned && mWords.at(i)->isLearned())) {
+        if (!(!includeLearned && mWords.at(i)->numCorrectAnswers()
+                                 / WordCard::corrAnsForLearned == 1)) {
             tmp.push_back(mWords.at(i));
             n++;
         }

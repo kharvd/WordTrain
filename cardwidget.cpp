@@ -75,9 +75,11 @@ void CardWidget::showFace(const WordCard& card)
                     .arg(card.lexCategoriesShortString()));
 
     // Transcription
-    htmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
-                            "[%1]</p>")
-                    .arg(card.transcription()));
+    if (!card.transcription().isEmpty()) {
+        htmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
+                                "[%1]</p>")
+                        .arg(card.transcription()));
+    }
 }
 
 void CardWidget::showBack(const WordCard& card, bool showForeign)
@@ -97,9 +99,11 @@ void CardWidget::showBack(const WordCard& card, bool showForeign)
                 .arg(card.lexCategoriesShortString()));
 
         // Transcription
-        htmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
-                                "[%1]</p>")
-                .arg(card.transcription()));
+        if (!card.transcription().isEmpty()) {
+            htmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
+                                    "[%1]</p>")
+                    .arg(card.transcription()));
+        }
     } else {
         // SHIT: Trying to align this fucked up QTextEdit
         htmlCard.append("<br />");

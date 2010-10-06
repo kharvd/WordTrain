@@ -31,7 +31,6 @@ private:
     QLineEdit* txtPlural;
     QComboBox* cmbCategory;
     QComboBox* cmbGender;
-    QCheckBox* chckLearned;
     QPushButton* btnAddExample;
     QPushButton* btnOk;
     QPushButton* btnCancel;

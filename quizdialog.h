@@ -21,11 +21,14 @@ public:
     QuizDialog(WordsSet *cards, ChoiceMode choice,
                HideMode hide, QWidget *parent = 0);
 
+    bool isModified();
+
 private slots:
     void nextCheckWord();
     void dontKnow();
 
 private:
+    void constructor(ChoiceMode choice, HideMode hide);
     void switchButtons();
     void setCurrentWord(int index);
     void createInterface();
@@ -35,6 +38,7 @@ private:
     CardWidget *cardText;
     AnswerWidget *wgtAnswer;
 
+    bool mModified;
     HideMode mHideMode;
     ChoiceMode mChoiceMode;
     bool mHideTranslation;

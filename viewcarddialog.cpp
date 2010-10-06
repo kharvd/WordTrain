@@ -41,16 +41,12 @@ void ViewCardDialog::createInterface()
     btnEdit = new QPushButton(tr("Edit card"));
     connect(btnEdit, SIGNAL(clicked()), this, SLOT(editCard()));
 
-    btnLearned = new QPushButton();
-    connect(btnLearned, SIGNAL(clicked()), this, SLOT(setCardLearned()));
-
     btnTurn = new QPushButton(tr("Show other side"));
     connect(btnTurn, SIGNAL(clicked()), cardText, SLOT(showOtherSide()));
 
     QHBoxLayout *hLayout1 = new QHBoxLayout;
     hLayout1->addWidget(btnEdit);
     hLayout1->addStretch(1);
-    hLayout1->addWidget(btnLearned);
 
     QHBoxLayout *hLayout2 = new QHBoxLayout;
     hLayout2->addWidget(btnPrevious);
@@ -71,16 +67,6 @@ void ViewCardDialog::enableButtons()
     btnTurn->setEnabled(true);
     btnNext->setEnabled(true);
     btnEdit->setEnabled(true);
-    btnLearned->setEnabled(true);
-}
-
-void ViewCardDialog::setLearnedButtonText()
-{
-    if (mCards[mCurrCard]->isLearned()) {
-        btnLearned->setText(tr("Set unlearned"));
-    } else {
-        btnLearned->setText(tr("Set learned"));
-    }
 }
 
 void ViewCardDialog::setCurrentWord(int index)
@@ -96,8 +82,6 @@ void ViewCardDialog::setCurrentWord(int index)
     if (mCurrCard == mCards.size() - 1) {
         btnNext->setEnabled(false);
     }
-
-    setLearnedButtonText();
 
     cardText->showWord(*(mCards[index]));
 }
@@ -125,12 +109,5 @@ void ViewCardDialog::editCard()
         mModified = true;
         setCurrentWord(mCurrCard); // Update
     }
-}
-
-void ViewCardDialog::setCardLearned()
-{
-    mCards[mCurrCard]->setLearned(!mCards[mCurrCard]->isLearned());
-    setLearnedButtonText();
-    mModified = true;
 }
 

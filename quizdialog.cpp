@@ -4,33 +4,29 @@ QuizDialog::QuizDialog(const WordsPtrSet & cards, ChoiceMode choice,
                        HideMode hide, QWidget *parent)
                            : QDialog(parent)
 {
-    qsrand(time(0));
     Q_ASSERT(cards.size());
     mCards = cards;
-    mAnswered = false;
-    mThatsAll = false;
-    mChoiceMode = choice;
-    mHideMode = hide;
-    if (mHideMode == Hide_Translation) {
-        mHideTranslation = true;
-    } else {
-        mHideTranslation = false;
-    }
-    createInterface();
-    setCurrentWord(0);
+
+    constructor(choice, hide);
 }
 
 QuizDialog::QuizDialog(WordsSet *cards, ChoiceMode choice, HideMode hide,
                        QWidget *parent)
     : QDialog(parent)
 {
-    qsrand(time(0));
     Q_ASSERT(cards->size());
     for (int i = 0; i < cards->size(); i++) {
         mCards.push_back(&cards[0][i]);
     }
 
+    constructor(choice, hide);
+}
+
+void QuizDialog::constructor(ChoiceMode choice, HideMode hide)
+{
+    qsrand(time(0));
     mAnswered = false;
+    mModified = false;
     mThatsAll = false;
     mChoiceMode = choice;
     mHideMode = hide;
@@ -39,6 +35,7 @@ QuizDialog::QuizDialog(WordsSet *cards, ChoiceMode choice, HideMode hide,
     } else {
         mHideTranslation = false;
     }
+
     createInterface();
     setCurrentWord(0);
 }
@@ -79,6 +76,11 @@ void QuizDialog::createInterface()
     mainLayout->addLayout(hLayout);
 
     setLayout(mainLayout);
+}
+
+bool QuizDialog::isModified()
+{
+    return mModified;
 }
 
 void QuizDialog::switchButtons()
@@ -143,7 +145,13 @@ void QuizDialog::nextCheckWord()
         bool correct = ((correctAnswer.indexOf(wgtAnswer->getAnswer(), 0,
                                 Qt::CaseInsensitive)) != -1 )
                                 && (!(wgtAnswer->getAnswer().isEmpty()));
+
         wgtAnswer->setCorrect(correct);
+
+        if (correct) {
+            mCards.at(mCurrCard)->incCorrectAnswers();
+            mModified = true;
+        }
 
         mAnswered = true;
         switchButtons();

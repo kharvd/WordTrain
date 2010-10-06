@@ -182,6 +182,12 @@ void MainWindow::startQuiz()
                                              dlg->getChoiceMode(),
                                              dlg->getHideMode());
         quizDlg->exec();
+
+        if (quizDlg->isModified()) {
+            setWindowModified(true);
+            updateTable();
+        }
+
         delete quizDlg;
     }
     delete dlg;
@@ -200,7 +206,8 @@ void MainWindow::createTableWidget() {
     tableWords->setRowCount(0);
 
     QStringList headerLabels;
-    headerLabels << "Word" << "Transcription" << "Translation" << "Learned";
+    headerLabels << tr("Word") << tr("Transcription") << tr("Translation")
+            << tr("Progress");
     tableWords->setHorizontalHeaderLabels(headerLabels);
 
     tableWords->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -511,8 +518,10 @@ void MainWindow::updateTable()
         tmp = new QTableWidgetItem(it->translation());
         tableWords->setItem(rowCount, 2, tmp);
         // Learned
-        tmp = new QTableWidgetItem(it->isLearned()
-                                   ? tr("Yes") : tr("No"));
+        tmp = new QTableWidgetItem(QString("%1%").arg(
+                (double)it->numCorrectAnswers() / WordCard::corrAnsForLearned
+                                                      * 100));
+
         tmp->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         tableWords->setItem(rowCount, 3, tmp);;
     }

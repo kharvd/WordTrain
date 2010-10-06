@@ -26,7 +26,7 @@ const WordCard& NewEditCardDialog::getNewCard()
     mNewCard.setPlural(txtPlural->text());
     mNewCard.setCategory(cmbCategory->currentIndex());
     mNewCard.setGender(cmbGender->currentIndex());
-    mNewCard.setLearned(chckLearned->isChecked());
+    mNewCard.setNumCorrectAnswers(0);
     mNewCard.clearExamples();
 
     for (int i = 0; (i < wgtExamples->examplesCount())
@@ -86,9 +86,6 @@ void NewEditCardDialog::createInterface()
     btnCancel = new QPushButton(tr("Cancel"));
     connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
 
-    chckLearned = new QCheckBox(tr("Learned?"));
-    chckLearned->setChecked(false);
-
     QFormLayout* fLayout = new QFormLayout();
     fLayout->addRow(tr("Word:"), txtWord);
     fLayout->addRow(tr("Transcription:"), txtTranscription);
@@ -101,7 +98,6 @@ void NewEditCardDialog::createInterface()
     QVBoxLayout* hLayout = new QVBoxLayout();
     hLayout->addLayout(fLayout);
     hLayout->addWidget(scrollExamples);
-    hLayout->addWidget(chckLearned);
 
     QGroupBox* grBox = new QGroupBox(windowTitle());
     grBox->setLayout(hLayout);
@@ -126,7 +122,6 @@ void NewEditCardDialog::fillForm()
     txtPlural->setText(mNewCard.plural());
     cmbCategory->setCurrentIndex(mNewCard.category());
     cmbGender->setCurrentIndex(mNewCard.gender());
-    chckLearned->setChecked(mNewCard.isLearned());
 
     for (int i = 0; i < (mNewCard.examplesSize())
         && (i <= ExamplesWidget::maxExamples); i++)

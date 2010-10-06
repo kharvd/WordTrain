@@ -1,24 +1,5 @@
 #include "wordscard.h"
 
-WordCard::WordCard(const WordCard & card)
-{
-    mWord = card.mWord;
-    mCategory = card.mCategory;
-    mGender = card.mGender;
-    mTranscription = card.mTranscription;
-    mTranslation = card.mTranslation;
-    mPlural = card.mPlural;
-    mExamples = card.mExamples;
-    mLearned = card.mLearned;
-}
-
-WordCard::WordCard(const QString & word, const QString & translation)
-    : mGender(Gen_None), mCategory(LC_None), mLearned(false)
-{
-    mWord = word.trimmed();
-    mTranslation = translation;
-}
-
 void WordCard::setWord(const QString & word)
 {
     mWord = word.trimmed();
@@ -51,7 +32,8 @@ void WordCard::setCategory(int category)
     setCategory(LexicalCategory(category));
 }
 
-void WordCard::setGender(Gender gender) {
+void WordCard::setGender(Gender gender)
+{
     if ((gender <= Gen_Common) && (gender >= 0)) {
         mGender = gender;
     }
@@ -62,9 +44,14 @@ void WordCard::setGender(int gender)
     setGender(Gender(gender));
 }
 
-void WordCard::setLearned(bool learned)
+void WordCard::setNumCorrectAnswers(unsigned int num)
 {
-    mLearned = learned;
+    mNumCorrectAnswers = num;
+}
+
+void WordCard::incCorrectAnswers()
+{
+    mNumCorrectAnswers++;
 }
 
 void WordCard::setExamples(const Examples & examples)
@@ -103,7 +90,7 @@ void WordCard::clearAll()
     setPlural("");
     setCategory(LC_None);
     setGender(Gen_None);
-    setLearned(false);
+    setNumCorrectAnswers(0);
     clearExamples();
 }
 

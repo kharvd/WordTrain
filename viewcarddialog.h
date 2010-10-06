@@ -21,20 +21,15 @@ private slots:
     void nextWord();
     void prevWord();
     void editCard();
-    void setCardLearned();
 
 private:
     void createInterface();
     void enableButtons();
 
-    /* Convenience func for setting "Learned" button text */
-    void setLearnedButtonText();
-
     QPushButton *btnPrevious;
     QPushButton *btnTurn;
     QPushButton *btnNext;
     QPushButton *btnEdit;
-    QPushButton *btnLearned;
     CardWidget *cardText;
 
     bool mModified;

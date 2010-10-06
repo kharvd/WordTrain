@@ -116,8 +116,8 @@ void XmlReader::readWordCard()
                         mReader.attributes().value("value").toString().toInt());
                 mReader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "learned") {
-                card.setLearned(
+            } else if (mReader.name() == "answers") {
+                card.setNumCorrectAnswers(
                         mReader.attributes().value("value").toString().toInt());
                 mReader.readNext();
                 skipWhitespaces();

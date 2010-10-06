@@ -37,9 +37,7 @@ class WordCard
 public:
     /* Constructors */
     WordCard():
-            mGender(Gen_None), mCategory(LC_None), mLearned(false) {}
-    WordCard(const WordCard & card);
-    WordCard(const QString & word, const QString & translation);
+            mNumCorrectAnswers(0), mGender(Gen_None), mCategory(LC_None) {}
 
     /* Mutators */
     void setWord(const QString & word);
@@ -50,7 +48,8 @@ public:
     void setGender(Gender gender);
     void setCategory(int category);
     void setGender(int gender);
-    void setLearned(bool learned);
+    void setNumCorrectAnswers(unsigned int num);
+    void incCorrectAnswers();
     void setExamples(const Examples & examples);
     void setExampleAt(int index, const Example & example);
     void addExample(const QString & example, const QString & translation);
@@ -65,11 +64,10 @@ public:
     const QString plural() const { return mPlural; }
     LexicalCategory category() const { return mCategory; }
     Gender gender() const { return mGender; }
+    unsigned int numCorrectAnswers() const { return mNumCorrectAnswers; }
     const Example exampleAt(int index) const { return mExamples[index]; }
     const Examples examples() const { return mExamples; }
     int examplesSize() const { return mExamples.size(); }
-    bool isLearned() const { return mLearned; }
-
     // Returns string interpretations of LexicalCategory enum values
     static QStringList lexCategoriesStrings();
     static QString lexCategoriesString(LexicalCategory cat);
@@ -89,8 +87,11 @@ public:
     // String short interpretations of Gender
     QString genderShortString() const;
 
+    // TODO: Move it into 'settings'
+    static const int corrAnsForLearned = 10;
 
 private:
+    unsigned int mNumCorrectAnswers;
     QString mWord;
     Gender mGender;
     LexicalCategory mCategory;
@@ -98,7 +99,6 @@ private:
     QString mTranslation;
     QString mPlural;
     Examples mExamples;
-    bool mLearned;
 };
 
 #endif // WORDSCARD_H
