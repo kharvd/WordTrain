@@ -1,8 +1,8 @@
 #include "wordschooser.h"
-#include <cstdlib>
+#include "utilities.h"
 
-WordsChooser::WordsChooser(const WordsPtrSet & words, bool random, bool includeLearned,
-                               int number)
+WordsChooser::WordsChooser(const WordsPtrSet & words, bool random,
+                           bool includeLearned, int number)
 {
     qsrand(time(0));
 
@@ -21,12 +21,7 @@ WordsPtrSet WordsChooser::getWords()
 }
 
 void WordsChooser::shuffle() {
-    int newPos;
-
-    for (int i = 0; i < mWords.size(); i++) {
-        newPos = qrand() % mWords.size();
-        qSwap(mWords[i], mWords[newPos]);
-    }
+    mWords = shuffleContainer(mWords, mWords.size());
 }
 
 WordsPtrSet WordsChooser::getFirstNOf(int number, bool includeLearned) {

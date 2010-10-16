@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     cardwidget.cpp \
     wordschooser.cpp \
     lineanswerwidget.cpp \
-    quizdialog.cpp
+    quizdialog.cpp \
+    multianswerwidget.cpp
 HEADERS += mainwindow.h \
     wordscard.h \
     xmlreader.h \
@@ -32,5 +33,7 @@ HEADERS += mainwindow.h \
     cardwidget.h \
     wordschooser.h \
     lineanswerwidget.h \
-    quizdialog.h
+    quizdialog.h \
+    multianswerwidget.h \
+    utilities.h
 RESOURCES += resources.qrc

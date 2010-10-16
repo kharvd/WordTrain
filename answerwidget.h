@@ -1,7 +1,7 @@
 #ifndef ANSWERWIDGET_H
 #define ANSWERWIDGET_H
 
-#include <QWidget>
+#include <QtGui>
 
 class AnswerWidget : public QWidget
 {
@@ -9,8 +9,10 @@ class AnswerWidget : public QWidget
 public:
     explicit AnswerWidget(QWidget *parent = 0);
     virtual QString getAnswer() = 0;
-    virtual void setCorrect(bool correct) = 0;
+    virtual void setCorrect(bool correct);
     virtual void clear() = 0;
+protected:
+    QLabel *imgCorrect;
 };
 
 #endif // ANSWERWIDGET_H

@@ -9,6 +9,7 @@ CardWidget::CardWidget(QWidget *parent) :
     lt->addWidget(txtCard);
     lt->setMargin(0);
     setLayout(lt);
+    setMinimumSize(370, 265);
 
     mFace = true;
 }

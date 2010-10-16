@@ -57,6 +57,8 @@ private:
     void updateTable();
     void showCard(int index);
 
+    WordsPtrSet getPointersSet();
+
     /* Checks whether 'curr' is not out of range of mCards */
     bool isInRange(int curr);
 

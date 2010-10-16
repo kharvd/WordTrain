@@ -2,14 +2,13 @@
 #define WORDSCHOOSER_H
 
 #include "wordscard.h"
-#include <QtAlgorithms>
 
 // Class for choosing words to be tested.
 class WordsChooser
 {
 public:
-    WordsChooser(const WordsPtrSet & words, bool random, bool includeLearned,
-                 int number);
+    WordsChooser(const WordsPtrSet & words, bool random = true,
+                 bool includeLearned = true, int number = -1);
     WordsPtrSet getWords();
 private:
     void shuffle();

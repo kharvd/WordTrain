@@ -26,8 +26,7 @@ ViewCardDialog::ViewCardDialog(WordsSet *cards, QWidget *parent) :
 void ViewCardDialog::createInterface()
 {
     setWindowTitle(tr("View card"));
-    setWindowFlags(Qt::Window);
-    setFixedSize(400, 360);
+    resize(400, 360);
 
     cardText = new CardWidget();
 

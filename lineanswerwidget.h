@@ -10,12 +10,10 @@ class LineAnswerWidget : public AnswerWidget
 public:
     explicit LineAnswerWidget(QWidget *parent = 0);
     virtual QString getAnswer();
-    virtual void setCorrect(bool correct);
     virtual void clear();
 
-private:
+protected:
     QLineEdit *txtAnswer;
-    QLabel *imgCorrect;
 };
 
 #endif // LINEANSWERWIDGET_H

@@ -23,7 +23,6 @@ void StartQuizDialog::createInterface()
     grpChoiceMode->addButton(radioMultiChoiceMode, 0);
     grpChoiceMode->addButton(radioNoChoiceMode, 1);
 
-     radioMultiChoiceMode->setEnabled(false);
     radioNoChoiceMode->setChecked(true);
 
     QVBoxLayout *ltRadioMode = new QVBoxLayout;

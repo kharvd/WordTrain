@@ -176,11 +176,16 @@ void MainWindow::startTraining()
 /* slot */
 void MainWindow::startQuiz()
 {
+    if (tableWords->rowCount() < 1) {
+        return;
+    }
+
     StartQuizDialog* dlg = new StartQuizDialog(&mCards);
     if (dlg->exec()) {
         QuizDialog *quizDlg = new QuizDialog(dlg->getWords(),
                                              dlg->getChoiceMode(),
-                                             dlg->getHideMode());
+                                             dlg->getHideMode(),
+                                             getPointersSet());
         quizDlg->exec();
 
         if (quizDlg->isModified()) {
@@ -570,4 +575,13 @@ void MainWindow::showCard(int index)
 bool MainWindow::isInRange(int curr)
 {
     return ((curr >= 0) && (curr < mCards.size()));
+}
+
+WordsPtrSet MainWindow::getPointersSet()
+{
+    WordsPtrSet tmp;
+    for (int i = 0; i < mCards.size(); i++) {
+        tmp.push_back(&mCards[i]);
+    }
+    return tmp;
 }
