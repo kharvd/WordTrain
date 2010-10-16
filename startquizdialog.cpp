@@ -23,14 +23,13 @@ void StartQuizDialog::createInterface()
     grpChoiceMode->addButton(radioMultiChoiceMode, 0);
     grpChoiceMode->addButton(radioNoChoiceMode, 1);
 
-    radioNoChoiceMode->setChecked(true);
+    radioMultiChoiceMode->setChecked(true);
 
     QVBoxLayout *ltRadioMode = new QVBoxLayout;
     ltRadioMode->addWidget(radioMultiChoiceMode);
     ltRadioMode->addWidget(radioNoChoiceMode);
 
     ltFormQuiz->addRow(tr("Mode:", "Quiz"), ltRadioMode);
-
 
     // Num of words
     QLabel *lblNumWords = new QLabel(
