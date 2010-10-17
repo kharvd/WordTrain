@@ -37,3 +37,5 @@ HEADERS += mainwindow.h \
     multianswerwidget.h \
     utilities.h
 RESOURCES += resources.qrc
+TRANSLATIONS = wordtrain_en.ts \
+               wordtrain_ru.ts

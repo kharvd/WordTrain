@@ -14,5 +14,7 @@
         <file>style.css</file>
         <file>icons/correct.png</file>
         <file>icons/incorrect.png</file>
+        <file>wordtrain_en.qm</file>
+        <file>wordtrain_ru.qm</file>
     </qresource>
 </RCC>

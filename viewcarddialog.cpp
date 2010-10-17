@@ -70,6 +70,10 @@ void ViewCardDialog::enableButtons()
 
 void ViewCardDialog::setCurrentWord(int index)
 {
+    if (index < 0) {
+        return;
+    }
+
     mCurrCard = index;
 
     enableButtons();

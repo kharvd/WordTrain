@@ -116,6 +116,7 @@ void MainWindow::addCard()
         mCards.push_back(dlg.getNewCard());
         setWindowModified(true);
         updateTable();
+        tableWords->setCurrentCell(tableWords->rowCount() - 1, 0);
     }
 }
 
@@ -131,6 +132,7 @@ void MainWindow::editCard()
         mCards.replace(curr, dlg->getNewCard());
         setWindowModified(true);
         updateTable();
+        tableWords->setCurrentCell(curr, 0);
     }
     delete dlg;
 }
@@ -150,7 +152,12 @@ void MainWindow::deleteCard()
     mCards.removeAt(curr);
     setWindowModified(true);
     updateTable();
-    tableWords->setCurrentCell(curr - 1, 0);
+    if (curr != 0) {
+        tableWords->setCurrentCell(curr - 1, 0);
+    } else {
+        tableWords->setCurrentCell(0, 0);
+    }
+
 }
 
 /* slot */
@@ -182,6 +189,16 @@ void MainWindow::startQuiz()
 
     StartQuizDialog* dlg = new StartQuizDialog(&mCards);
     if (dlg->exec()) {
+        if (dlg->getWords().size() == 0) {
+            QMessageBox::critical(this, tr("Error"),
+                       tr("No words have been selected!"),
+                       QMessageBox::Ok,
+                       QMessageBox::Ok);
+
+            delete dlg;
+            return;
+        }
+
         QuizDialog *quizDlg = new QuizDialog(dlg->getWords(),
                                              dlg->getChoiceMode(),
                                              dlg->getHideMode(),
