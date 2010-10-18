@@ -32,17 +32,24 @@ private slots:
 
 private:
     static const int numChoices = 4;
+
     void constructor(ChoiceMode choice, HideMode hide);
     void switchButtons();
     void setCurrentWord(int index);
     void createInterface();
     QStringList getAnswersMultiChoice(QString correct, bool translation);
+    void checkAnswer();
+    void showResult();
 
     QPushButton *btnDontKnow;
+    QProgressBar *prgProgress;
+    QLabel *lblProgress;
     QPushButton *btnCheckNext;
     CardWidget *cardText;
     AnswerWidget *wgtAnswer;
 
+    int mCardsNumber;
+    int mCorrectAnswers;
     bool mModified;
     HideMode mHideMode;
     ChoiceMode mChoiceMode;

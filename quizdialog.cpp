@@ -28,6 +28,8 @@ QuizDialog::QuizDialog(WordsSet *cards, ChoiceMode choice, HideMode hide,
 void QuizDialog::constructor(ChoiceMode choice, HideMode hide)
 {
     qsrand(time(0));
+    mCorrectAnswers = 0;
+    mCardsNumber = mCards.size();
     mAnswered = false;
     mModified = false;
     mThatsAll = false;
@@ -57,6 +59,13 @@ void QuizDialog::createInterface()
     connect(btnCheckNext, SIGNAL(clicked()), this, SLOT(nextCheckWord()));
     btnCheckNext->setDefault(true);
 
+    prgProgress = new QProgressBar();
+    prgProgress->setMinimum(0);
+    prgProgress->setMaximum(mCardsNumber);
+    prgProgress->setValue(0);
+
+    lblProgress = new QLabel(QString("0/%1").arg(mCardsNumber));
+
     switch (mChoiceMode) {
     case Choice_NoChoice:
         wgtAnswer = new LineAnswerWidget();
@@ -68,6 +77,10 @@ void QuizDialog::createInterface()
 
     Q_ASSERT(wgtAnswer);
 
+    QHBoxLayout *prgLayout = new QHBoxLayout;
+    prgLayout->addWidget(prgProgress);
+    prgLayout->addWidget(lblProgress);
+
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addWidget(btnDontKnow);
     hLayout->addWidget(btnCheckNext);
@@ -75,6 +88,7 @@ void QuizDialog::createInterface()
     QLabel *lbl = new QLabel(tr("Your answer"));
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addLayout(prgLayout);
     mainLayout->addWidget(cardText);
     mainLayout->addWidget(lbl);
     mainLayout->addWidget(wgtAnswer);
@@ -94,7 +108,7 @@ void QuizDialog::switchButtons()
         btnDontKnow->setEnabled(false);
 
         if (mCurrCard == mCards.size() - 1) {
-            btnCheckNext->setText(tr("Close"));
+            btnCheckNext->setText(tr("Finish"));
             mThatsAll = true;
         } else {
             btnCheckNext->setText(tr("Next"));
@@ -129,7 +143,7 @@ void QuizDialog::setCurrentWord(int index)
         QString correctAnswer
                 = mHideTranslation ? mCards.at(mCurrCard)->translation()
                                    : mCards.at(mCurrCard)->word();
-        dynamic_cast<MultiAnswerWidget *>(wgtAnswer)->
+        qobject_cast<MultiAnswerWidget *>(wgtAnswer)->
                 setAnswers(getAnswersMultiChoice(correctAnswer,
                                                  mHideTranslation));
     }
@@ -138,13 +152,18 @@ void QuizDialog::setCurrentWord(int index)
 void QuizDialog::nextCheckWord()
 {
     if (mThatsAll) {
+        showResult();
         close();
         return;
     }
 
     if (mAnswered) {
+        mCurrCard++;
         mAnswered = false;
-        setCurrentWord(mCurrCard + 1);
+        lblProgress->setText(QString("%1/%2").arg(mCurrCard).
+                             arg(mCardsNumber));
+        prgProgress->setValue(prgProgress->value() + 1);
+        setCurrentWord(mCurrCard);
     } else {
         if (!mHideTranslation) {
             cardText->showWord(false, true);
@@ -152,24 +171,48 @@ void QuizDialog::nextCheckWord()
             cardText->showOtherSide();
         }
 
-        QString correctAnswer
-                = mHideTranslation ? mCards.at(mCurrCard)->translation()
-                                   : mCards.at(mCurrCard)->word();
-
-        bool correct = ((correctAnswer.indexOf(wgtAnswer->getAnswer(), 0,
-                                Qt::CaseInsensitive)) != -1 )
-                                && (!(wgtAnswer->getAnswer().isEmpty()));
-
-        wgtAnswer->setCorrect(correct);
-
-        if (correct) {
-            mCards.at(mCurrCard)->incCorrectAnswers();
-            mModified = true;
-        }
+        checkAnswer();
 
         mAnswered = true;
         switchButtons();
     }
+}
+
+void QuizDialog::checkAnswer()
+{
+    QString correctAnswer
+            = mHideTranslation ? mCards.at(mCurrCard)->translation()
+                               : mCards.at(mCurrCard)->word();
+
+    bool correct = ((correctAnswer.indexOf(wgtAnswer->getAnswer(), 0,
+                            Qt::CaseInsensitive)) != -1 )
+                            && (!(wgtAnswer->getAnswer().isEmpty()));
+
+    wgtAnswer->setCorrect(correct);
+
+    if (correct) {
+        mCorrectAnswers++;
+        mCards.at(mCurrCard)->incCorrectAnswers();
+        mModified = true;
+    }
+}
+
+void QuizDialog::showResult()
+{
+    QMessageBox msgBox;
+    QString msg;
+    double mark = (mCorrectAnswers * 5.0) / mCardsNumber;
+
+    msg.append(tr("Correct answers: %1/%2\n").arg(mCorrectAnswers)
+                  .arg(mCards.size()));
+    msg.append(tr("Your mark: %1").arg(mark));
+
+    msgBox.setText(msg);
+    msgBox.setWindowTitle(tr("Your result"));
+    msgBox.setIcon(QMessageBox::Information);
+    msgBox.setStandardButtons(QMessageBox::Close);
+    msgBox.setDefaultButton(QMessageBox::Close);
+    msgBox.exec();
 }
 
 void QuizDialog::dontKnow()

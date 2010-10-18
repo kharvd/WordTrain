@@ -17,8 +17,12 @@ int main(int argc, char *argv[])
 
     QString locale = QLocale::system().name();
 
+    QTranslator translatorQt;
+    translatorQt.load(QString(":/translations/qt_") + locale);
+    a.installTranslator(&translatorQt);
+
     QTranslator translator;
-    translator.load(QString(":/wordtrain_") + locale);
+    translator.load(QString(":/translations/wordtrain_") + locale);
     a.installTranslator(&translator);
 
     MainWindow w;

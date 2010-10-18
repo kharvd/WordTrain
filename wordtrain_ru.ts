@@ -2,6 +2,15 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru_RU">
 <context>
+    <name>CardWidget</name>
+    <message>
+        <location filename="cardwidget.cpp" line="125"/>
+        <source>Examples:</source>
+        <oldsource>Examples</oldsource>
+        <translation>Примеры:</translation>
+    </message>
+</context>
+<context>
     <name>ExamplesWidget</name>
     <message>
         <location filename="exampleswidget.cpp" line="31"/>
@@ -39,220 +48,220 @@
         <translation>Импортировать набор</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="194"/>
-        <location filename="mainwindow.cpp" line="456"/>
-        <location filename="mainwindow.cpp" line="488"/>
+        <location filename="mainwindow.cpp" line="193"/>
+        <location filename="mainwindow.cpp" line="455"/>
+        <location filename="mainwindow.cpp" line="487"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="195"/>
+        <location filename="mainwindow.cpp" line="194"/>
         <source>No words have been selected!</source>
         <translation>Ни одно слово не выбрано!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="232"/>
+        <location filename="mainwindow.cpp" line="231"/>
         <source>Word</source>
         <translation>Слово</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="232"/>
+        <location filename="mainwindow.cpp" line="231"/>
         <source>Transcription</source>
         <translation>Транскрипция</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="232"/>
+        <location filename="mainwindow.cpp" line="231"/>
         <source>Translation</source>
         <translation>Перевод</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="233"/>
+        <location filename="mainwindow.cpp" line="232"/>
         <source>Progress</source>
         <translation>Прогресс</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="255"/>
+        <location filename="mainwindow.cpp" line="254"/>
         <source>&amp;New set...</source>
         <translation>&amp;Новый набор...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="257"/>
+        <location filename="mainwindow.cpp" line="256"/>
         <source>Create a new card set</source>
         <translation>Создать новый набор карточек</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="261"/>
+        <location filename="mainwindow.cpp" line="260"/>
         <source>&amp;Open set...</source>
         <translation>&amp;Открыть набор...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="263"/>
+        <location filename="mainwindow.cpp" line="262"/>
         <source>Open an existing card set</source>
         <translation>Открыть существующий набор карточек</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="267"/>
+        <location filename="mainwindow.cpp" line="266"/>
         <source>&amp;Save set</source>
         <translation>&amp;Сохранить набор</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="269"/>
+        <location filename="mainwindow.cpp" line="268"/>
         <source>Save the card set to disk</source>
         <translation>Сохранить набор карточек</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="272"/>
+        <location filename="mainwindow.cpp" line="271"/>
         <source>Save set &amp;As...</source>
         <translation>Сохранить набор &amp;как...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="274"/>
+        <location filename="mainwindow.cpp" line="273"/>
         <source>Save the card set under a new name</source>
         <translation>Сохранить набор карточек под новым именем</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="277"/>
+        <location filename="mainwindow.cpp" line="276"/>
         <source>&amp;Quit</source>
         <translation>В&amp;ыход</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="279"/>
+        <location filename="mainwindow.cpp" line="278"/>
         <source>Quit the application</source>
         <translation>Выйти из программы</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="283"/>
+        <location filename="mainwindow.cpp" line="282"/>
         <source>&amp;Add card...</source>
         <translation>&amp;Добавить карточку...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="284"/>
+        <location filename="mainwindow.cpp" line="283"/>
         <source>Add a new word card to the set</source>
         <translation>Добавить новую карточку в набор</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="288"/>
+        <location filename="mainwindow.cpp" line="287"/>
         <source>&amp;View card...</source>
         <translation>&amp;Просмотреть карточку...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="289"/>
+        <location filename="mainwindow.cpp" line="288"/>
         <source>View current word card</source>
         <translation>Просмотреть выбранную карточку</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="293"/>
+        <location filename="mainwindow.cpp" line="292"/>
         <source>&amp;Edit card...</source>
         <translation>&amp;Изменить карточку...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="294"/>
+        <location filename="mainwindow.cpp" line="293"/>
         <source>Edit current word card</source>
         <translation>Изменить выбранную карточку</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="298"/>
+        <location filename="mainwindow.cpp" line="297"/>
         <source>&amp;Delete card</source>
         <translation>&amp;Удалить карточку</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="300"/>
+        <location filename="mainwindow.cpp" line="299"/>
         <source>Delete the word card from the set</source>
         <translation>Удалить выбранную карточку из набора</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="303"/>
+        <location filename="mainwindow.cpp" line="302"/>
         <source>&amp;Import set...</source>
         <translation>&amp;Импортировать набор...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="305"/>
+        <location filename="mainwindow.cpp" line="304"/>
         <source>Append an existing set to the current</source>
         <translation>Добавить существующий набор к текущему</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="311"/>
+        <location filename="mainwindow.cpp" line="310"/>
         <source>Start &amp;training...</source>
         <translation>Начать &amp;тренировку...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="312"/>
+        <location filename="mainwindow.cpp" line="311"/>
         <source>Start learning words from the set</source>
         <translation>Начать изучать слова из набора</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="317"/>
+        <location filename="mainwindow.cpp" line="316"/>
         <source>Start qui&amp;z...</source>
         <translation>Начать &amp;викторину...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="319"/>
+        <location filename="mainwindow.cpp" line="318"/>
         <source>Test your knowledge of words from the set</source>
         <translation>Проверьте знание слов из набора</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="323"/>
-        <location filename="mainwindow.cpp" line="369"/>
+        <location filename="mainwindow.cpp" line="322"/>
+        <location filename="mainwindow.cpp" line="368"/>
         <source>&amp;About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="324"/>
+        <location filename="mainwindow.cpp" line="323"/>
         <source>Show the application&apos;s About box</source>
         <translation>Показать окно &quot;О программе&quot;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="327"/>
+        <location filename="mainwindow.cpp" line="326"/>
         <source>About &amp;Qt</source>
         <translation>О Qt</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="328"/>
+        <location filename="mainwindow.cpp" line="327"/>
         <source>Show the Qt library&apos;s About box</source>
         <translation>Показать окно &quot;О библиотеке Qt&quot;</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="346"/>
+        <location filename="mainwindow.cpp" line="345"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="354"/>
+        <location filename="mainwindow.cpp" line="353"/>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="363"/>
+        <location filename="mainwindow.cpp" line="362"/>
         <source>&amp;Training</source>
         <translation>&amp;Тренировка</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="376"/>
+        <location filename="mainwindow.cpp" line="375"/>
         <source>Toolbar</source>
         <translation>Панель инструментов</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="396"/>
+        <location filename="mainwindow.cpp" line="395"/>
         <source>Ready</source>
         <translation>Готов</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="461"/>
+        <location filename="mainwindow.cpp" line="460"/>
         <source>File imported</source>
         <translation>Файл импортирован</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="465"/>
+        <location filename="mainwindow.cpp" line="464"/>
         <source>File loaded</source>
         <translation>Файл загружен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="494"/>
+        <location filename="mainwindow.cpp" line="493"/>
         <source>File saved</source>
         <translation>Файл сохранен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="504"/>
+        <location filename="mainwindow.cpp" line="503"/>
         <source>The set has been modified.
 Do you want to save your changes?</source>
         <translation>Набор был изменен.
@@ -333,32 +342,53 @@ Do you want to save your changes?</source>
 <context>
     <name>QuizDialog</name>
     <message>
-        <location filename="quizdialog.cpp" line="48"/>
+        <location filename="quizdialog.cpp" line="50"/>
         <source>Test</source>
         <translation>Тест</translation>
     </message>
     <message>
-        <location filename="quizdialog.cpp" line="53"/>
+        <location filename="quizdialog.cpp" line="55"/>
         <source>Don&apos;t know</source>
         <translation>Не знаю</translation>
     </message>
     <message>
-        <location filename="quizdialog.cpp" line="75"/>
+        <location filename="quizdialog.cpp" line="88"/>
         <source>Your answer</source>
         <translation>Ваш ответ</translation>
     </message>
     <message>
-        <location filename="quizdialog.cpp" line="97"/>
-        <source>Close</source>
-        <translation>Закрыть</translation>
+        <location filename="quizdialog.cpp" line="111"/>
+        <source>Finish</source>
+        <translation>Закончить</translation>
     </message>
     <message>
-        <location filename="quizdialog.cpp" line="100"/>
+        <location filename="quizdialog.cpp" line="206"/>
+        <source>Correct answers: %1/%2
+</source>
+        <translation type="unfinished">Правильных ответов: %1/%2
+</translation>
+    </message>
+    <message>
+        <location filename="quizdialog.cpp" line="208"/>
+        <source>Your mark: %1</source>
+        <translation>Ваша оценка: %1</translation>
+    </message>
+    <message>
+        <location filename="quizdialog.cpp" line="211"/>
+        <source>Your result</source>
+        <translation>Ваш результат</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">Закрыть</translation>
+    </message>
+    <message>
+        <location filename="quizdialog.cpp" line="114"/>
         <source>Next</source>
         <translation>Далее</translation>
     </message>
     <message>
-        <location filename="quizdialog.cpp" line="105"/>
+        <location filename="quizdialog.cpp" line="119"/>
         <source>Check Answer</source>
         <translation>Проверить</translation>
     </message>

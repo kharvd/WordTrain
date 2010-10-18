@@ -189,7 +189,7 @@ void MainWindow::startQuiz()
 
     StartQuizDialog* dlg = new StartQuizDialog(&mCards);
     if (dlg->exec()) {
-        if (dlg->getWords().size() == 0) {
+        if (!dlg->getWords().size()) {
             QMessageBox::critical(this, tr("Error"),
                        tr("No words have been selected!"),
                        QMessageBox::Ok,
@@ -545,7 +545,7 @@ void MainWindow::updateTable()
                                                       * 100));
 
         tmp->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-        tableWords->setItem(rowCount, 3, tmp);;
+        tableWords->setItem(rowCount, 3, tmp);
     }
 
     tableWords->setCurrentCell(0, 0);

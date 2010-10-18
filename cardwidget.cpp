@@ -120,7 +120,10 @@ void CardWidget::showBack(const WordCard& card, bool showForeign)
             .arg(card.translation()));
 
     // Examples
-    htmlCard.append("<p class=\"examples\">Examples:</p>");
+    if (card.examplesSize()) {
+        htmlCard.append(QString("<p class=\"examples\">%1</p>")
+                        .arg(tr("Examples:")));
+    }
 
     for (int i = 0; i < card.examplesSize(); i++) {
         if (showForeign) {
