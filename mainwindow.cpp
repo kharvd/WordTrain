@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "neweditcarddialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,6 +15,19 @@ MainWindow::MainWindow(QWidget *parent)
     readSettings();
 
     setAutoEditActionsState();
+
+    QSettings settings;
+    if (settings.value("save_pos").toBool()) {
+        QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
+        QSize size = settings.value("size", QSize(400, 400)).toSize();
+        bool isMax = settings.value("maximized", false).toBool();
+        resize(size);
+        move(pos);
+        isMax ? showMaximized() : showNormal();
+    } else {
+        resize(400, 400);
+        move(200, 200);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -157,7 +169,6 @@ void MainWindow::deleteCard()
     } else {
         tableWords->setCurrentCell(0, 0);
     }
-
 }
 
 /* slot */
@@ -172,6 +183,19 @@ void MainWindow::importSet()
         loadFile(fileName, true);
     }
     setWindowModified(true);
+}
+
+/* slot */
+void MainWindow::preferences()
+{
+    SettingsDialog *dlgSettings = new SettingsDialog;
+
+    if (dlgSettings->exec()) {
+        readSettings();
+        updateTable();
+    }
+
+    delete dlgSettings;
 }
 
 /* slot */
@@ -305,7 +329,11 @@ void MainWindow::createActions()
     connect(actionImportSet, SIGNAL(triggered()), this, SLOT(importSet()));
 
     //  actionBaseProperties;
-    //  actionPreferences;
+
+    actionPreferences = new QAction(QIcon(":/icons/settings.png"),
+                                    tr("Settings..."), this);
+    connect(actionPreferences, SIGNAL(triggered()),
+            this, SLOT(preferences()));
 
     actionStartTraining = new QAction(tr("Start &training..."), this);
     actionStartTraining->setStatusTip(tr("Start learning words from the set"));
@@ -337,6 +365,7 @@ void MainWindow::createActions()
     actionEditCard->setIcon(QIcon::fromTheme("gtk-edit"));
     actionDeleteCard->setIcon(QIcon::fromTheme("list-remove"));
     actionStartQuiz->setIcon(QIcon::fromTheme("media-playback-start"));
+    actionPreferences->setIcon(QIcon::fromTheme("document-properties"));
 #endif
 }
 
@@ -357,7 +386,7 @@ void MainWindow::createMenus()
     menuEdit->addAction(actionDeleteCard);
     menuEdit->addAction(actionImportSet);
     //  menuEdit->addAction(actionBaseProperties);
-    //  menuEdit->addAction(actionPreferences);
+    menuEdit->addAction(actionPreferences);
 
     menuTraining = menuBar()->addMenu(tr("&Training"));
     menuTraining->addAction(actionStartTraining);
@@ -386,7 +415,7 @@ void MainWindow::createToolbars()
     //  toolBar->addAction(actionBaseProperties);
     toolBar->addAction(actionStartQuiz);
     toolBar->addSeparator();
-    //  toolBar->addAction(actionPreferences);
+    toolBar->addAction(actionPreferences);
     toolBar->addAction(actionQuit);
 }
 
@@ -398,24 +427,21 @@ void MainWindow::createStatusBar()
 void MainWindow::readSettings()
 {
     QSettings settings;
-    QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
-    QSize size = settings.value("size", QSize(400, 400)).toSize();
-    bool isMax = settings.value("maximized", false).toBool();
-    resize(size);
-    move(pos);
-    isMax ? showMaximized() : showNormal();
+    corrAnsForLearned = settings.value("corr_answers", 10).toInt();
 }
 
 void MainWindow::writeSettings()
 {
     QSettings settings;
-    settings.setValue("pos", pos());
-    if (!isMaximized()) {
-        settings.setValue("size", size());
-    } else {
-        settings.setValue("size", QSize(800, 600));
+    if (settings.value("save_pos").toBool()) {
+        settings.setValue("pos", pos());
+        if (!isMaximized()) {
+            settings.setValue("size", size());
+        } else {
+            settings.setValue("size", QSize(800, 600));
+        }
+        settings.setValue("maximized", isMaximized());
     }
-    settings.setValue("maximized", isMaximized());
 }
 
 void MainWindow::setCurrentFile(const QString &fileName)
@@ -541,7 +567,7 @@ void MainWindow::updateTable()
         tableWords->setItem(rowCount, 2, tmp);
         // Learned
         tmp = new QTableWidgetItem(QString("%1%").arg(
-                (double)it->numCorrectAnswers() / WordCard::corrAnsForLearned
+                (double)it->numCorrectAnswers() / corrAnsForLearned
                                                       * 100));
 
         tmp->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);

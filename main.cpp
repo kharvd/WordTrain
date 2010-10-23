@@ -10,20 +10,27 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("Demihalf");
     QCoreApplication::setApplicationName("WordTrain");
 
-    /* Для поддержки русских символов */
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
+    // Language set
+    QSettings sets;
+    QString lang = sets.value("lang", "auto").toString();
 
-    QString locale = QLocale::system().name();
+    if (lang == "auto") {
+        lang = QLocale::system().name();
+    }
 
     QTranslator translatorQt;
-    translatorQt.load(QString(":/translations/qt_") + locale);
+    translatorQt.load(QString(":/translations/qt_") + lang);
     a.installTranslator(&translatorQt);
 
     QTranslator translator;
-    translator.load(QString(":/translations/wordtrain_") + locale);
+    translator.load(QString(":/translations/wordtrain_") + lang);
     a.installTranslator(&translator);
+
+    //====================
+
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
 
     MainWindow w;
     w.show();

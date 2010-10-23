@@ -8,6 +8,8 @@
 #include "viewcarddialog.h"
 #include "startquizdialog.h"
 #include "quizdialog.h"
+#include "neweditcarddialog.h"
+#include "settingsdialog.h"
 
 class MainWindow : public QMainWindow
 {
@@ -31,7 +33,7 @@ private slots:
     void deleteCard();
     void importSet();
 //  void baseProperties();
-//  void preferences();
+    void preferences();
     void startTraining();
     void startQuiz();
     void about();
@@ -65,6 +67,8 @@ private:
     /* If set is not opened or is empty, disable all edit actions */
     void setAutoEditActionsState();
 
+    int corrAnsForLearned;
+
     WordsSet mCards;
     QString mCurFile;
 
@@ -81,7 +85,7 @@ private:
     QAction *actionDeleteCard;
     QAction *actionImportSet;
 //  QAction *actionBaseProperties;
-//  QAction *actionPreferences;
+    QAction *actionPreferences;
     QAction *actionStartTraining;
     QAction *actionStartQuiz;
     QAction *actionAbout;
