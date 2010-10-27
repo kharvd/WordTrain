@@ -183,7 +183,7 @@ void XmlReader::skipUnknownElement()
     }
 }
 
-/* FIXME: without this function program goes in infinite loop
+/* FIXME: without this function program goes into an infinite loop
  if there are a lot of spaces in the file... */
 void XmlReader::skipWhitespaces() {
     if (mReader.isWhitespace()) {

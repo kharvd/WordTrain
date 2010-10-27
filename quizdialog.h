@@ -12,7 +12,7 @@
 #include "wordschooser.h"
 
 enum ChoiceMode { Choice_MultiChoice = 0, Choice_NoChoice };
-enum HideMode { Hide_Translation = 0, Hide_Word, Hide_Random };
+enum HideMode { Hide_Random = 0, Hide_Translation, Hide_Word };
 
 class QuizDialog : public QDialog
 {
