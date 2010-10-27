@@ -68,9 +68,10 @@ void StartQuizDialog::createInterface()
     radioWordHide = new QRadioButton(tr("Word", "Hide"));
     radioRandomHide = new QRadioButton(tr("Random", "Hide"));
     grpHideMode = new QButtonGroup(this);
-    grpHideMode->addButton(radioTranslationHide, 0);
-    grpHideMode->addButton(radioWordHide, 1);
-    grpHideMode->addButton(radioRandomHide, 2);
+    grpHideMode->addButton(radioRandomHide, Hide_Random);
+    grpHideMode->addButton(radioTranslationHide, Hide_Translation);
+    grpHideMode->addButton(radioWordHide, Hide_Word);
+
 
     radioTranslationHide->setChecked(true);
 
