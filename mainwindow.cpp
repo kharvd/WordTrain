@@ -332,7 +332,7 @@ void MainWindow::createActions()
 
     actionPreferences = new QAction(QIcon(":/icons/settings.png"),
                                     tr("Settings..."), this);
-    actionStartTraining->setStatusTip(tr("Settings"));
+    actionPreferences->setStatusTip(tr("Settings"));
     connect(actionPreferences, SIGNAL(triggered()),
             this, SLOT(preferences()));
 
