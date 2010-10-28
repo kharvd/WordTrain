@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
         resize(400, 400);
         move(200, 200);
     }
+
+    setWindowIcon(QIcon(":/icons/icon.png"));
 }
 
 MainWindow::~MainWindow()
@@ -242,7 +244,13 @@ void MainWindow::startQuiz()
 /* slot */
 void MainWindow::about()
 {
-
+    QMessageBox::about(this, tr("About WordTrain"), tr(
+            "WordTrain v0.8.4 by Valery Kharitonov (kharvd@gmail.com)\n"
+            "http://sourceforge.net/projects/wordtrain\n\n"
+            "WordTrain is a simple program for learning foreign words. "
+            "You can test yourself with a quiz mode or just store word cards. "
+            "If you have any questions or wishes, feel free to "
+            "mail me to kharvd@gmail.com"));
 }
 
 void MainWindow::createTableWidget() {
