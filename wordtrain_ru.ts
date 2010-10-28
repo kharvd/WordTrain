@@ -73,15 +73,25 @@
         <translation>О WordTrain</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="247"/>
         <source>WordTrain v0.8.3 by Valery Kharitonov (kharvd@gmail.com)
 http://sourceforge.net/projects/wordtrain
 
 WordTrain is a simple program for learning foreign words. You can test yourself with a quiz mode or just store word cards. If you have any questions or wishes, feel free to mail me to kharvd@gmail.com</source>
-        <translation type="unfinished">WordTrain v0.8.3 © Валерий Харитонов (kharvd@gmail.com)
+        <translation type="obsolete">WordTrain v0.8.3 © Валерий Харитонов (kharvd@gmail.com)
 http://sourceforge.net/projects/wordtrain
 
 WordTrain - простая программа для изучения иностранных слов. Вы можете проверять себя с помощью режима викторины или просто хранить карточки со словами. Если у вас есть вопросы или пожелания, пишите мне на kharvd@gmail.com</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="247"/>
+        <source>WordTrain v0.8.4 by Valery Kharitonov (kharvd@gmail.com)
+http://sourceforge.net/projects/wordtrain
+
+WordTrain is a simple program for learning foreign words. You can test yourself with a quiz mode or just store word cards. If you have any questions or wishes, feel free to mail me to kharvd@gmail.com</source>
+        <translation>WordTrain v0.8.4 © Валерий Харитонов (kharvd@gmail.com)
+http://sourceforge.net/projects/wordtrain
+
+WordTrain - простая программа для изучения иностранных слов. Вы можете проверять себя с помощью режима викторины или просто хранить карточки со словами. Если у вас есть вопросы или пожелания, пишите мне на kharvd@gmail.com {0.8.4 ?}</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="263"/>
@@ -541,18 +551,18 @@ Do you want to save your changes?</source>
         <translation>Случайно</translation>
     </message>
     <message>
-        <location filename="startquizdialog.cpp" line="83"/>
+        <location filename="startquizdialog.cpp" line="81"/>
         <source>Hide:</source>
         <comment>Quiz</comment>
         <translation>Скрывать:</translation>
     </message>
     <message>
-        <location filename="startquizdialog.cpp" line="89"/>
+        <location filename="startquizdialog.cpp" line="87"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="startquizdialog.cpp" line="91"/>
+        <location filename="startquizdialog.cpp" line="89"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
