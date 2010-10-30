@@ -1,6 +1,6 @@
 /******************************************************************************
 ** WordTrain 0.8.4 -- Foreign words trainer
-** Copyright (C) 2010  Valery Kharitonov
+** Copyright (C) 2010  Valery Kharitonov (kharvd@gmail.com)
 **
 ** This file is part of WordTrain.
 **
@@ -20,6 +20,9 @@
 ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **
 ** $QT_END_LICENSE$
+**
+** If you have questions regarding the use of this file, please contact me at
+** kharvd@gmail.com.
 **
 ******************************************************************************/
 
@@ -45,17 +48,22 @@ WordsPtrSet WordsChooser::getWords()
     return mWords;
 }
 
-void WordsChooser::shuffle() {
+void WordsChooser::shuffle()
+{
     mWords = shuffleContainer(mWords, mWords.size());
 }
 
-WordsPtrSet WordsChooser::getFirstNOf(int number, bool includeLearned) {
+WordsPtrSet WordsChooser::getFirstNOf(int number, bool includeLearned)
+{
     WordsPtrSet tmp;
     number = (number == -1) ? mWords.size() : number;
 
+    QSettings settings;
+    int corrAnsForLearned = settings.value("corr_answers", 10).toInt();
+
     for (int i = 0, n = 0; (i < mWords.size()) && (n < number); i++) {
         if (!(!includeLearned && mWords.at(i)->numCorrectAnswers()
-                                 / WordCard::corrAnsForLearned == 1)) {
+                                 / corrAnsForLearned == 1)) {
             tmp.push_back(mWords.at(i));
             n++;
         }

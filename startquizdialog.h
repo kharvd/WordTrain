@@ -1,6 +1,6 @@
 /******************************************************************************
 ** WordTrain 0.8.4 -- Foreign words trainer
-** Copyright (C) 2010  Valery Kharitonov
+** Copyright (C) 2010  Valery Kharitonov (kharvd@gmail.com)
 **
 ** This file is part of WordTrain.
 **
@@ -21,6 +21,9 @@
 **
 ** $QT_END_LICENSE$
 **
+** If you have questions regarding the use of this file, please contact me at
+** kharvd@gmail.com.
+**
 ******************************************************************************/
 
 #ifndef STARTQUIZDIALOG_H
@@ -39,7 +42,8 @@ public:
     WordsPtrSet getWords();
     ChoiceMode getChoiceMode();
     HideMode getHideMode();
-
+private slots:
+    void toggleTxtNumWords(bool disable);
 private:
     void createInterface();
 
@@ -53,6 +57,7 @@ private:
     QRadioButton *radioTranslationHide;
     QRadioButton *radioRandomHide;
     QCheckBox *chckIncLearned;
+    QCheckBox *chckAllWords;
     QLineEdit *txtNumWords;
     QPushButton *btnOk;
     QPushButton *btnCancel;

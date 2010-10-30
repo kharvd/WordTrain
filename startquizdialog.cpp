@@ -1,6 +1,6 @@
 /******************************************************************************
 ** WordTrain 0.8.4 -- Foreign words trainer
-** Copyright (C) 2010  Valery Kharitonov
+** Copyright (C) 2010  Valery Kharitonov (kharvd@gmail.com)
 **
 ** This file is part of WordTrain.
 **
@@ -20,6 +20,9 @@
 ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **
 ** $QT_END_LICENSE$
+**
+** If you have questions regarding the use of this file, please contact me at
+** kharvd@gmail.com.
 **
 ******************************************************************************/
 
@@ -58,15 +61,20 @@ void StartQuizDialog::createInterface()
 
     // Num of words
     QLabel *lblNumWords = new QLabel(
-            tr("Number of words (-1 for all words):"));
+            tr("Number of words:"));
 
-    txtNumWords = new QLineEdit("-1");
-    QIntValidator *validator = new QIntValidator(-1, 1000, this);
+    txtNumWords = new QLineEdit();
+    QIntValidator *validator = new QIntValidator(1, 1000, this);
     txtNumWords->setValidator(validator);
+
+    chckAllWords = new QCheckBox(tr("All words"));
+    connect(chckAllWords, SIGNAL(toggled(bool)), SLOT(toggleTxtNumWords(bool)));
+    chckAllWords->setChecked(false);
 
     QHBoxLayout *ltNumWords = new QHBoxLayout;
     ltNumWords->addWidget(lblNumWords);
     ltNumWords->addWidget(txtNumWords, 1);
+    ltNumWords->addWidget(chckAllWords);
 
     ltFormQuiz->addRow(ltNumWords);
 
@@ -126,11 +134,16 @@ void StartQuizDialog::createInterface()
     setLayout(ltMain);
 }
 
+void StartQuizDialog::toggleTxtNumWords(bool disable)
+{
+    txtNumWords->setEnabled(!disable);
+}
+
 WordsPtrSet StartQuizDialog::getWords()
 {
+    int numWords = chckAllWords->isChecked() ? -1 : txtNumWords->text().toInt();
     WordsChooser chooser(mWords, radioRandomOrder->isChecked(),
-                         chckIncLearned->isChecked(),
-                         txtNumWords->text().toInt());
+                         chckIncLearned->isChecked(), numWords);
     return chooser.getWords();
 }
 

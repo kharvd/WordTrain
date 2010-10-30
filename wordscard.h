@@ -1,6 +1,6 @@
 /******************************************************************************
 ** WordTrain 0.8.4 -- Foreign words trainer
-** Copyright (C) 2010  Valery Kharitonov
+** Copyright (C) 2010  Valery Kharitonov (kharvd@gmail.com)
 **
 ** This file is part of WordTrain.
 **
@@ -20,6 +20,9 @@
 ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **
 ** $QT_END_LICENSE$
+**
+** If you have questions regarding the use of this file, please contact me at
+** kharvd@gmail.com.
 **
 ******************************************************************************/
 
@@ -111,9 +114,6 @@ public:
     QString lexCategoriesShortString() const;
     // String short interpretations of Gender
     QString genderShortString() const;
-
-    // TODO: Move it into 'settings'
-    static const int corrAnsForLearned = 10;
 
 private:
     unsigned int mNumCorrectAnswers;

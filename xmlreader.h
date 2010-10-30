@@ -1,6 +1,6 @@
 /******************************************************************************
 ** WordTrain 0.8.4 -- Foreign words trainer
-** Copyright (C) 2010  Valery Kharitonov
+** Copyright (C) 2010  Valery Kharitonov (kharvd@gmail.com)
 **
 ** This file is part of WordTrain.
 **
@@ -19,7 +19,12 @@
 ** You should have received a copy of the GNU General Public License
 ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **
-** $QT_END_LICENSE$ */
+** $QT_END_LICENSE$
+**
+** If you have questions regarding the use of this file, please contact me at
+** kharvd@gmail.com.
+**
+******************************************************************************/
 
 #ifndef XMLSTREAMREADER_H
 #define XMLSTREAMREADER_H
