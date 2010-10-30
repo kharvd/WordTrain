@@ -1,3 +1,28 @@
+/******************************************************************************
+** WordTrain 0.8.4 -- Foreign words trainer
+** Copyright (C) 2010  Valery Kharitonov
+**
+** This file is part of WordTrain.
+**
+** $QT_BEGIN_LICENSE:GPL$
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+**
+** $QT_END_LICENSE$
+**
+******************************************************************************/
+
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -244,13 +269,9 @@ void MainWindow::startQuiz()
 /* slot */
 void MainWindow::about()
 {
-    QMessageBox::about(this, tr("About WordTrain"), tr(
-            "WordTrain v0.8.4 by Valery Kharitonov (kharvd@gmail.com)\n"
-            "http://sourceforge.net/projects/wordtrain\n\n"
-            "WordTrain is a simple program for learning foreign words. "
-            "You can test yourself with a quiz mode or just store word cards. "
-            "If you have any questions or wishes, feel free to "
-            "mail me to kharvd@gmail.com"));
+    AboutDialog *dlg = new AboutDialog(this);
+    dlg->exec();
+    delete dlg;
 }
 
 void MainWindow::createTableWidget() {

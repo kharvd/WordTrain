@@ -23,27 +23,22 @@
 **
 ******************************************************************************/
 
-#ifndef XMLWRITER_H
-#define XMLWRITER_H
+#ifndef ABOUTDIALOG_H
+#define ABOUTDIALOG_H
 
-#include <QXmlStreamWriter>
 #include <QtGui>
-#include <QVector>
-#include <QPair>
-#include "wordscard.h"
 
-class XmlWriter
+class AboutDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
-    XmlWriter(const WordsSet *cards);
-    bool writeFile(const QString & fileName);
-    QString getErrorMessage();
-private:
-    void writeCard(WordsSet::const_iterator it);
-    void writeExample(Examples::const_iterator it);
-    QXmlStreamWriter mWriter;
-    const WordsSet *mCards;
-    QString mErrorMessage;
+    explicit AboutDialog(QWidget *parent = 0);
+
+signals:
+
+public slots:
+
 };
 
-#endif // XMLWRITER_H
+#endif // ABOUTDIALOG_H
