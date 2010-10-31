@@ -1,6 +1,6 @@
 /******************************************************************************
 ** WordTrain 0.8.4 -- Foreign words trainer
-** Copyright (C) 2010  Valery Kharitonov (kharvd@gmail.com)
+** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
 **
@@ -71,19 +71,36 @@ const WordCard& NewEditCardDialog::getNewCard()
 
 void NewEditCardDialog::addExample() {
     scrollExamples->show();
-    int optimalHeight = height() + 66;
-    optimalHeight = (optimalHeight > 500) ? 500 : optimalHeight;
+    int optimalHeight = height() + 50;
+    optimalHeight = (optimalHeight > 420) ? 420 : optimalHeight;
     resize(width(), optimalHeight);
 
     wgtExamples->addExample();
+    scrollExamples->verticalScrollBar()->
+            triggerAction(QAbstractSlider::SliderToMaximum);
     if (!wgtExamples->canAdd()) {
         btnAddExample->setEnabled(false);
     }
 }
 
+void NewEditCardDialog::switchPluralGender(int cat)
+{
+    if (cat == (int)LC_Noun) {
+        txtPlural->show();
+        cmbGender->show();
+        fLayout->labelForField(txtPlural)->show();
+        fLayout->labelForField(cmbGender)->show();
+    } else {
+        txtPlural->hide();
+        cmbGender->hide();
+        fLayout->labelForField(txtPlural)->hide();
+        fLayout->labelForField(cmbGender)->hide();
+    }
+}
+
 void NewEditCardDialog::createInterface()
 {
-    resize(600, 300);
+    resize(550, 250);
     setWindowFlags(Qt::Window);
     txtWord = new QLineEdit();
 
@@ -114,14 +131,18 @@ void NewEditCardDialog::createInterface()
     btnCancel = new QPushButton(tr("Cancel"));
     connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
 
-    QFormLayout* fLayout = new QFormLayout();
+    fLayout = new QFormLayout();
     fLayout->addRow(tr("Word:"), txtWord);
     fLayout->addRow(tr("Transcription:"), txtTranscription);
     fLayout->addRow(tr("Translation:"), txtTranslation);
-    fLayout->addRow(tr("Plural:"), txtPlural);
     fLayout->addRow(tr("Category:"), cmbCategory);
+    fLayout->addRow(tr("Plural:"), txtPlural);
     fLayout->addRow(tr("Gender:"), cmbGender);
     fLayout->addRow(tr("Examples:"), btnAddExample);
+
+    connect(cmbCategory, SIGNAL(currentIndexChanged(int)),
+            SLOT(switchPluralGender(int)));
+    switchPluralGender(0);
 
     QVBoxLayout* hLayout = new QVBoxLayout();
     hLayout->addLayout(fLayout);

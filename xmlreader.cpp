@@ -1,6 +1,6 @@
 /******************************************************************************
 ** WordTrain 0.8.4 -- Foreign words trainer
-** Copyright (C) 2010  Valery Kharitonov (kharvd@gmail.com)
+** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
 **
@@ -81,12 +81,7 @@ void XmlReader::readWordsSet()
     mReader.readNext();
     skipWhitespaces();
 
-    while (!mReader.atEnd()) {
-        if (mReader.isEndElement()) {
-            mReader.readNext();
-            break;
-        }
-
+    while (!mReader.atEnd() && !mReader.isEndElement()) {
         if (mReader.isStartElement()) {
             if (mReader.name() == "wordcard") {
                 WordCard curr;
@@ -100,6 +95,8 @@ void XmlReader::readWordsSet()
             skipWhitespaces();
         }
     }
+
+    mReader.readNext();
 }
 
 void XmlReader::readWordCard()
@@ -108,12 +105,9 @@ void XmlReader::readWordCard()
     mReader.readNext();
     skipWhitespaces();
 
-    while (!mReader.atEnd()) {
-        if (mReader.isEndElement() && mReader.name() == "wordcard") {
-            mReader.readNext();
-            break;
-        }
-
+    while (!mReader.atEnd() && !(mReader.isEndElement()
+        && mReader.name() == "wordcard"))
+    {
         if (mReader.isStartElement()) {
             if (mReader.name() == "word") {
                 card.setWord(mReader.attributes().value("value").toString());
@@ -159,6 +153,8 @@ void XmlReader::readWordCard()
             skipWhitespaces();
         }
     }
+
+    mReader.readNext();
 }
 
 void XmlReader::readExample() {
@@ -169,11 +165,7 @@ void XmlReader::readExample() {
     QString currEx;
     QString currTr;
 
-    while (!mReader.atEnd()) {
-        if (mReader.isEndElement()) {
-            mReader.readNext();
-            break;
-        }
+    while (!mReader.atEnd() && !mReader.isEndElement()) {
         if (mReader.isStartElement()) {
             if (mReader.name() == "ex") {
                 currEx = mReader.readElementText();
@@ -189,6 +181,7 @@ void XmlReader::readExample() {
         }
     }
 
+    mReader.readNext();
     card.addExample(currEx, currTr);
 }
 
@@ -196,12 +189,7 @@ void XmlReader::skipUnknownElement()
 {
     mReader.readNext();
     skipWhitespaces();
-    while (!mReader.atEnd()) {
-        if (mReader.isEndElement()) {
-            mReader.readNext();
-            break;
-        }
-
+    while (!mReader.atEnd() && !mReader.isEndElement()) {
         if (mReader.isStartElement()) {
             skipUnknownElement();
         } else {
@@ -209,6 +197,8 @@ void XmlReader::skipUnknownElement()
             skipWhitespaces();
         }
     }
+
+    mReader.readNext();
 }
 
 /* FIXME: without this function program goes into an infinite loop

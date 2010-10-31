@@ -1,6 +1,6 @@
 /******************************************************************************
 ** WordTrain 0.8.4 -- Foreign words trainer
-** Copyright (C) 2010  Valery Kharitonov (kharvd@gmail.com)
+** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
 **
@@ -40,6 +40,7 @@ class NewEditCardDialog : public QDialog
 public:
     /* If we want to add new card (you should use getNewCard() to get values) */
     NewEditCardDialog(QWidget *parent = 0);
+
     /* If we want to edit existing card (we don't change value of card directly,
        you should use getNewCard() to get new values) */
     NewEditCardDialog(const WordCard &card, QWidget *parent = 0);
@@ -48,11 +49,15 @@ public:
 public slots:
     void addExample();
 
+    // Show plural and gender boxes only if the word is noun
+    void switchPluralGender(int);
+
 private:
     void createInterface();
     /* Fills the form with current card's content */
     void fillForm();
 
+    QFormLayout* fLayout;
     QLineEdit* txtWord;
     QLineEdit* txtTranscription;
     QLineEdit* txtTranslation;
