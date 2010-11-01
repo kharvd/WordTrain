@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.4 -- Foreign words trainer
+** WordTrain 0.8.5 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName("Demihalf");
     QCoreApplication::setApplicationName("WordTrain");
-    QCoreApplication::setApplicationVersion("0.8.4");
+    QCoreApplication::setApplicationVersion("0.8.5");
 
     // Language set
     QSettings sets;
