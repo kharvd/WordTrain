@@ -141,7 +141,6 @@ void QuizDialog::switchButtons()
         } else {
             btnCheckNext->setText(tr("Next"));
         }
-
     } else {
         btnDontKnow->setEnabled(true);
         btnCheckNext->setText(tr("Check Answer"));
@@ -182,27 +181,26 @@ void QuizDialog::nextCheckWord()
     if (mThatsAll) {
         showResult();
         close();
-        return;
-    }
-
-    if (mAnswered) {
-        mCurrCard++;
-        mAnswered = false;
-        lblProgress->setText(QString("%1/%2").arg(mCurrCard).
-                             arg(mCardsNumber));
-        prgProgress->setValue(prgProgress->value() + 1);
-        setCurrentWord(mCurrCard);
     } else {
-        if (!mHideTranslation) {
-            cardText->showWord(false, true);
+        if (mAnswered) {
+            mCurrCard++;
+            mAnswered = false;
+            lblProgress->setText(QString("%1/%2").arg(mCurrCard).
+                                 arg(mCardsNumber));
+            prgProgress->setValue(prgProgress->value() + 1);
+            setCurrentWord(mCurrCard);
         } else {
-            cardText->showOtherSide();
+            if (!mHideTranslation) {
+                cardText->showWord(false, true);
+            } else {
+                cardText->showOtherSide();
+            }
+
+            checkAnswer();
+
+            mAnswered = true;
+            switchButtons();
         }
-
-        checkAnswer();
-
-        mAnswered = true;
-        switchButtons();
     }
 }
 
@@ -245,8 +243,14 @@ void QuizDialog::showResult()
 
 void QuizDialog::dontKnow()
 {
+    if (!mHideTranslation) {
+        cardText->showWord(false, true);
+    } else {
+        cardText->showOtherSide();
+    }
+
+    wgtAnswer->setCorrect(false);
     mAnswered = true;
-    cardText->showOtherSide();
     switchButtons();
 }
 

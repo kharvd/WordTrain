@@ -101,7 +101,6 @@ void NewEditCardDialog::switchPluralGender(int cat)
 void NewEditCardDialog::createInterface()
 {
     resize(550, 250);
-    setWindowFlags(Qt::Window);
     txtWord = new QLineEdit();
 
     txtTranscription = new QLineEdit();

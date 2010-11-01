@@ -61,6 +61,8 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
 
+    a.setWindowIcon(QIcon(":/icons/icon.png"));
+
     MainWindow w;
     w.show();
 

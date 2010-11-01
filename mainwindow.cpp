@@ -56,8 +56,6 @@ MainWindow::MainWindow(QWidget *parent)
         resize(400, 400);
         move(200, 200);
     }
-
-    setWindowIcon(QIcon(":/icons/icon.png"));
 }
 
 MainWindow::~MainWindow()
@@ -153,13 +151,14 @@ bool MainWindow::saveSetAs()
 /* slot */
 void MainWindow::addCard()
 {
-    NewEditCardDialog dlg;
-    if(dlg.exec()) {
-        mCards.push_back(dlg.getNewCard());
+    NewEditCardDialog *dlg = new NewEditCardDialog();
+    if(dlg->exec()) {
+        mCards.push_back(dlg->getNewCard());
         setWindowModified(true);
         updateTable();
         tableWords->setCurrentCell(tableWords->rowCount() - 1, 0);
     }
+    delete dlg;
 }
 
 /* slot */
