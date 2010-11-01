@@ -1,3 +1,31 @@
+/******************************************************************************
+** WordTrain 0.8.5 -- Foreign words trainer
+** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
+**
+** This file is part of WordTrain.
+**
+** $QT_BEGIN_LICENSE:GPL$
+**
+** This program is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, either version 3 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program.  If not, see <http://www.gnu.org/licenses/>.
+**
+** $QT_END_LICENSE$
+**
+** If you have questions regarding the use of this file, please contact me at
+** kharvd@gmail.com.
+**
+******************************************************************************/
+
 #include "quizdialog.h"
 #include "utilities.h"
 
@@ -113,7 +141,6 @@ void QuizDialog::switchButtons()
         } else {
             btnCheckNext->setText(tr("Next"));
         }
-
     } else {
         btnDontKnow->setEnabled(true);
         btnCheckNext->setText(tr("Check Answer"));
@@ -154,27 +181,26 @@ void QuizDialog::nextCheckWord()
     if (mThatsAll) {
         showResult();
         close();
-        return;
-    }
-
-    if (mAnswered) {
-        mCurrCard++;
-        mAnswered = false;
-        lblProgress->setText(QString("%1/%2").arg(mCurrCard).
-                             arg(mCardsNumber));
-        prgProgress->setValue(prgProgress->value() + 1);
-        setCurrentWord(mCurrCard);
     } else {
-        if (!mHideTranslation) {
-            cardText->showWord(false, true);
+        if (mAnswered) {
+            mCurrCard++;
+            mAnswered = false;
+            lblProgress->setText(QString("%1/%2").arg(mCurrCard).
+                                 arg(mCardsNumber));
+            prgProgress->setValue(prgProgress->value() + 1);
+            setCurrentWord(mCurrCard);
         } else {
-            cardText->showOtherSide();
+            if (!mHideTranslation) {
+                cardText->showWord(false, true);
+            } else {
+                cardText->showOtherSide();
+            }
+
+            checkAnswer();
+
+            mAnswered = true;
+            switchButtons();
         }
-
-        checkAnswer();
-
-        mAnswered = true;
-        switchButtons();
     }
 }
 
@@ -217,8 +243,14 @@ void QuizDialog::showResult()
 
 void QuizDialog::dontKnow()
 {
+    if (!mHideTranslation) {
+        cardText->showWord(false, true);
+    } else {
+        cardText->showOtherSide();
+    }
+
+    wgtAnswer->setCorrect(false);
     mAnswered = true;
-    cardText->showOtherSide();
     switchButtons();
 }
 

@@ -25,30 +25,23 @@
 ** kharvd@gmail.com.
 **
 ******************************************************************************/
-#ifndef EXAMPLESWIDGET_H
-#define EXAMPLESWIDGET_H
+
+#ifndef ABOUTDIALOG_H
+#define ABOUTDIALOG_H
 
 #include <QtGui>
-#include "wordscard.h"
 
-class ExamplesWidget : public QWidget
+class AboutDialog : public QDialog
 {
     Q_OBJECT
+
 public:
-    explicit ExamplesWidget(QWidget *parent = 0);
+    explicit AboutDialog(QWidget *parent = 0);
 
-    void setExampleAt(int index, Example ex);
-    Example getExampleAt(int index);
-    int examplesCount();
-    bool canAdd();
-
-    const static int maxExamples = 50;
-
-private:
-    QFormLayout *ltExamples;
+signals:
 
 public slots:
-    void addExample();
+
 };
 
-#endif // EXAMPLESWIDGET_H
+#endif // ABOUTDIALOG_H

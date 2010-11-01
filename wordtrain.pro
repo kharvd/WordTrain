@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     lineanswerwidget.cpp \
     quizdialog.cpp \
     multianswerwidget.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    aboutdialog.cpp
 HEADERS += mainwindow.h \
     wordscard.h \
     xmlreader.h \
@@ -37,7 +38,9 @@ HEADERS += mainwindow.h \
     quizdialog.h \
     multianswerwidget.h \
     utilities.h \
-    settingsdialog.h
+    settingsdialog.h \
+    aboutdialog.h
 RESOURCES += resources.qrc
 TRANSLATIONS = wordtrain_de.ts \
                wordtrain_ru.ts
+RC_FILE = wordtrain.rc
