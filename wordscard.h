@@ -67,7 +67,10 @@ public:
     WordCard():
             mNumCorrectAnswers(0), mGender(Gen_None), mCategory(LC_None) {}
 
-    /* Mutators */
+    /* Operators */
+    bool operator==(const WordCard &card);
+
+    /* Setters */
     void setWord(const QString & word);
     void setTranscription(const QString & transcription);
     void setTranslation(const QString & translation);
