@@ -41,6 +41,7 @@ class QTableWidget;
 class QAction;
 class QMenu;
 class QMenuBar;
+class QLineEdit;
 
 // Main window class.
 class MainWindow : public QMainWindow
@@ -73,6 +74,8 @@ private slots:
     void startQuiz();
     void about();
 
+    void search(QString str);
+
 private:
     // Some constants
     static const int defaultWidth = 640;
@@ -87,6 +90,7 @@ private:
     void createContextMenu();
     void createToolbars();
     void createStatusBar();
+    void createSearchBar();
     void createInterface();
 
     void readSettings();
@@ -104,7 +108,8 @@ private:
     bool isFileOpened();
 
     // Fills the table with words
-    void updateTable();
+    void updateTable(WordsSet words);
+    void updateTable(WordsPtrSet words);
 
     // Shows card with index 'index'
     void showCard(int index);
@@ -113,7 +118,7 @@ private:
     bool isInRange(int curr);
 
     // If set is not opened or is empty, disable all edit actions
-    void setAutoEditActionsState();
+    void editActionsState();
 
     // Returns set of the pointers to all words in the main set
     WordsPtrSet getPointersSet();
@@ -123,8 +128,15 @@ private:
 
     //=============================================================
 
+    // True if search box is not empty
+    bool mSearching;
+
     // All the words of the current set.
     WordsSet mCards;
+
+    // Pointers to results of search
+    WordsPtrSet mSearchResults;
+
     // Path to current file
     QString mCurrentFile;
 
@@ -159,6 +171,9 @@ private:
 
     // Main toolbar
     QToolBar *toolBar;
+
+    // Search bar
+    QLineEdit *editSearch;
 };
 
 #endif // MAINWINDOW_H

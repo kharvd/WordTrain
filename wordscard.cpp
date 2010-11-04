@@ -27,6 +27,20 @@
 ******************************************************************************/
 
 #include "wordscard.h"
+#include <QtCore>
+
+bool WordCard::operator==(const WordCard &card)
+{
+    bool result =
+            (mWord == card.word()) && (mGender == card.gender())
+            && (mCategory == card.category())
+            && (mTranscription == card.transcription())
+            && (mTranslation == card.translation())
+            && (mPlural == card.plural())
+            && (mExamples == card.examples())
+            && (mNumCorrectAnswers == card.numCorrectAnswers());
+    return result;
+}
 
 void WordCard::setWord(const QString & word)
 {

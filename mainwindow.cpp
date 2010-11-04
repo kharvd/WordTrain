@@ -34,6 +34,9 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QToolBar>
+#include <QLineEdit>
+#include <QHBoxLayout>
+#include <QToolButton>
 #include "xmlreader.h"
 #include "xmlwriter.h"
 #include "viewcarddialog.h"
@@ -49,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
     createActions();
     createMenus();
     createToolbars();
+    createSearchBar();
     createStatusBar();
     createTableWidget();
 
@@ -58,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     readSettings();
 
-    setAutoEditActionsState();
+    editActionsState();
 
     QSettings settings;
 
@@ -78,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent)
         resize(defaultWidth, defaultHeight);
         move(defaultXPosition, defaultYPosition);
     }
+
+    mSearching = false;
 }
 
 MainWindow::~MainWindow()
@@ -125,8 +131,8 @@ void MainWindow::newSet()
         setWindowModified(true);
         mCards.clear();
         tableWords->show();
-        updateTable();
-        setAutoEditActionsState();
+        updateTable(mCards);
+        editActionsState();
     }
 }
 
@@ -174,7 +180,7 @@ void MainWindow::addCard()
 
         // Set is modified now
         setWindowModified(true);
-        updateTable();
+        updateTable(mCards);
 
         // Setting selection to the new card
         tableWords->setCurrentCell(tableWords->rowCount() - 1, 0);
@@ -187,14 +193,26 @@ void MainWindow::editCard()
 {
     int curr = tableWords->currentRow();
     if (isInRange(curr)) {
-        NewEditCardDialog* dlg = new NewEditCardDialog(mCards.at(curr));
+        NewEditCardDialog* dlg;
+
+        if (mSearching)
+            dlg = new NewEditCardDialog(*mSearchResults.at(curr));
+        else
+            dlg = new NewEditCardDialog(mCards.at(curr));
+
         if (dlg->exec()) {
             // Updating card's content
-            mCards.replace(curr, dlg->getNewCard());
+            if (mSearching) {
+                *mSearchResults[curr] = dlg->getNewCard();
+                updateTable(mSearchResults);
+            }
+            else {
+                mCards.replace(curr, dlg->getNewCard());
+                updateTable(mCards);
+            }
 
             // Set is modified now
             setWindowModified(true);
-            updateTable();
 
             // Selecting edited card
             tableWords->setCurrentCell(curr, 0);
@@ -213,12 +231,18 @@ void MainWindow::deleteCard()
     int curr = tableWords->currentRow();
     if (isInRange(curr)) {
         // Removing card
-        mCards.removeAt(curr);
+        if (mSearching)
+            mCards.removeOne(*mSearchResults.at(curr));
+        else
+            mCards.removeAt(curr);
+
+        mSearching = false;
+        editSearch->clear();
 
         // Set is modified now
         setWindowModified(true);
 
-        updateTable();
+        updateTable(mCards);
 
         // Selecting previous or the first card
         if (curr != 0)
@@ -247,7 +271,7 @@ void MainWindow::settings()
 
     if (dlgSettings->exec()) {
         readSettings();
-        updateTable();
+        updateTable(mCards);
     }
 
     delete dlgSettings;
@@ -274,7 +298,7 @@ void MainWindow::startQuiz()
 
                 if (quizDlg->isModified()) {
                     setWindowModified(true);
-                    updateTable();
+                    updateTable(mCards);
                 }
 
                 delete quizDlg;
@@ -290,12 +314,31 @@ void MainWindow::startQuiz()
     }
 }
 
-/* slot */
 void MainWindow::about()
 {
     AboutDialog *dlg = new AboutDialog(this);
     dlg->exec();
     delete dlg;
+}
+
+void MainWindow::search(QString str)
+{
+    mSearchResults.clear();
+
+    if (!str.isEmpty()) {
+        mSearching = true;
+
+        for (int i = 0; i < mCards.size(); i++) {
+            if (mCards.at(i).word().contains(str, Qt::CaseInsensitive)
+             || mCards.at(i).translation().contains(str, Qt::CaseInsensitive)) {
+                mSearchResults.push_back(&mCards[i]);
+            }
+        }
+        updateTable(mSearchResults);
+    } else {
+        mSearching = false;
+        updateTable(mCards);
+    }
 }
 
 void MainWindow::createTableWidget() {
@@ -495,6 +538,31 @@ void MainWindow::createToolbars()
 
     toolBar->addAction(actionSettings);
     toolBar->addAction(actionQuit);
+
+    toolBar->addSeparator();
+}
+
+void MainWindow::createSearchBar()
+{
+    editSearch = new QLineEdit();
+    connect(editSearch, SIGNAL(textChanged(QString)), SLOT(search(QString)));
+
+    QToolButton *btnClear = new QToolButton();
+    btnClear->setToolTip(tr("Clear"));
+    btnClear->setIcon(QIcon(":/icons/fileclose.png"));
+    btnClear->setStyleSheet("QToolButton { border: none; padding: 0px; }");
+    connect(btnClear, SIGNAL(clicked()), editSearch, SLOT(clear()));
+
+    QHBoxLayout *lt = new QHBoxLayout;
+    lt->addStretch(1);
+    lt->addWidget(new QLabel(tr("Search")));
+    lt->addWidget(editSearch);
+    lt->addWidget(btnClear);
+
+    QWidget *searchWgt = new QWidget();
+    searchWgt->setLayout(lt);
+
+    toolBar->addWidget(searchWgt);
 }
 
 void MainWindow::createStatusBar()
@@ -566,8 +634,8 @@ void MainWindow::loadFile(const QString &fileName, bool import)
             statusBar()->showMessage(tr("File loaded"), 2000);
         }
         tableWords->show();
-        updateTable();
-        setAutoEditActionsState();
+        updateTable(mCards);
+        editActionsState();
     } else {
         QMessageBox::critical(this, tr("Error"), reader.getErrorMessage(),
                               QMessageBox::Ok);
@@ -617,17 +685,20 @@ bool MainWindow::maybeSave()
     return true;
 }
 
-void MainWindow::updateTable()
+void MainWindow::updateTable(WordsSet words)
 {
+    mSearching = false;
+    editSearch->clear();
+
     tableWords->clearContents();
     tableWords->setRowCount(0);
 
-    WordsSet::const_iterator it = mCards.constBegin();
+    WordsSet::const_iterator it = words.constBegin();
 
     int rowCount;
     QTableWidgetItem* tmp;
 
-    for ( ; it != mCards.constEnd(); it++) {
+    for ( ; it != words.constEnd(); it++) {
         // Old row count and index of last row
         rowCount = tableWords->rowCount();
 
@@ -659,12 +730,54 @@ void MainWindow::updateTable()
     tableWords->setCurrentCell(0, 0);
 }
 
+void MainWindow::updateTable(WordsPtrSet words)
+{
+    tableWords->clearContents();
+    tableWords->setRowCount(0);
+
+    WordsPtrSet::const_iterator it = words.constBegin();
+
+    int rowCount;
+    QTableWidgetItem* tmp;
+
+    for ( ; it != words.constEnd(); it++) {
+        // Old row count and index of last row
+        rowCount = tableWords->rowCount();
+
+        tableWords->insertRow(rowCount);
+
+        // Word
+        tmp = new QTableWidgetItem((*it)->word());
+        tableWords->setItem(rowCount, 0, tmp);
+
+        // Transcription
+        tmp = new QTableWidgetItem((*it)->transcription());
+        tableWords->setItem(rowCount, 1, tmp);
+
+        // Translation
+        tmp = new QTableWidgetItem((*it)->translation());
+        tableWords->setItem(rowCount, 2, tmp);
+
+        // Learning progress in %
+        int progress = (double((*it)->numCorrectAnswers()) / corrAnsForLearned
+                        * 100);
+        progress = (progress > 100) ? 100 : progress;
+
+        tmp = new QTableWidgetItem(QString("%1%").arg(progress));
+
+        tmp->setTextAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+        tableWords->setItem(rowCount, 3, tmp);
+    }
+
+    tableWords->setCurrentCell(0, 0);
+}
+
 bool MainWindow::isFileOpened()
 {
     return (mCurrentFile != "---");
 }
 
-void MainWindow::setAutoEditActionsState()
+void MainWindow::editActionsState()
 {
     bool state = isFileOpened();
     actionSaveSet->setEnabled(state);
@@ -676,19 +789,28 @@ void MainWindow::setAutoEditActionsState()
     actionImportSet->setEnabled(state);
     actionStartTraining->setEnabled(state);
     actionStartQuiz->setEnabled(state);
+    editSearch->setEnabled(state);
 }
 
 void MainWindow::showCard(int index)
 {
     if (isInRange(index)) {
-        ViewCardDialog *viewDlg = new ViewCardDialog(&mCards);
+        ViewCardDialog *viewDlg;
+        if (mSearching)
+            viewDlg = new ViewCardDialog(mSearchResults);
+        else
+            viewDlg = new ViewCardDialog(&mCards);
+
         viewDlg->setCurrentWord(index);
 
         viewDlg->exec();
 
         if (viewDlg->isModified()) {
             setWindowModified(true);
-            updateTable();
+            if (mSearching)
+                updateTable(mSearchResults);
+            else
+                updateTable(mCards);
         }
 
         delete viewDlg;
