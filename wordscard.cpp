@@ -27,12 +27,13 @@
 ******************************************************************************/
 
 #include "wordscard.h"
+#include <QtCore>
 
 bool WordCard::operator==(const WordCard &card)
 {
     bool result =
             (mWord == card.word()) && (mGender == card.gender())
-            && (mCategory = card.mCategory)
+            && (mCategory == card.category())
             && (mTranscription == card.transcription())
             && (mTranslation == card.translation())
             && (mPlural == card.plural())

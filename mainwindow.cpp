@@ -34,6 +34,9 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QToolBar>
+#include <QLineEdit>
+#include <QHBoxLayout>
+#include <QToolButton>
 #include "xmlreader.h"
 #include "xmlwriter.h"
 #include "viewcarddialog.h"
@@ -43,15 +46,13 @@
 #include "settingsdialog.h"
 #include "aboutdialog.h"
 
-#include <QLineEdit>
-#include <QHBoxLayout>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     createActions();
     createMenus();
     createToolbars();
+    createSearchBar();
     createStatusBar();
     createTableWidget();
 
@@ -61,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     readSettings();
 
-    setAutoEditActionsState();
+    editActionsState();
 
     QSettings settings;
 
@@ -131,7 +132,7 @@ void MainWindow::newSet()
         mCards.clear();
         tableWords->show();
         updateTable(mCards);
-        setAutoEditActionsState();
+        editActionsState();
     }
 }
 
@@ -313,12 +314,31 @@ void MainWindow::startQuiz()
     }
 }
 
-/* slot */
 void MainWindow::about()
 {
     AboutDialog *dlg = new AboutDialog(this);
     dlg->exec();
     delete dlg;
+}
+
+void MainWindow::search(QString str)
+{
+    mSearchResults.clear();
+
+    if (!str.isEmpty()) {
+        mSearching = true;
+
+        for (int i = 0; i < mCards.size(); i++) {
+            if (mCards.at(i).word().contains(str, Qt::CaseInsensitive)
+             || mCards.at(i).translation().contains(str, Qt::CaseInsensitive)) {
+                mSearchResults.push_back(&mCards[i]);
+            }
+        }
+        updateTable(mSearchResults);
+    } else {
+        mSearching = false;
+        updateTable(mCards);
+    }
 }
 
 void MainWindow::createTableWidget() {
@@ -520,37 +540,29 @@ void MainWindow::createToolbars()
     toolBar->addAction(actionQuit);
 
     toolBar->addSeparator();
+}
 
+void MainWindow::createSearchBar()
+{
     editSearch = new QLineEdit();
     connect(editSearch, SIGNAL(textChanged(QString)), SLOT(search(QString)));
 
+    QToolButton *btnClear = new QToolButton();
+    btnClear->setToolTip(tr("Clear"));
+    btnClear->setIcon(QIcon(":/icons/fileclose.png"));
+    btnClear->setStyleSheet("QToolButton { border: none; padding: 0px; }");
+    connect(btnClear, SIGNAL(clicked()), editSearch, SLOT(clear()));
+
     QHBoxLayout *lt = new QHBoxLayout;
-    lt->addWidget(new QLabel(tr("Search: ")));
-    lt->addWidget(editSearch);
     lt->addStretch(1);
+    lt->addWidget(new QLabel(tr("Search")));
+    lt->addWidget(editSearch);
+    lt->addWidget(btnClear);
 
     QWidget *searchWgt = new QWidget();
     searchWgt->setLayout(lt);
 
     toolBar->addWidget(searchWgt);
-}
-
-void MainWindow::search(QString str)
-{
-    mSearchResults.clear();
-
-    if (!str.isEmpty()) {
-        mSearching = true;
-
-        for (int i = 0; i < mCards.size(); i++) {
-            if (mCards.at(i).word().contains(str, Qt::CaseInsensitive))
-                mSearchResults.push_back(&mCards[i]);
-        }
-        updateTable(mSearchResults);
-    } else {
-        mSearching = false;
-        updateTable(mCards);
-    }
 }
 
 void MainWindow::createStatusBar()
@@ -623,7 +635,7 @@ void MainWindow::loadFile(const QString &fileName, bool import)
         }
         tableWords->show();
         updateTable(mCards);
-        setAutoEditActionsState();
+        editActionsState();
     } else {
         QMessageBox::critical(this, tr("Error"), reader.getErrorMessage(),
                               QMessageBox::Ok);
@@ -675,6 +687,9 @@ bool MainWindow::maybeSave()
 
 void MainWindow::updateTable(WordsSet words)
 {
+    mSearching = false;
+    editSearch->clear();
+
     tableWords->clearContents();
     tableWords->setRowCount(0);
 
@@ -762,7 +777,7 @@ bool MainWindow::isFileOpened()
     return (mCurrentFile != "---");
 }
 
-void MainWindow::setAutoEditActionsState()
+void MainWindow::editActionsState()
 {
     bool state = isFileOpened();
     actionSaveSet->setEnabled(state);
@@ -774,6 +789,7 @@ void MainWindow::setAutoEditActionsState()
     actionImportSet->setEnabled(state);
     actionStartTraining->setEnabled(state);
     actionStartQuiz->setEnabled(state);
+    editSearch->setEnabled(state);
 }
 
 void MainWindow::showCard(int index)

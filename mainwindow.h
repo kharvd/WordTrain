@@ -90,6 +90,7 @@ private:
     void createContextMenu();
     void createToolbars();
     void createStatusBar();
+    void createSearchBar();
     void createInterface();
 
     void readSettings();
@@ -117,7 +118,7 @@ private:
     bool isInRange(int curr);
 
     // If set is not opened or is empty, disable all edit actions
-    void setAutoEditActionsState();
+    void editActionsState();
 
     // Returns set of the pointers to all words in the main set
     WordsPtrSet getPointersSet();
