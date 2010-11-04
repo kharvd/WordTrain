@@ -28,17 +28,29 @@
 
 #include "aboutdialog.h"
 
+#include <QIcon>
+#include <QLabel>
+#include <QTextEdit>
+#include <QFile>
+#include <QTextStream>
+#include <QTabWidget>
+#include <QLayout>
+#include <QApplication>
+#include <QPushButton>
+
 AboutDialog::AboutDialog(QWidget *parent) :
     QDialog(parent)
 {
-    resize(500, 400);
+    resize(defaultWidth, defaultHeight);
     setWindowTitle(tr("About WordTrain"));
 
+    // Setting big icon
     QIcon icon = windowIcon();
     QSize size = icon.actualSize(QSize(64, 64));
     QLabel *lblIcon = new QLabel();
     lblIcon->setPixmap(icon.pixmap(size));
 
+    // Name and version of the application
     QLabel *lblName = new QLabel();
     lblName->setText(QString("WordTrain v%1").arg(qApp->applicationVersion()));
 
@@ -47,9 +59,10 @@ AboutDialog::AboutDialog(QWidget *parent) :
     lblName->setMargin(10);
     lblName->setFont(font);
 
-    QLabel *lblDescr = new QLabel();
-    lblDescr->setOpenExternalLinks(true);
-    lblDescr->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    // Description
+    QLabel *labelDescription = new QLabel();
+    labelDescription->setOpenExternalLinks(true);
+    labelDescription->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
     QString descr
             = tr("<b>WordTrain</b> - a simple program for learning foreign"
@@ -66,10 +79,11 @@ AboutDialog::AboutDialog(QWidget *parent) :
                  "<a href=\"http://www.gnu.org/licenses/gpl.html\">"
                  "http://www.gnu.org/licenses/gpl.html</a> for details");
 
-    lblDescr->setText(descr);
-    lblDescr->setWordWrap(true);
-    lblDescr->setMargin(10);
+    labelDescription->setText(descr);
+    labelDescription->setWordWrap(true);
+    labelDescription->setMargin(10);
 
+    // License info box
     QTextEdit *license = new QTextEdit();
 
     QFile file(":/COPYING");
@@ -81,8 +95,9 @@ AboutDialog::AboutDialog(QWidget *parent) :
     QPushButton *btnClose = new QPushButton(tr("Close"));
     connect(btnClose, SIGNAL(clicked()), SLOT(close()));
 
+    // Creating tabs
     QTabWidget *tabs = new QTabWidget();
-    tabs->addTab(lblDescr, QIcon(), tr("About"));
+    tabs->addTab(labelDescription, QIcon(), tr("About"));
     tabs->addTab(license, QIcon(), tr("License"));
 
     QHBoxLayout *ltHeader = new QHBoxLayout();

@@ -29,19 +29,18 @@
 #ifndef ABOUTDIALOG_H
 #define ABOUTDIALOG_H
 
-#include <QtGui>
+#include <QDialog>
 
+// About dialog with information about program and about license
 class AboutDialog : public QDialog
 {
     Q_OBJECT
 
 public:
     explicit AboutDialog(QWidget *parent = 0);
-
-signals:
-
-public slots:
-
+private:
+    static const int defaultWidth = 500;
+    static const int defaultHeight = 400;
 };
 
 #endif // ABOUTDIALOG_H

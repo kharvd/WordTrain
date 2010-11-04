@@ -26,10 +26,12 @@
 **
 ******************************************************************************/
 
-#include <QtGui>
+#include <QApplication>
+#include <QSettings>
+#include <QLocale>
 #include <QTranslator>
+#include <QTextCodec>
 #include "mainwindow.h"
-#include "exampleswidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("WordTrain");
     QCoreApplication::setApplicationVersion("0.8.5");
 
-    // Language set
+    // Set language
     QSettings sets;
     QString lang = sets.value("lang", "auto").toString();
 
@@ -54,7 +56,6 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load(QString(":/translations/wordtrain_") + lang);
     a.installTranslator(&translator);
-
     //====================
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));

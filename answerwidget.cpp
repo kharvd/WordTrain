@@ -28,6 +28,9 @@
 
 #include "answerwidget.h"
 
+#include <QLabel>
+#include <QPixmap>
+
 AnswerWidget::AnswerWidget(QWidget *parent) :
     QWidget(parent)
 {

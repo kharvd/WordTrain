@@ -29,16 +29,26 @@
 #ifndef ANSWERWIDGET_H
 #define ANSWERWIDGET_H
 
-#include <QtGui>
+#include <QWidget>
 
+class QLabel;
+
+// Abstract class for answers in the quiz
 class AnswerWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit AnswerWidget(QWidget *parent = 0);
+
+    // Returns user's answer
     virtual QString getAnswer() = 0;
+
     virtual void setCorrect(bool correct);
+
+    // Clears the widget
     virtual void clear() = 0;
+
 protected:
     QLabel *imgCorrect;
 };

@@ -158,11 +158,16 @@ void QuizDialog::setCurrentWord(int index)
         cardText->showWord(*mCards.at(index));
         break;
     case Hide_Word:
-        cardText->showWord(*mCards.at(index), false, false);
+        cardText->showWord(*mCards.at(index), CardWidget::Back, false);
         break;
     case Hide_Random:
         mHideTranslation = qrand() % 2;
-        cardText->showWord(*mCards.at(index), mHideTranslation, mHideTranslation);
+
+        CardWidget::CardSide side = mHideTranslation
+                                    ? CardWidget::Face
+                                    : CardWidget::Back;
+
+        cardText->showWord(*mCards.at(index), side, mHideTranslation);
         break;
     }
 
@@ -191,7 +196,7 @@ void QuizDialog::nextCheckWord()
             setCurrentWord(mCurrCard);
         } else {
             if (!mHideTranslation) {
-                cardText->showWord(false, true);
+                cardText->showWord(CardWidget::Back, true);
             } else {
                 cardText->showOtherSide();
             }
@@ -244,7 +249,7 @@ void QuizDialog::showResult()
 void QuizDialog::dontKnow()
 {
     if (!mHideTranslation) {
-        cardText->showWord(false, true);
+        cardText->showWord(CardWidget::Back, true);
     } else {
         cardText->showOtherSide();
     }

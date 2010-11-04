@@ -30,18 +30,28 @@
 #define MULTIANSWERWIDGET_H
 
 #include "answerwidget.h"
-#include <QtGui>
 
+class QButtonGroup;
+class QVBoxLayout;
+
+// Widget for answering with multichoice
 class MultiAnswerWidget : public AnswerWidget
 {
     Q_OBJECT
 public:
     explicit MultiAnswerWidget(QWidget *parent = 0);
+
+    // Returns user's answer
     virtual QString getAnswer();
+
+    // Sets choices
     virtual void setAnswers(const QStringList & answers);
+
+    // Clears widget
     virtual void clear();
 
 private:
+    // Creates radio buttons with answers
     void createRadios();
 
 protected:

@@ -28,6 +28,10 @@
 
 #include "lineanswerwidget.h"
 
+#include <QLayout>
+#include <QLineEdit>
+#include <QLabel>
+
 LineAnswerWidget::LineAnswerWidget(QWidget *parent) :
     AnswerWidget(parent)
 {

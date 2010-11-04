@@ -28,27 +28,38 @@
 #ifndef EXAMPLESWIDGET_H
 #define EXAMPLESWIDGET_H
 
-#include <QtGui>
+#include <QWidget>
 #include "wordscard.h"
 
+class QFormLayout;
+
+// Widget for entering examples of using words in NewEditDialog
 class ExamplesWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit ExamplesWidget(QWidget *parent = 0);
 
-    void setExampleAt(int index, Example ex);
+    // Sets content of example at index to example
+    void setExampleAt(int index, Example example);
+
+    // Returns example at index
     Example getExampleAt(int index);
+
+    // Returns number of examples in the widget
     int examplesCount();
+
+    // Returns true if you can add an example to the widget
     bool canAdd();
 
+    // Maximum number of examples in the widget
     const static int maxExamples = 50;
-
-private:
-    QFormLayout *ltExamples;
 
 public slots:
     void addExample();
+
+private:
+    QFormLayout *ltExamples;
 };
 
 #endif // EXAMPLESWIDGET_H

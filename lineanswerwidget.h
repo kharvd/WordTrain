@@ -29,15 +29,20 @@
 #ifndef LINEANSWERWIDGET_H
 #define LINEANSWERWIDGET_H
 
-#include <QtGui>
 #include "answerwidget.h"
+class QLineEdit;
 
+// Widget for answering without choice
 class LineAnswerWidget : public AnswerWidget
 {
     Q_OBJECT
 public:
     explicit LineAnswerWidget(QWidget *parent = 0);
+
+    // Returns user's answer
     virtual QString getAnswer();
+
+    // Clears the widget
     virtual void clear();
 
 protected:

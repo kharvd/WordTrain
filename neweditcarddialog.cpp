@@ -28,6 +28,15 @@
 
 #include "neweditcarddialog.h"
 
+#include <QLineEdit>
+#include <QComboBox>
+#include <QScrollArea>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QScrollBar>
+#include <QPushButton>
+#include "exampleswidget.h"
+
 /* Add card */
 NewEditCardDialog::NewEditCardDialog(QWidget *parent) :
         QDialog(parent)
@@ -61,9 +70,8 @@ const WordCard& NewEditCardDialog::getNewCard()
         && (i <= ExamplesWidget::maxExamples); i++)
     {
         Example ex = wgtExamples->getExampleAt(i);
-        if (!ex.first.isEmpty()) {
+        if (!ex.first.isEmpty())
             mNewCard.addExample(wgtExamples->getExampleAt(i));
-        }
     }
 
     return mNewCard;
@@ -71,16 +79,17 @@ const WordCard& NewEditCardDialog::getNewCard()
 
 void NewEditCardDialog::addExample() {
     scrollExamples->show();
-    int optimalHeight = height() + 50;
-    optimalHeight = (optimalHeight > 420) ? 420 : optimalHeight;
+    int optimalHeight = height() + exampleHeight;
+    optimalHeight = (optimalHeight > maxAutoHeight) ? maxAutoHeight
+                                                    : optimalHeight;
     resize(width(), optimalHeight);
 
     wgtExamples->addExample();
     scrollExamples->verticalScrollBar()->
             triggerAction(QAbstractSlider::SliderToMaximum);
-    if (!wgtExamples->canAdd()) {
+
+    if (!wgtExamples->canAdd())
         btnAddExample->setEnabled(false);
-    }
 }
 
 void NewEditCardDialog::switchPluralGender(int cat)
@@ -100,7 +109,7 @@ void NewEditCardDialog::switchPluralGender(int cat)
 
 void NewEditCardDialog::createInterface()
 {
-    resize(550, 250);
+    resize(defaultWidth, defaultHeight);
     txtWord = new QLineEdit();
 
     txtTranscription = new QLineEdit();
@@ -143,19 +152,19 @@ void NewEditCardDialog::createInterface()
             SLOT(switchPluralGender(int)));
     switchPluralGender(0);
 
-    QVBoxLayout* hLayout = new QVBoxLayout();
+    QVBoxLayout *hLayout = new QVBoxLayout();
     hLayout->addLayout(fLayout);
     hLayout->addWidget(scrollExamples);
 
-    QGroupBox* grBox = new QGroupBox(windowTitle());
+    QGroupBox *grBox = new QGroupBox(windowTitle());
     grBox->setLayout(hLayout);
 
-    QVBoxLayout* hButtonsLayout = new QVBoxLayout();
+    QVBoxLayout *hButtonsLayout = new QVBoxLayout();
     hButtonsLayout->addWidget(btnOk);
     hButtonsLayout->addWidget(btnCancel);
     hButtonsLayout->addStretch(1);
 
-    QHBoxLayout* mainLayout = new QHBoxLayout();
+    QHBoxLayout *mainLayout = new QHBoxLayout();
     mainLayout->addWidget(grBox);
     mainLayout->addLayout(hButtonsLayout);
 

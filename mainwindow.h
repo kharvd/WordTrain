@@ -29,26 +29,33 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtGui>
-#include "xmlreader.h"
-#include "xmlwriter.h"
+#include <QMainWindow>
 #include "wordscard.h"
-#include "viewcarddialog.h"
-#include "startquizdialog.h"
-#include "quizdialog.h"
-#include "neweditcarddialog.h"
-#include "settingsdialog.h"
-#include "aboutdialog.h"
 
+class QWidget;
+class QObject;
+class QString;
+class QEvent;
+class QCloseEvent;
+class QTableWidget;
+class QAction;
+class QMenu;
+class QMenuBar;
+
+// Main window class.
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 protected:
+    // On close
     void closeEvent(QCloseEvent *event);
+
+    // For handling context menu event on tableWords
     bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
@@ -61,13 +68,19 @@ private slots:
     void editCard();
     void deleteCard();
     void importSet();
-//  void baseProperties();
-    void preferences();
+    void settings();
     void startTraining();
     void startQuiz();
     void about();
 
 private:
+    // Some constants
+    static const int defaultWidth = 640;
+    static const int defaultHeight = 480;
+    static const int defaultXPosition = 200;
+    static const int defaultYPosition = 200;
+
+    // Creating interface
     void createTableWidget();
     void createActions();
     void createMenus();
@@ -75,34 +88,50 @@ private:
     void createToolbars();
     void createStatusBar();
     void createInterface();
+
     void readSettings();
     void writeSettings();
+
+    /* Checks whether the file should be saved or not, saves it if it should,
+    returns false if user rejected to close file, and true if we can
+    close it. */
     bool maybeSave();
-    /* If import is true, we append existing file to current */
+
+    // If import is true, we append existing file to current
     void loadFile(const QString & fileName, bool import = false);
     bool saveFile(const QString & fileName);
     void setCurrentFile(const QString &fileName);
-    QString strippedName(const QString & fullFileName);
-    void clearCards();
     bool isFileOpened();
+
+    // Fills the table with words
     void updateTable();
+
+    // Shows card with index 'index'
     void showCard(int index);
 
-    WordsPtrSet getPointersSet();
-
-    /* Checks whether 'curr' is not out of range of mCards */
+    // Checks whether 'curr' is not out of range of mCards
     bool isInRange(int curr);
 
-    /* If set is not opened or is empty, disable all edit actions */
+    // If set is not opened or is empty, disable all edit actions
     void setAutoEditActionsState();
 
+    // Returns set of the pointers to all words in the main set
+    WordsPtrSet getPointersSet();
+
+    // Word is learned after this number of correct answers
     int corrAnsForLearned;
 
-    WordsSet mCards;
-    QString mCurFile;
+    //=============================================================
 
+    // All the words of the current set.
+    WordsSet mCards;
+    // Path to current file
+    QString mCurrentFile;
+
+    // Main widget - table with words of the set
     QTableWidget *tableWords;
 
+    // Actions
     QAction *actionNewSet;
     QAction *actionOpenSet;
     QAction *actionSaveSet;
@@ -113,17 +142,22 @@ private:
     QAction *actionEditCard;
     QAction *actionDeleteCard;
     QAction *actionImportSet;
-//  QAction *actionBaseProperties;
-    QAction *actionPreferences;
+    QAction *actionSettings;
     QAction *actionStartTraining;
     QAction *actionStartQuiz;
     QAction *actionAbout;
     QAction *actionAboutQt;
+
+    // Menus
     QMenu *menuFile;
     QMenu *menuEdit;
     QMenu *menuTraining;
     QMenu *menuAbout;
+
+    // Main menu
     QMenuBar *menubar;
+
+    // Main toolbar
     QToolBar *toolBar;
 };
 
