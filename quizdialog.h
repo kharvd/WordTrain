@@ -29,29 +29,32 @@
 #ifndef QUIZDIALOG_H
 #define QUIZDIALOG_H
 
-#include <QtGui>
-#include <ctime>
+#include <QDialog>
 #include "wordscard.h"
-#include "neweditcarddialog.h"
-#include "cardwidget.h"
-#include "answerwidget.h"
-#include "lineanswerwidget.h"
-#include "multianswerwidget.h"
-#include "wordschooser.h"
+
+class QProgressBar;
+class QPushButton;
+class QLabel;
+class AnswerWidget;
+class CardWidget;
 
 enum ChoiceMode { Choice_MultiChoice = 0, Choice_NoChoice };
 enum HideMode { Hide_Random = 0, Hide_Translation, Hide_Word };
 
+// Dialog with the quiz, similar to ViewCardDialog.
 class QuizDialog : public QDialog
 {
     Q_OBJECT
+
 public:
+    // This class should be able to edit contents of the cards
     QuizDialog(const WordsPtrSet & cards, ChoiceMode choice,
                HideMode hide, const WordsPtrSet & allCards,
                QWidget *parent = 0);
     QuizDialog(WordsSet *cards, ChoiceMode choice,
                HideMode hide, const WordsPtrSet & allCards,
                QWidget *parent = 0);
+
     bool isModified();
 
 private slots:
@@ -59,14 +62,28 @@ private slots:
     void dontKnow();
 
 private:
+    static const int defaultWidth = 400;
+    static const int defaultHeight = 360;
     static const int numChoices = 4;
 
+    // Convenience function for initialization
     void constructor(ChoiceMode choice, HideMode hide);
+
+    // Changes buttons' text to appropriate, when something is clicked
     void switchButtons();
-    void setCurrentWord(int index);
+
+    // Sets current displayed card
+    void setCurrentCard(int index);
+
     void createInterface();
+
+    // Selects some words for choices in MultiAnswerWidget
     QStringList getAnswersMultiChoice(QString correct, bool translation);
+
+    // Checks answer
     void checkAnswer();
+
+    // Shows result of the quiz
     void showResult();
 
     QPushButton *btnDontKnow;
@@ -76,16 +93,33 @@ private:
     CardWidget *cardText;
     AnswerWidget *wgtAnswer;
 
+    // Number of cards
     int mCardsNumber;
+
+    // Number of all correct answers
     int mCorrectAnswers;
+
+    // If user answered correctly at least one question
     bool mModified;
+
     HideMode mHideMode;
     ChoiceMode mChoiceMode;
+
+    // If we hide mode is Hide_Translation now
     bool mHideTranslation;
-    bool mThatsAll; // If there is no more words
-    bool mAnswered; // If "Check" has been clicked
-    int mCurrCard;
+
+    // If user answered all words
+    bool mThatsAll;
+
+    // If "Check" has been clicked
+    bool mAnswered;
+
+    int mCurrentCard;
+
+    // Cards to be tested
     WordsPtrSet mCards;
+
+    // All cards of current set
     WordsPtrSet mAllCards;
 };
 

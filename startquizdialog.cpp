@@ -28,12 +28,22 @@
 
 #include "startquizdialog.h"
 
+#include "wordschooser.h"
+#include <QButtonGroup>
+#include <QRadioButton>
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QFormLayout>
+#include <QValidator>
+#include <QGroupBox>
+#include <QLabel>
+#include <QPushButton>
+
 StartQuizDialog::StartQuizDialog(WordsSet * words, QWidget *parent) :
     QDialog(parent)
 {
-    for (int i = 0; i < words->size(); i++) {
-        mWords.push_back(&words[0][i]);
-    }
+    for (int i = 0; i < words->size(); i++)
+        mCards.push_back(&words[0][i]);
 
     setWindowTitle(tr("Start test"));
     createInterface();
@@ -139,12 +149,13 @@ void StartQuizDialog::toggleTxtNumWords(bool disable)
     txtNumWords->setEnabled(!disable);
 }
 
-WordsPtrSet StartQuizDialog::getWords()
+WordsPtrSet StartQuizDialog::getCards()
 {
+    // Getting words from the set according to selected options
     int numWords = chckAllWords->isChecked() ? -1 : txtNumWords->text().toInt();
-    WordsChooser chooser(mWords, radioRandomOrder->isChecked(),
+    WordsChooser chooser(mCards, radioRandomOrder->isChecked(),
                          chckIncLearned->isChecked(), numWords);
-    return chooser.getWords();
+    return chooser.getCards();
 }
 
 ChoiceMode StartQuizDialog::getChoiceMode()
@@ -152,6 +163,7 @@ ChoiceMode StartQuizDialog::getChoiceMode()
     return (ChoiceMode)grpChoiceMode->checkedId();
 }
 
-HideMode StartQuizDialog::getHideMode() {
+HideMode StartQuizDialog::getHideMode()
+{
     return (HideMode)grpHideMode->checkedId();
 }

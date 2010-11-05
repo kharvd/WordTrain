@@ -48,11 +48,11 @@ CardWidget::CardWidget(QWidget *parent) :
     setMinimumSize(defaultWidth, defauldHeight);
 }
 
-void CardWidget::showWord(const WordCard& card, CardSide faceSide,
+void CardWidget::showCard(const WordCard& card, CardSide faceSide,
                           bool showForeign)
 {
     mSide = faceSide;
-    mWord = card;
+    mCard = card;
     mHtmlCard.clear();
 
     // Attaching CSS
@@ -70,15 +70,15 @@ void CardWidget::showWord(const WordCard& card, CardSide faceSide,
     txtCard->setHtml(mHtmlCard);
 }
 
-void CardWidget::showWord(CardSide faceSide, bool showForeign)
+void CardWidget::showCard(CardSide faceSide, bool showForeign)
 {
-    showWord(mWord, faceSide, showForeign);
+    showCard(mCard, faceSide, showForeign);
 }
 
 void CardWidget::showOtherSide()
 {
     mSide = (mSide == Face) ? Back : Face;
-    showWord(mWord, mSide);
+    showCard(mCard, mSide);
 }
 
 QString CardWidget::getCSS() {

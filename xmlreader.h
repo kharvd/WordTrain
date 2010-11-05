@@ -29,9 +29,6 @@
 #ifndef XMLSTREAMREADER_H
 #define XMLSTREAMREADER_H
 
-#include <QtGui>
-#include <QList>
-#include <QString>
 #include <QXmlStreamReader>
 #include "wordscard.h"
 

@@ -57,6 +57,7 @@ NewEditCardDialog::NewEditCardDialog(const WordCard &card, QWidget *parent) :
 
 const WordCard& NewEditCardDialog::getNewCard()
 {
+    // Getting data from the form
     mNewCard.setWord(txtWord->text());
     mNewCard.setTranscription(txtTranscription->text());
     mNewCard.setTranslation(txtTranslation->text());
@@ -78,7 +79,10 @@ const WordCard& NewEditCardDialog::getNewCard()
 }
 
 void NewEditCardDialog::addExample() {
+    // Adding new example and resizing the window
     scrollExamples->show();
+
+    // Height for window with examples
     int optimalHeight = height() + exampleHeight;
     optimalHeight = (optimalHeight > maxAutoHeight) ? maxAutoHeight
                                                     : optimalHeight;
@@ -88,12 +92,14 @@ void NewEditCardDialog::addExample() {
     scrollExamples->verticalScrollBar()->
             triggerAction(QAbstractSlider::SliderToMaximum);
 
+    // If we cannot add another example
     if (!wgtExamples->canAdd())
         btnAddExample->setEnabled(false);
 }
 
 void NewEditCardDialog::switchPluralGender(int cat)
 {
+    // If the word is noun, show plural and gender fields, otherwise hide them
     if (cat == (int)LC_Noun) {
         txtPlural->show();
         cmbGender->show();
@@ -173,6 +179,7 @@ void NewEditCardDialog::createInterface()
 
 void NewEditCardDialog::fillForm()
 {
+    // Filling the form with the word card's contents
     txtWord->setText(mNewCard.word());
     txtTranscription->setText(mNewCard.transcription());
     txtTranslation->setText(mNewCard.translation());

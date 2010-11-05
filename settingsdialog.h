@@ -29,8 +29,14 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include <QtGui>
+#include <QDialog>
 
+class QComboBox;
+class QLineEdit;
+class QCheckBox;
+class QPushButton;
+
+// Dialog with settings
 class SettingsDialog : public QDialog
 {
     Q_OBJECT
@@ -39,9 +45,14 @@ public:
 
 private slots:
     void writeSettings();
-    void fillLanguages();
 
 private:
+    static const int defaultWidth = 300;
+    static const int defaultHeight = 200;
+
+    // Dynamically gets available languages from resources
+    void fillLanguages();
+
     QComboBox *cmbLanguages;
     QLineEdit *txtCorrAnswers;
     QCheckBox *chckSaveWinPosition;

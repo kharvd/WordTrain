@@ -40,7 +40,7 @@ class ExamplesWidget : public QWidget
 public:
     explicit ExamplesWidget(QWidget *parent = 0);
 
-    // Sets content of example at index to example
+    // Sets contents of example at index to example
     void setExampleAt(int index, Example example);
 
     // Returns example at index

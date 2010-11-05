@@ -175,7 +175,7 @@ void MainWindow::addCard()
 {
     NewEditCardDialog *dlg = new NewEditCardDialog();
     if(dlg->exec()) {
-        // Getting new card's content
+        // Getting new card's contents
         mCards.push_back(dlg->getNewCard());
 
         // Set is modified now
@@ -201,7 +201,7 @@ void MainWindow::editCard()
             dlg = new NewEditCardDialog(mCards.at(curr));
 
         if (dlg->exec()) {
-            // Updating card's content
+            // Updating card's contents
             if (mSearching) {
                 *mSearchResults[curr] = dlg->getNewCard();
                 updateTable(mSearchResults);
@@ -289,8 +289,8 @@ void MainWindow::startQuiz()
         StartQuizDialog* dlg = new StartQuizDialog(&mCards);
 
         if (dlg->exec()) {
-            if (dlg->getWords().size()) {
-                QuizDialog *quizDlg = new QuizDialog(dlg->getWords(),
+            if (dlg->getCards().size()) {
+                QuizDialog *quizDlg = new QuizDialog(dlg->getCards(),
                                                      dlg->getChoiceMode(),
                                                      dlg->getHideMode(),
                                                      getPointersSet());
@@ -801,7 +801,7 @@ void MainWindow::showCard(int index)
         else
             viewDlg = new ViewCardDialog(&mCards);
 
-        viewDlg->setCurrentWord(index);
+        viewDlg->setCurrentCard(index);
 
         viewDlg->exec();
 

@@ -49,9 +49,9 @@ public:
 
     // showForeign - if true, shows 'word', 'plural', 'transcription' etc on
     // the back side
-    void showWord(const WordCard& card, CardSide side = Face,
+    void showCard(const WordCard& card, CardSide side = Face,
                   bool showForeign = true);
-    void showWord(CardSide side = Face, bool showForeign = true);
+    void showCard(CardSide side = Face, bool showForeign = true);
 
 public slots:
     // Shows other side of the card
@@ -69,7 +69,7 @@ private:
     void showBack(const WordCard& card, bool showForeign);
 
     CardSide mSide;
-    WordCard mWord;
+    WordCard mCard;
 
     // Displayed content
     QString mHtmlCard;

@@ -27,7 +27,6 @@
 ******************************************************************************/
 
 #include "wordscard.h"
-#include <QtCore>
 
 bool WordCard::operator==(const WordCard &card)
 {

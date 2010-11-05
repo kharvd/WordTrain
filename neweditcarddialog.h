@@ -65,7 +65,7 @@ private:
 
     void createInterface();
 
-    // Fills the form with current card's content
+    // Fills the form with current card's contents
     void fillForm();
 
     QFormLayout *fLayout;

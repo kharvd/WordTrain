@@ -33,7 +33,7 @@
 #include <QtCore>
 #include <QtAlgorithms>
 
-// Generick shuffle
+// Generic shuffle
 template <class T>
 T shuffleContainer(const T & container, int size) {
     T tmp = container;

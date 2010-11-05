@@ -29,21 +29,37 @@
 #ifndef STARTQUIZDIALOG_H
 #define STARTQUIZDIALOG_H
 
-#include <QtGui>
-#include "wordschooser.h"
+#include <QDialog>
 #include "wordscard.h"
 #include "quizdialog.h"
 
+class QButtonGroup;
+class QRadioButton;
+class QCheckBox;
+class QLineEdit;
+
+// Dialog for selecting quiz options and starting the quiz
 class StartQuizDialog : public QDialog
 {
     Q_OBJECT
+
 public:
     explicit StartQuizDialog(WordsSet * words, QWidget *parent = 0);
-    WordsPtrSet getWords();
+
+    // Returns chosen words
+    WordsPtrSet getCards();
+
+    // Returns selected choice mode
     ChoiceMode getChoiceMode();
+
+    // Returns selected hiding mode
     HideMode getHideMode();
+
 private slots:
+    /* Enables or disables line edit with number of words depending on
+     chckAllWords */
     void toggleTxtNumWords(bool disable);
+
 private:
     void createInterface();
 
@@ -61,7 +77,8 @@ private:
     QLineEdit *txtNumWords;
     QPushButton *btnOk;
     QPushButton *btnCancel;
-    WordsPtrSet mWords;
+
+    WordsPtrSet mCards;
 };
 
 #endif // STARTQUIZDIALOG_H

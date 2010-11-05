@@ -29,30 +29,37 @@
 #ifndef VIEWCARDDIALOG_H
 #define VIEWCARDDIALOG_H
 
-#include <QtGui>
+#include <QDialog>
 #include "wordscard.h"
-#include "neweditcarddialog.h"
-#include "cardwidget.h"
 
+class CardWidget;
+
+// Class for viewing cards
 class ViewCardDialog : public QDialog
 {
     Q_OBJECT
 
 public:
+    // This class should be able to edit contents of the cards
     ViewCardDialog(const WordsPtrSet & cards, QWidget *parent = 0);
     ViewCardDialog(WordsSet *cards, QWidget *parent = 0);
 
-    void setCurrentWord(int index);
+    void setCurrentCard(int index);
     bool isModified();
 
 private slots:
-    void nextWord();
-    void prevWord();
+    void nextCard();
+    void prevCard();
     void editCard();
 
 private:
+    static const int defaultWidth = 400;
+    static const int defaultHeight = 360;
+
     void createInterface();
-    void enableButtons();
+
+    // Switches Previous and Next buttons according to mCurrentCard
+    void switchButtons();
 
     QPushButton *btnPrevious;
     QPushButton *btnTurn;
@@ -61,7 +68,7 @@ private:
     CardWidget *cardText;
 
     bool mModified;
-    int mCurrCard;
+    int mCurrentCard;
     WordsPtrSet mCards;
 };
 
