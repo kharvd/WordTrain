@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -29,9 +29,14 @@
 #ifndef NEWCARDDIALOG_H
 #define NEWCARDDIALOG_H
 
-#include <QtGui>
+#include <QDialog>
 #include "wordscard.h"
-#include "exampleswidget.h"
+
+class QLineEdit;
+class QComboBox;
+class QScrollArea;
+class QFormLayout;
+class ExamplesWidget;
 
 // Create new card or edit existing one
 class NewEditCardDialog : public QDialog
@@ -53,24 +58,30 @@ public slots:
     void switchPluralGender(int);
 
 private:
+    static const int defaultWidth = 550;
+    static const int defaultHeight = 250;
+    static const int exampleHeight = 50;
+    static const int maxAutoHeight = 420;
+
     void createInterface();
-    /* Fills the form with current card's content */
+
+    // Fills the form with current card's contents
     void fillForm();
 
-    QFormLayout* fLayout;
-    QLineEdit* txtWord;
-    QLineEdit* txtTranscription;
-    QLineEdit* txtTranslation;
-    QLineEdit* txtPlural;
-    QComboBox* cmbCategory;
-    QComboBox* cmbGender;
-    QPushButton* btnAddExample;
-    QPushButton* btnOk;
-    QPushButton* btnCancel;
-    ExamplesWidget* wgtExamples;
+    QFormLayout *fLayout;
+    QLineEdit *txtWord;
+    QLineEdit *txtTranscription;
+    QLineEdit *txtTranslation;
+    QLineEdit *txtPlural;
+    QComboBox *cmbCategory;
+    QComboBox *cmbGender;
+    QPushButton *btnAddExample;
+    QPushButton *btnOk;
+    QPushButton *btnCancel;
+    ExamplesWidget *wgtExamples;
     QScrollArea *scrollExamples;
 
-    /* Temporary card for holding new values */
+    // Temporary card for holding new values
     WordCard mNewCard;
 };
 

@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -27,6 +27,16 @@
 ******************************************************************************/
 
 #include "settingsdialog.h"
+
+#include <QPushButton>
+#include <QSettings>
+#include <QLineEdit>
+#include <QValidator>
+#include <QFormLayout>
+#include <QDir>
+#include <QTranslator>
+#include <QComboBox>
+#include <QCheckBox>
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent)
@@ -82,7 +92,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     connect(this, SIGNAL(accepted()), SLOT(writeSettings()));
 
     setWindowTitle(tr("Settings"));
-    resize(300, 200);
+    resize(defaultWidth, defaultHeight);
     setLayout(ltMain);
 }
 
@@ -106,16 +116,15 @@ void SettingsDialog::fillLanguages()
         locale.remove(0, locale.indexOf('_') + 1);
         locale.chop(3);
 
+        // Getting translated full string with language
         QTranslator translator;
         translator.load(fileNames[i], qmDir.absolutePath());
         QString language = translator.translate("Languages",
                                                 "English");
 
         cmbLanguages->addItem(QIcon(), language);
+
+        // Containing short string of the language in appropriate item
         cmbLanguages->setItemData(cmbLanguages->count() + i - 1, locale);
     }
 }
-
-
-
-

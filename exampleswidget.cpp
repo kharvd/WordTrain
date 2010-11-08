@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -27,6 +27,8 @@
 ******************************************************************************/
 
 #include "exampleswidget.h"
+#include <QLineEdit>
+#include <QFormLayout>
 
 ExamplesWidget::ExamplesWidget(QWidget *parent) :
         QWidget(parent)
@@ -43,44 +45,43 @@ int ExamplesWidget::examplesCount() {
 }
 
 bool ExamplesWidget::canAdd() {
-    if (examplesCount() < maxExamples) {
-        return true;
-    }
-
-    return false;
+    return (examplesCount() < maxExamples);
 }
 
 void ExamplesWidget::addExample() {
-    int num = examplesCount() + 1;
-    if(canAdd()) {
+    int count = examplesCount() + 1;
+
+    if (canAdd()) {
         QLineEdit* txt1 = new QLineEdit();
         QLineEdit* txt2 = new QLineEdit();
 
-        ltExamples->addRow(tr("Example %1:").arg(num), txt1);
-        ltExamples->addRow(tr("Translation %1:").arg(num), txt2);
+        ltExamples->addRow(tr("Example %1:").arg(count), txt1);
+        ltExamples->addRow(tr("Translation %1:").arg(count), txt2);
     }
 }
 
-void ExamplesWidget::setExampleAt(int index, Example ex) {
-    QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
-                                                   (index * 4 + 1)->widget());
-    Q_ASSERT(example);
+void ExamplesWidget::setExampleAt(int index, Example example) {
+    // Getting widgets
+    QLineEdit* lineExample = qobject_cast<QLineEdit *>(ltExamples->itemAt
+                                                     (index * 4 + 1)->widget());
+    Q_ASSERT(lineExample);
 
-    QLineEdit* translation = qobject_cast<QLineEdit *>(ltExamples->itemAt
-                                                       (index * 4 + 3)->widget());
-    Q_ASSERT(translation);
+    QLineEdit* lineTranslation = qobject_cast<QLineEdit *>(ltExamples->itemAt
+                                                     (index * 4 + 3)->widget());
+    Q_ASSERT(lineTranslation);
 
-    example->setText(ex.first);
-    translation->setText(ex.second);
+    lineExample->setText(example.first);
+    lineTranslation->setText(example.second);
 }
 
 Example ExamplesWidget::getExampleAt(int index) {
+    // Getting widgets
     QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
-                                                   (index * 4 + 1)->widget());
+                                                     (index * 4 + 1)->widget());
     Q_ASSERT(example);
 
     QLineEdit* translation = qobject_cast<QLineEdit *>(ltExamples->itemAt
-                                                       (index * 4 + 3)->widget());
+                                                     (index * 4 + 3)->widget());
     Q_ASSERT(translation);
 
     Example tmp;

@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -29,34 +29,51 @@
 #ifndef CARDWIDGET_H
 #define CARDWIDGET_H
 
-#include <QtGui>
+#include <QWidget>
 #include "wordscard.h"
 
+class QTextEdit;
+
+/*
+**  Widget for displaying contents of the card. Has two 'sides' - 'face' with the
+**  word and it's transcription, and 'back' with the full info about the word
+*/
 class CardWidget : public QWidget
 {
     Q_OBJECT
+
 public:
+    enum CardSide { Face = 0, Back };
+
     explicit CardWidget(QWidget *parent = 0);
 
     // showForeign - if true, shows 'word', 'plural', 'transcription' etc on
     // the back side
-    void showWord(const WordCard& card, bool faceSide = true,
+    void showCard(const WordCard& card, CardSide side = Face,
                   bool showForeign = true);
-    void showWord(bool faceSide = true, bool showForeign = true);
+    void showCard(CardSide side = Face, bool showForeign = true);
 
 public slots:
+    // Shows other side of the card
     void showOtherSide();
 
 private:
+    static const int defaultWidth = 370;
+    static const int defauldHeight = 265;
+
+    // Get CSS from resource
     QString getCSS();
     void showFace(const WordCard& card);
 
     // showForeign - if true, shows 'word', 'plural', 'transcription' etc
     void showBack(const WordCard& card, bool showForeign);
 
-    bool mFace;
-    WordCard mCurrWord;
-    QString htmlCard;
+    CardSide mSide;
+    WordCard mCard;
+
+    // Displayed content
+    QString mHtmlCard;
+
     QTextEdit *txtCard;
 };
 

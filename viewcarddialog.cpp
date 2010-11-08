@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -28,6 +28,11 @@
 
 #include "viewcarddialog.h"
 
+#include "cardwidget.h"
+#include "neweditcarddialog.h"
+#include <QPushButton>
+#include <QLayout>
+
 ViewCardDialog::ViewCardDialog(const WordsPtrSet & cards, QWidget *parent) :
     QDialog(parent)
 {
@@ -35,34 +40,33 @@ ViewCardDialog::ViewCardDialog(const WordsPtrSet & cards, QWidget *parent) :
     mModified = false;
     mCards = cards;
     createInterface();
-    setCurrentWord(0);
+    setCurrentCard(0);
 }
 
 ViewCardDialog::ViewCardDialog(WordsSet *cards, QWidget *parent) :
     QDialog(parent)
 {
     Q_ASSERT(cards->size());
-    for (int i = 0; i < cards->size(); i++) {
+    for (int i = 0; i < cards->size(); i++)
         mCards.push_back(&cards[0][i]);
-    }
 
     mModified = false;
     createInterface();
-    setCurrentWord(0);
+    setCurrentCard(0);
 }
 
 void ViewCardDialog::createInterface()
 {
     setWindowTitle(tr("View card"));
-    resize(400, 360);
+    resize(defaultWidth, defaultHeight);
 
     cardText = new CardWidget();
 
     btnPrevious = new QPushButton(tr("Previous"));
-    connect(btnPrevious, SIGNAL(clicked()), this, SLOT(prevWord()));
+    connect(btnPrevious, SIGNAL(clicked()), this, SLOT(prevCard()));
 
     btnNext = new QPushButton(tr("Next"));
-    connect(btnNext, SIGNAL(clicked()), this, SLOT(nextWord()));
+    connect(btnNext, SIGNAL(clicked()), this, SLOT(nextCard()));
     btnNext->setDefault(true);
 
     btnEdit = new QPushButton(tr("Edit card"));
@@ -88,33 +92,17 @@ void ViewCardDialog::createInterface()
     setLayout(mainLayout);
 }
 
-void ViewCardDialog::enableButtons()
+void ViewCardDialog::switchButtons()
 {
-    btnPrevious->setEnabled(true);
-    btnTurn->setEnabled(true);
-    btnNext->setEnabled(true);
-    btnEdit->setEnabled(true);
+    btnPrevious->setEnabled(mCurrentCard != 0);
+    btnNext->setEnabled(mCurrentCard != (mCards.size() - 1));
 }
 
-void ViewCardDialog::setCurrentWord(int index)
+void ViewCardDialog::setCurrentCard(int index)
 {
-    if (index < 0) {
-        return;
-    }
-
-    mCurrCard = index;
-
-    enableButtons();
-
-    if (mCurrCard == 0) {
-        btnPrevious->setEnabled(false);
-    }
-
-    if (mCurrCard == mCards.size() - 1) {
-        btnNext->setEnabled(false);
-    }
-
-    cardText->showWord(*(mCards[index]));
+    mCurrentCard = index;
+    switchButtons();
+    cardText->showCard(*(mCards[index]));
 }
 
 bool ViewCardDialog::isModified()
@@ -122,23 +110,23 @@ bool ViewCardDialog::isModified()
     return mModified;
 }
 
-void ViewCardDialog::prevWord()
+void ViewCardDialog::prevCard()
 {
-    setCurrentWord(mCurrCard - 1);
+    setCurrentCard(mCurrentCard - 1);
 }
 
-void ViewCardDialog::nextWord()
+void ViewCardDialog::nextCard()
 {
-    setCurrentWord(mCurrCard + 1);
+    setCurrentCard(mCurrentCard + 1);
 }
 
 void ViewCardDialog::editCard()
 {
-    NewEditCardDialog* dlg = new NewEditCardDialog(*(mCards[mCurrCard]));
+    NewEditCardDialog* dlg = new NewEditCardDialog(*(mCards[mCurrentCard]));
     if (dlg->exec()) {
-        *mCards[mCurrCard] = dlg->getNewCard();
+        *mCards[mCurrentCard] = dlg->getNewCard();
         mModified = true;
-        setCurrentWord(mCurrCard); // Update
+        setCurrentCard(mCurrentCard); // Update
     }
 }
 

@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -26,10 +26,12 @@
 **
 ******************************************************************************/
 
-#include <QtGui>
+#include <QApplication>
+#include <QSettings>
+#include <QLocale>
 #include <QTranslator>
+#include <QTextCodec>
 #include "mainwindow.h"
-#include "exampleswidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -37,9 +39,9 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName("Demihalf");
     QCoreApplication::setApplicationName("WordTrain");
-    QCoreApplication::setApplicationVersion("0.8.5");
+    QCoreApplication::setApplicationVersion("0.9");
 
-    // Language set
+    // Set language
     QSettings sets;
     QString lang = sets.value("lang", "auto").toString();
 
@@ -54,7 +56,6 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load(QString(":/translations/wordtrain_") + lang);
     a.installTranslator(&translator);
-
     //====================
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
@@ -65,6 +66,10 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.show();
+
+    // Getting command-line argument, if filename passed, load file
+    if (a.arguments().size() > 1)
+        w.loadFile(a.arguments().at(1));
 
     return a.exec();
 }

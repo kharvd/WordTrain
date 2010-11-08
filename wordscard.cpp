@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -27,6 +27,19 @@
 ******************************************************************************/
 
 #include "wordscard.h"
+
+bool WordCard::operator==(const WordCard &card)
+{
+    bool result =
+            (mWord == card.word()) && (mGender == card.gender())
+            && (mCategory == card.category())
+            && (mTranscription == card.transcription())
+            && (mTranslation == card.translation())
+            && (mPlural == card.plural())
+            && (mExamples == card.examples())
+            && (mNumCorrectAnswers == card.numCorrectAnswers());
+    return result;
+}
 
 void WordCard::setWord(const QString & word)
 {

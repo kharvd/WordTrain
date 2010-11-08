@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -28,6 +28,15 @@
 
 #include "neweditcarddialog.h"
 
+#include <QLineEdit>
+#include <QComboBox>
+#include <QScrollArea>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QScrollBar>
+#include <QPushButton>
+#include "exampleswidget.h"
+
 /* Add card */
 NewEditCardDialog::NewEditCardDialog(QWidget *parent) :
         QDialog(parent)
@@ -48,6 +57,7 @@ NewEditCardDialog::NewEditCardDialog(const WordCard &card, QWidget *parent) :
 
 const WordCard& NewEditCardDialog::getNewCard()
 {
+    // Getting data from the form
     mNewCard.setWord(txtWord->text());
     mNewCard.setTranscription(txtTranscription->text());
     mNewCard.setTranslation(txtTranslation->text());
@@ -61,30 +71,35 @@ const WordCard& NewEditCardDialog::getNewCard()
         && (i <= ExamplesWidget::maxExamples); i++)
     {
         Example ex = wgtExamples->getExampleAt(i);
-        if (!ex.first.isEmpty()) {
+        if (!ex.first.isEmpty())
             mNewCard.addExample(wgtExamples->getExampleAt(i));
-        }
     }
 
     return mNewCard;
 }
 
 void NewEditCardDialog::addExample() {
+    // Adding new example and resizing the window
     scrollExamples->show();
-    int optimalHeight = height() + 50;
-    optimalHeight = (optimalHeight > 420) ? 420 : optimalHeight;
+
+    // Height for window with examples
+    int optimalHeight = height() + exampleHeight;
+    optimalHeight = (optimalHeight > maxAutoHeight) ? maxAutoHeight
+                                                    : optimalHeight;
     resize(width(), optimalHeight);
 
     wgtExamples->addExample();
     scrollExamples->verticalScrollBar()->
             triggerAction(QAbstractSlider::SliderToMaximum);
-    if (!wgtExamples->canAdd()) {
+	    
+    // If we cannot add another example
+    if (!wgtExamples->canAdd())
         btnAddExample->setEnabled(false);
-    }
 }
 
 void NewEditCardDialog::switchPluralGender(int cat)
 {
+    // If the word is noun, show plural and gender fields, otherwise hide them
     if (cat == (int)LC_Noun) {
         txtPlural->show();
         cmbGender->show();
@@ -100,7 +115,7 @@ void NewEditCardDialog::switchPluralGender(int cat)
 
 void NewEditCardDialog::createInterface()
 {
-    resize(550, 250);
+    resize(defaultWidth, defaultHeight);
     txtWord = new QLineEdit();
 
     txtTranscription = new QLineEdit();
@@ -143,19 +158,19 @@ void NewEditCardDialog::createInterface()
             SLOT(switchPluralGender(int)));
     switchPluralGender(0);
 
-    QVBoxLayout* hLayout = new QVBoxLayout();
+    QVBoxLayout *hLayout = new QVBoxLayout();
     hLayout->addLayout(fLayout);
     hLayout->addWidget(scrollExamples);
 
-    QGroupBox* grBox = new QGroupBox(windowTitle());
+    QGroupBox *grBox = new QGroupBox(windowTitle());
     grBox->setLayout(hLayout);
 
-    QVBoxLayout* hButtonsLayout = new QVBoxLayout();
+    QVBoxLayout *hButtonsLayout = new QVBoxLayout();
     hButtonsLayout->addWidget(btnOk);
     hButtonsLayout->addWidget(btnCancel);
     hButtonsLayout->addStretch(1);
 
-    QHBoxLayout* mainLayout = new QHBoxLayout();
+    QHBoxLayout *mainLayout = new QHBoxLayout();
     mainLayout->addWidget(grBox);
     mainLayout->addLayout(hButtonsLayout);
 
@@ -164,6 +179,7 @@ void NewEditCardDialog::createInterface()
 
 void NewEditCardDialog::fillForm()
 {
+    // Filling the form with the word card's contents
     txtWord->setText(mNewCard.word());
     txtTranscription->setText(mNewCard.transcription());
     txtTranslation->setText(mNewCard.translation());

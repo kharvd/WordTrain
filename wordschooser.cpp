@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -29,42 +29,43 @@
 #include "wordschooser.h"
 #include "utilities.h"
 
-WordsChooser::WordsChooser(const WordsPtrSet & words, bool random,
+WordsChooser::WordsChooser(const WordsPtrSet & cards, bool random,
                            bool includeLearned, int number)
 {
+    // Init PRNG
     qsrand(time(0));
 
-    mWords = words;
+    mCards = cards;
 
-    if (random) {
-        shuffle();
-    }
+    if (random)
+        mCards = shuffleContainer(mCards, mCards.size());
 
-    mWords = getFirstNOf(number, includeLearned);
+    mCards = getFirstN(number, includeLearned);
 }
 
-WordsPtrSet WordsChooser::getWords()
+WordsPtrSet WordsChooser::getCards()
 {
-    return mWords;
+    return mCards;
 }
 
-void WordsChooser::shuffle()
-{
-    mWords = shuffleContainer(mWords, mWords.size());
-}
-
-WordsPtrSet WordsChooser::getFirstNOf(int number, bool includeLearned)
+WordsPtrSet WordsChooser::getFirstN(int number, bool includeLearned)
 {
     WordsPtrSet tmp;
-    number = (number == -1) ? mWords.size() : number;
+
+    // -1 means all words
+    number = (number == -1) ? mCards.size() : number;
 
     QSettings settings;
     int corrAnsForLearned = settings.value("corr_answers", 10).toInt();
 
-    for (int i = 0, n = 0; (i < mWords.size()) && (n < number); i++) {
-        if (!(!includeLearned && mWords.at(i)->numCorrectAnswers()
-                                 / corrAnsForLearned == 1)) {
-            tmp.push_back(mWords.at(i));
+    // i goes through all elements of list, n counts 'number'
+    for (int i = 0, n = 0; (i < mCards.size()) && (n < number); i++) {
+        bool learned = (mCards.at(i)->numCorrectAnswers() / corrAnsForLearned
+                       == 1);
+
+        // If we include learned words or word is not learned
+        if (includeLearned || !learned) {
+            tmp.push_back(mCards.at(i));
             n++;
         }
     }

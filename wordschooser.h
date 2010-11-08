@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -31,18 +31,21 @@
 
 #include "wordscard.h"
 
-// Class for choosing words to be tested.
+// Utility class for choosing words to be tested.
 class WordsChooser
 {
 public:
-    WordsChooser(const WordsPtrSet & words, bool random = true,
+    WordsChooser(const WordsPtrSet & cards, bool random = true,
                  bool includeLearned = true, int number = -1);
-    WordsPtrSet getWords();
-private:
-    void shuffle();
-    WordsPtrSet getFirstNOf(int number, bool includeLearned);
 
-    WordsPtrSet mWords;
+    // Returns chosen set of cards
+    WordsPtrSet getCards();
+
+private:
+    // Returns first N elements from mCards
+    WordsPtrSet getFirstN(int number, bool includeLearned);
+
+    WordsPtrSet mCards;
 };
 
 #endif // WORDSCHOOSER_H

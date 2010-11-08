@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -27,6 +27,9 @@
 ******************************************************************************/
 
 #include "answerwidget.h"
+
+#include <QLabel>
+#include <QPixmap>
 
 AnswerWidget::AnswerWidget(QWidget *parent) :
     QWidget(parent)

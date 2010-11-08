@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -27,6 +27,11 @@
 ******************************************************************************/
 
 #include "multianswerwidget.h"
+
+#include <QRadioButton>
+#include <QLayout>
+#include <QButtonGroup>
+#include <QLabel>
 
 MultiAnswerWidget::MultiAnswerWidget(QWidget *parent) :
     AnswerWidget(parent)
@@ -60,17 +65,19 @@ void MultiAnswerWidget::createRadios()
 
 QString MultiAnswerWidget::getAnswer()
 {
-    if (grpAnswers->checkedId() == -1) {
-        return "";
-    }
-    return mAnswers.at(grpAnswers->checkedId());
+    if (grpAnswers->checkedId() != -1)
+        return mAnswers.at(grpAnswers->checkedId());
+
+    return "";
 }
 
 void MultiAnswerWidget::clear()
 {
     QLayoutItem *child;
     QRadioButton *btn;
-    while ((child = ltRadios->takeAt(0)) != 0) {
+
+    // We take first 'child' and remove it from the layout
+    while ((child = ltRadios->takeAt(0))) {
         btn = qobject_cast<QRadioButton *>(child->widget());
         Q_ASSERT(btn);
         grpAnswers->removeButton(btn);

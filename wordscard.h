@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.8.5 -- Foreign words trainer
+** WordTrain 0.9 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -29,11 +29,7 @@
 #ifndef WORDSCARD_H
 #define WORDSCARD_H
 
-#include <QString>
-#include <QVector>
-#include <QPair>
-#include <QStringList>
-#include <QCoreApplication>
+#include <QtCore>
 
 class WordCard;
 
@@ -57,17 +53,21 @@ enum Gender {
     Gen_None, Gen_Masculine, Gen_Femenine, Gen_Neuter, Gen_Common
 };
 
-/* Words card class */
+/* Word card class */
 class WordCard
 {
     // For using 'tr()'
     Q_DECLARE_TR_FUNCTIONS(WordCard)
+
 public:
     /* Constructors */
     WordCard():
-            mNumCorrectAnswers(0), mGender(Gen_None), mCategory(LC_None) {}
+        mGender(Gen_None), mCategory(LC_None), mNumCorrectAnswers(0) {}
 
-    /* Mutators */
+    /* Operators */
+    bool operator==(const WordCard &card);
+
+    /* Setters */
     void setWord(const QString & word);
     void setTranscription(const QString & transcription);
     void setTranslation(const QString & translation);
@@ -96,27 +96,29 @@ public:
     const Example exampleAt(int index) const { return mExamples[index]; }
     const Examples examples() const { return mExamples; }
     int examplesSize() const { return mExamples.size(); }
-    // Returns string interpretations of LexicalCategory enum values
-    static QStringList lexCategoriesStrings();
-    static QString lexCategoriesString(LexicalCategory cat);
-    // String interpretations of Gender enum values
-    static QStringList genderStrings();
-    static QString genderString(Gender gen);
-
-    // Returns short string interpretations of LexicalCategory enum values
-    static QStringList lexCategoriesShortStrings();
-    static QString lexCategoriesShortString(LexicalCategory cat);
-    // String short interpretations of Gender enum values
-    static QStringList genderShortStrings();
-    static QString genderShortString(Gender gen);
 
     // Returns short string interpretations of LexicalCategory
     QString lexCategoriesShortString() const;
     // String short interpretations of Gender
     QString genderShortString() const;
 
+    // Returns string representations of LexicalCategory enum values
+    static QStringList lexCategoriesStrings();
+    static QString lexCategoriesString(LexicalCategory cat);
+
+    // String representations of Gender enum values
+    static QStringList genderStrings();
+    static QString genderString(Gender gen);
+
+    // Returns short string representations of LexicalCategory enum values
+    static QStringList lexCategoriesShortStrings();
+    static QString lexCategoriesShortString(LexicalCategory cat);
+
+    // String short representations of Gender enum values
+    static QStringList genderShortStrings();
+    static QString genderShortString(Gender gen);
+
 private:
-    unsigned int mNumCorrectAnswers;
     QString mWord;
     Gender mGender;
     LexicalCategory mCategory;
@@ -124,6 +126,7 @@ private:
     QString mTranslation;
     QString mPlural;
     Examples mExamples;
+    unsigned int mNumCorrectAnswers;
 };
 
 #endif // WORDSCARD_H
