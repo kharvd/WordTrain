@@ -67,7 +67,7 @@ QuizDialog::QuizDialog(WordsSet *cards, ChoiceMode choice, HideMode hide,
 
 void QuizDialog::constructor(ChoiceMode choice, HideMode hide)
 {
-    qsrand(time(0));
+    qsrand(time(NULL));
     mCorrectAnswers = 0;
     mCardsNumber = mCards.size();
     mAnswered = false;

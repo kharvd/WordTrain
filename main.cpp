@@ -67,5 +67,9 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
+    // Getting command-line argument, if filename passed, load file
+    if (a.arguments().size() > 1)
+        w.loadFile(a.arguments().at(1));
+
     return a.exec();
 }

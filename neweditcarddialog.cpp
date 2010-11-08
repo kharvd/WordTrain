@@ -91,7 +91,7 @@ void NewEditCardDialog::addExample() {
     wgtExamples->addExample();
     scrollExamples->verticalScrollBar()->
             triggerAction(QAbstractSlider::SliderToMaximum);
-
+	    
     // If we cannot add another example
     if (!wgtExamples->canAdd())
         btnAddExample->setEnabled(false);

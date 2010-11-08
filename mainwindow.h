@@ -52,6 +52,9 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    // If import is true, we append existing file to current
+    void loadFile(const QString & fileName, bool import = false);
+
 protected:
     // On close
     void closeEvent(QCloseEvent *event);
@@ -101,8 +104,6 @@ private:
     close it. */
     bool maybeSave();
 
-    // If import is true, we append existing file to current
-    void loadFile(const QString & fileName, bool import = false);
     bool saveFile(const QString & fileName);
     void setCurrentFile(const QString &fileName);
     bool isFileOpened();
