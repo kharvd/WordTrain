@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[ru]=wordtrain
+Name[ru]=WordTrain
+Exec=wordtrain
+Comment[ru]=Simple program for learning words
+Name=WordTrain
+Comment=Simple program for learning words
+Icon=wordtrain
+Categories=Education;

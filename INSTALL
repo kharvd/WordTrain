@@ -1,0 +1,5 @@
+This is Qt4 project. Use standard Qt installation procedure:
+
+qmake wordtrain.pro
+make
+make install

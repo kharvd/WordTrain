@@ -1,0 +1,4 @@
+0.9 Released 9 November 2010
+    * Added search in the set
+    * 'Refactored' and commented code for a bit
+    * Now one can pass filename as command-line argument
