@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wordsset>
+    <wordcard>
+        <word value="propose"/>
+        <transcription value="prə-ˈpōz"/>
+        <translation value="предлагать, выдвигать, делать предложение женитьбы"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="2"/>
+        <answers value="5"/>
+        <example>
+            <ex>Jack proposed going to the cinema.</ex>
+            <tr>Джек предложил сходить в кино.</tr>
+        </example>
+        <example>
+            <ex>The scientists proposed a new theory.</ex>
+            <tr>Ученые предложили новую теорию</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="ecstatic"/>
+        <transcription value="ek-ˈsta-tik"/>
+        <translation value="восторженный, в экстазе"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="3"/>
+        <answers value="5"/>
+        <example>
+            <ex>He was ecstatic when he heard that he was going to be a father.</ex>
+            <tr>Он был в восторге, когда услышал, что станет отцом.</tr>
+        </example>
+        <example>
+            <ex>Everyone was ecstatic at the news of the couple's engagement.</ex>
+            <tr>Все были в восторге от новости об их помолвке.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="fine"/>
+        <transcription value="ˈfīn"/>
+        <translation value="штраф, пеня"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="5"/>
+        <example>
+            <ex>I got a $100 fine for speeding.</ex>
+            <tr>Я получил штраф в $100 за превышение скорости.</tr>
+        </example>
+        <example>
+            <ex>He had to pay a hefty fine.</ex>
+            <tr>Ему пришлось заплатить крупный штраф.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="livid"/>
+        <transcription value="ˈli-vəd"/>
+        <translation value="синевато-серый, синевато-багровый, в ярости"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="3"/>
+        <answers value="4"/>
+        <example>
+            <ex>The boss was livid when yet another deadline was missed.</ex>
+            <tr>Босс был в ярости, когда очередной дедлайн был пропущен.</tr>
+        </example>
+        <example>
+            <ex>Her face was livid with fear.</ex>
+            <tr>Ее лицо было мертвенно-бледным от страха.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="evolve"/>
+        <transcription value="i-ˈvälv"/>
+        <translation value="развиваться, эволюционировать"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="2"/>
+        <answers value="4"/>
+        <example>
+            <ex>Her company has evolved from a hobby into a thriving business.</ex>
+            <tr>Ее компания развилась из хобби в процветающий бизнес</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="thrive"/>
+        <transcription value="ˈthrīv"/>
+        <translation value="процветать, преуспевать, цвести"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="2"/>
+        <answers value="3"/>
+        <example>
+            <ex>These plants thrive with relatively little sunlight.</ex>
+            <tr>Эти растения цветут при относительно слабом освещении.</tr>
+        </example>
+        <example>
+            <ex>Going to a school for gifted students will help him thrive as a musical prodigy</ex>
+            <tr>Посещение школы для одаренных поможет ему преуспеть как музыкальному гению.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="burglary"/>
+        <transcription value="'bərglərē"/>
+        <translation value="кража со взломом"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="22"/>
+        <example>
+            <ex>Merely a common burglary, you say?</ex>
+            <tr>Значит, простая кража со взломом, вы говорите?</tr>
+        </example>
+        <example>
+            <ex>The professional shook his head over our confessed burglary.</ex>
+            <tr>Cыщик покачал головой, услышав исповедь о краже со взломом.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="fare"/>
+        <transcription value="'fer"/>
+        <translation value="плата за проезд"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="2"/>
+        <answers value="8"/>
+        <example>
+            <ex>The fare was nothing like as much as that</ex>
+            <tr>Мы заплатили гораздо меньшую сумму за проезд</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="redundant"/>
+        <transcription value="rĭ-dŭn'dənt"/>
+        <translation value="ненужный, излишний"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="3"/>
+        <answers value="4"/>
+    </wordcard>
+    <wordcard>
+        <word value="forgery"/>
+        <transcription value="'fȯrj-rē"/>
+        <translation value="подделка"/>
+        <plural value="forgeries"/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="5"/>
+        <example>
+            <ex>That is a cheap forgery, not an authentic Ming Dynasty vase</ex>
+            <tr>Это дешевая подделка, а не ваза династии Минь</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="demand"/>
+        <transcription value="di-'mand"/>
+        <translation value="требование, спрос"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="6"/>
+        <example>
+            <ex>The workers said they would not end the strike until their demands were met.</ex>
+            <tr>Рабочие сказали, что они не прекратят забастовку, пока их требования не будут выполнены</tr>
+        </example>
+        <example>
+            <ex>The demand for low-income housing is increasing as the economy gets worse.</ex>
+            <tr>Спрос на дешевое жилье растет, в то время как экономическая ситуация ухудшается</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="receipt"/>
+        <transcription value="ri-'sēt"/>
+        <translation value="получение, чек"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="7"/>
+        <example>
+            <ex>Keep your receipt in case you need to return anything.</ex>
+            <tr>Сохраняйте чек, чтобы в случае чего можно было бы вернуть товар</tr>
+        </example>
+        <example>
+            <ex>The form should be completed and returned within 30 days of receipt.</ex>
+            <tr>Форма должна быть заполнена и отправлена в течение 30 дней с момента получения</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="plead"/>
+        <transcription value="'plēd"/>
+        <translation value="умолять, защищать в суде"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="2"/>
+        <answers value="7"/>
+        <example>
+            <ex>He begged and pleaded, but she would not change her mind.</ex>
+            <tr>Он просил и умолял, но она была непреклонна</tr>
+        </example>
+        <example>
+            <ex>She couldn't afford a lawyer to plead her case.</ex>
+            <tr>Она не могла позволить себе адвоката для защиты в ее деле</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="smuggle"/>
+        <transcription value="'smə-gəl"/>
+        <translation value="провозить контрабандой, незаконно вывозить"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="2"/>
+        <answers value="8"/>
+        <example>
+            <ex>He was arrested for smuggling drugs into the country.</ex>
+            <tr>Он был арестован за контрабанду наркотиков.</tr>
+        </example>
+        <example>
+            <ex>We smuggled his favorite sandwich past the nurse.</ex>
+            <tr>Мы тайком пронесли мимо медсестры его любимый сэндвич</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="Wasser"/>
+        <transcription value="'vase"/>
+        <translation value="вода"/>
+        <plural value="Wässer"/>
+        <gender value="3"/>
+        <category value="1"/>
+        <answers value="8"/>
+        <example>
+            <ex>Wenn es heiß ist, trinke ich gern Wasser.</ex>
+            <tr>Когда жарко, я с удовольствием пью воду</tr>
+        </example>
+        <example>
+            <ex>Er ging hinunter ans Wasser.</ex>
+            <tr>Он спустился к воде</tr>
+        </example>
+        <example>
+            <ex>Mein Vater ließ das Boot zu Wasser.</ex>
+            <tr>Мой отец спускает лодку на воду</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="fed-up"/>
+        <transcription value="ˈfed ˈəp"/>
+        <translation value="уставший, сытый по горло"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="3"/>
+        <answers value="5"/>
+        <example>
+            <ex>Fed up with the noise and bustle of the big city</ex>
+            <tr>Уставший от шума и суеты большого города</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="bustle"/>
+        <transcription value="ˈbə-səl"/>
+        <translation value="суета, суетиться"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="0"/>
+        <answers value="7"/>
+        <example>
+            <ex>She bustled around the kitchen getting ready for dinner guests.</ex>
+            <tr>Она суетилась на кухне, готовясь к приходу гостей.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="apprehensive"/>
+        <transcription value="ˌa-pri-ˈhen(t)-siv"/>
+        <translation value="опасающийся, озабоченный о будущем, понятливый, сообразительный"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="3"/>
+        <answers value="2"/>
+    </wordcard>
+    <wordcard>
+        <word value="maintain"/>
+        <transcription value="mān-ˈtān"/>
+        <translation value="поддерживать, сохранять"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="2"/>
+        <answers value="1"/>
+        <example>
+            <ex>He has found it difficult to maintain a healthy weight.</ex>
+            <tr>Он обнаружил, что непросто держать вес в норме.</tr>
+        </example>
+        <example>
+            <ex>She still maintains a close relationship with her college roommate.</ex>
+            <tr>Она все еще поддерживает близкие отношения с ее соседкой в колледже.</tr>
+        </example>
+    </wordcard>
+</wordsset>

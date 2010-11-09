@@ -1,0 +1,5 @@
+Makefile
+src/Makefile
+bin
+tmp
+wordtrain.pro.user
