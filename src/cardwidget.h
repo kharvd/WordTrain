@@ -34,6 +34,8 @@
 
 class QTextEdit;
 
+
+
 /*
 **  Widget for displaying contents of the card. Has two 'sides' - 'face' with the
 **  word and it's transcription, and 'back' with the full info about the word
@@ -43,19 +45,39 @@ class CardWidget : public QWidget
     Q_OBJECT
 
 public:
-    enum CardSide { Face = 0, Back };
+    enum CardElement {
+        Nothing = 0,
+        Word = 0x1,
+        Transcription = 0x2,
+        Translation = 0x4,
+        Category = 0x8,
+        Gender = 0x10,
+        Plural = 0x20,
+        Examples = 0x40,
+        ExamplesTranslation = 0x80,
+
+        FaceDefault = Word | Transcription | Category | Gender,
+        BackNoForeign = Translation | ExamplesTranslation,
+        BackAll = Translation | ExamplesTranslation | Word | Transcription
+                  | Category | Gender | Plural | Examples
+    };
+
+    Q_DECLARE_FLAGS(CardElements, CardElement)
+
+    enum CardSide {
+        Face = 0,
+        Back
+    };
 
     explicit CardWidget(QWidget *parent = 0);
 
-    // showForeign - if true, shows 'word', 'plural', 'transcription' etc on
-    // the back side
     void showCard(const WordCard& card, CardSide side = Face,
-                  bool showForeign = true);
-    void showCard(CardSide side = Face, bool showForeign = true);
+                  CardElements elements = BackAll);
+    void showCard(CardSide side = Face, CardElements elements = BackAll);
 
 public slots:
     // Shows other side of the card
-    void showOtherSide();
+    void showOtherSide(CardElements elements = BackAll);
 
 private:
     static const int defaultWidth = 370;
@@ -63,10 +85,10 @@ private:
 
     // Get CSS from resource
     QString getCSS();
-    void showFace(const WordCard& card);
+    void showFace(const WordCard& card, CardElements elements);
 
     // showForeign - if true, shows 'word', 'plural', 'transcription' etc
-    void showBack(const WordCard& card, bool showForeign);
+    void showBack(const WordCard& card, CardElements elements);
 
     CardSide mSide;
     WordCard mCard;

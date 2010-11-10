@@ -1,5 +1,6 @@
 Makefile
 src/Makefile
+deb
 bin
 tmp
 wordtrain.pro.user

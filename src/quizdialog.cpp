@@ -166,13 +166,19 @@ void QuizDialog::setCurrentCard(int index)
     wgtAnswer->clear();
     switchButtons();
 
+    CardWidget::CardElements WOCategory = CardWidget::BackAll;
+    WOCategory &= ~CardWidget::Category;
+
+    Qt::Alignment al = Qt::AlignBottom | Qt::AlignHCenter;
     // What is to be hidden?
     switch (mHideMode) {
     case Hide_Translation:
-        cardText->showCard(*mCards.at(index));
+        // Don't show category
+        cardText->showCard(*mCards.at(index), CardWidget::Face, WOCategory);
         break;
     case Hide_Word:
-        cardText->showCard(*mCards.at(index), CardWidget::Back, false);
+        cardText->showCard(*mCards.at(index), CardWidget::Back,
+                           CardWidget::BackNoForeign);
         break;
     case Hide_Random:
         mHideTranslation = qrand() % 2;
@@ -181,7 +187,11 @@ void QuizDialog::setCurrentCard(int index)
                                     ? CardWidget::Face
                                     : CardWidget::Back;
 
-        cardText->showCard(*mCards.at(index), side, mHideTranslation);
+        CardWidget::CardElements elements = mHideTranslation
+                                            ? WOCategory
+                                            : CardWidget::BackNoForeign;
+
+        cardText->showCard(*mCards.at(index), side, elements);
         break;
     }
 
@@ -213,7 +223,7 @@ void QuizDialog::nextCheckWord()
             if (mHideTranslation)
                 cardText->showOtherSide();
             else
-                cardText->showCard(CardWidget::Back, true);
+                cardText->showCard(CardWidget::Back, CardWidget::BackAll);
 
             checkAnswer();
 
@@ -266,7 +276,7 @@ void QuizDialog::dontKnow()
     if (mHideTranslation)
         cardText->showOtherSide();
     else
-        cardText->showCard(CardWidget::Back, true);
+        cardText->showCard(CardWidget::Back, CardWidget::BackAll);
 
     wgtAnswer->setCorrect(false);
     mAnswered = true;

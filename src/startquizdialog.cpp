@@ -79,7 +79,7 @@ void StartQuizDialog::createInterface()
 
     chckAllWords = new QCheckBox(tr("All words"));
     connect(chckAllWords, SIGNAL(toggled(bool)), SLOT(toggleTxtNumWords(bool)));
-    chckAllWords->setChecked(false);
+    chckAllWords->setChecked(true);
 
     QHBoxLayout *ltNumWords = new QHBoxLayout;
     ltNumWords->addWidget(lblNumWords);

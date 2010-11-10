@@ -294,7 +294,9 @@ void MainWindow::startQuiz()
                                                      dlg->getChoiceMode(),
                                                      dlg->getHideMode(),
                                                      getPointersSet());
+                tableWords->hide();
                 quizDlg->exec();
+                tableWords->show();
 
                 if (quizDlg->isModified()) {
                     setWindowModified(true);

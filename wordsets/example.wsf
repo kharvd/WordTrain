@@ -41,7 +41,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="5"/>
+        <answers value="6"/>
         <example>
             <ex>I got a $100 fine for speeding.</ex>
             <tr>Я получил штраф в $100 за превышение скорости.</tr>
@@ -58,7 +58,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="4"/>
+        <answers value="5"/>
         <example>
             <ex>The boss was livid when yet another deadline was missed.</ex>
             <tr>Босс был в ярости, когда очередной дедлайн был пропущен.</tr>
@@ -105,7 +105,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="22"/>
+        <answers value="23"/>
         <example>
             <ex>Merely a common burglary, you say?</ex>
             <tr>Значит, простая кража со взломом, вы говорите?</tr>
@@ -122,7 +122,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="8"/>
+        <answers value="9"/>
         <example>
             <ex>The fare was nothing like as much as that</ex>
             <tr>Мы заплатили гораздо меньшую сумму за проезд</tr>
@@ -157,14 +157,14 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="6"/>
+        <answers value="0"/>
         <example>
             <ex>The workers said they would not end the strike until their demands were met.</ex>
             <tr>Рабочие сказали, что они не прекратят забастовку, пока их требования не будут выполнены</tr>
         </example>
         <example>
             <ex>The demand for low-income housing is increasing as the economy gets worse.</ex>
-            <tr>Спрос на дешевое жилье растет, в то время как экономическая ситуация ухудшается</tr>
+            <tr>Спрос на дешевое жилье растет, так как экономическая ситуация ухудшается</tr>
         </example>
     </wordcard>
     <wordcard>
@@ -208,7 +208,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="8"/>
+        <answers value="9"/>
         <example>
             <ex>He was arrested for smuggling drugs into the country.</ex>
             <tr>Он был арестован за контрабанду наркотиков.</tr>
@@ -246,7 +246,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="5"/>
+        <answers value="6"/>
         <example>
             <ex>Fed up with the noise and bustle of the big city</ex>
             <tr>Уставший от шума и суеты большого города</tr>
