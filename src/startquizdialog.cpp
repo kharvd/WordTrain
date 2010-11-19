@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9 -- Foreign words trainer
+** WordTrain 0.9.1 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -79,7 +79,7 @@ void StartQuizDialog::createInterface()
 
     chckAllWords = new QCheckBox(tr("All words"));
     connect(chckAllWords, SIGNAL(toggled(bool)), SLOT(toggleTxtNumWords(bool)));
-    chckAllWords->setChecked(false);
+    chckAllWords->setChecked(true);
 
     QHBoxLayout *ltNumWords = new QHBoxLayout;
     ltNumWords->addWidget(lblNumWords);

@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9 -- Foreign words trainer
+** WordTrain 0.9.1 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -34,6 +34,8 @@
 #include <QFile>
 #include <QTextStream>
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(CardWidget::CardElements)
+
 CardWidget::CardWidget(QWidget *parent) :
     QWidget(parent), mSide(Face)
 {
@@ -49,7 +51,7 @@ CardWidget::CardWidget(QWidget *parent) :
 }
 
 void CardWidget::showCard(const WordCard& card, CardSide faceSide,
-                          bool showForeign)
+                          CardElements elements)
 {
     mSide = faceSide;
     mCard = card;
@@ -61,24 +63,24 @@ void CardWidget::showCard(const WordCard& card, CardSide faceSide,
     mHtmlCard.append("</style></head><body style=\"font-size:9pt;\">");
 
     if (mSide == Face)
-        showFace(card);
+        showFace(card, elements);
     else
-        showBack(card, showForeign);
+        showBack(card, elements);
 
     mHtmlCard.append("</body>");
 
     txtCard->setHtml(mHtmlCard);
 }
 
-void CardWidget::showCard(CardSide faceSide, bool showForeign)
+void CardWidget::showCard(CardSide faceSide, CardElements elements)
 {
-    showCard(mCard, faceSide, showForeign);
+    showCard(mCard, faceSide, elements);
 }
 
-void CardWidget::showOtherSide()
+void CardWidget::showOtherSide(CardElements elements)
 {
     mSide = (mSide == Face) ? Back : Face;
-    showCard(mCard, mSide);
+    showCard(mCard, mSide, elements);
 }
 
 QString CardWidget::getCSS() {
@@ -92,55 +94,97 @@ QString CardWidget::getCSS() {
     return QString();
 }
 
-void CardWidget::showFace(const WordCard& card)
+void CardWidget::showFace(const WordCard& card, CardElements elements)
 {
+    // Get flags
+    bool word = elements & CardWidget::Word;
+    bool gender = elements & CardWidget::Gender;
+    bool category = elements & CardWidget::Category;
+    bool transcription = elements & CardWidget::Transcription;
+
     // SHIT: Trying to align this fucked up QTextEdit
     mHtmlCard.append("<br />");
     mHtmlCard.append("<br />");
     mHtmlCard.append("<br />");
     mHtmlCard.append("<br />");
 
-    // Word and its gender
-    mHtmlCard.append(QString("<p class=\"word\" align=\"center\"><b>%1</b>"
-                            "<span style=\"font-size:12pt\"> %2</span></p>")
-                    .arg(card.word(), card.genderShortString()));
+    if (word) {
+        // Word
+        mHtmlCard.append(QString("<p class=\"word\" align=\"center\"><b>%1</b>")
+                        .arg(card.word()));
+    }
+
+    if (gender) {
+        // Gender
+        mHtmlCard.append(QString("<span style=\"font-size:12pt\"> %1</span></p>")
+                        .arg(card.genderShortString()));
+    } else if (word) {
+        mHtmlCard.append(QString("</p>")
+                        .arg(card.genderShortString()));
+    }
 
 
-    // Category
-    mHtmlCard.append(QString("<p class=\"category\" align=\"center\">%1</p>")
-                    .arg(card.lexCategoriesShortString()));
 
-    // Transcription
-    if (!card.transcription().isEmpty()) {
+    if (category) {
+        // Category
+        mHtmlCard.append(QString("<p class=\"category\" align=\"center\">%1</p>")
+                        .arg(card.lexCategoriesShortString()));
+    }
+
+    if (transcription && !card.transcription().isEmpty()) {
         mHtmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
-                                "[%1]</p>")
-                        .arg(card.transcription()));
+                                 "[%1]</p>")
+                         .arg(card.transcription()));
     }
 }
 
-void CardWidget::showBack(const WordCard& card, bool showForeign)
+void CardWidget::showBack(const WordCard& card, CardElements elements)
 {
-    if (showForeign) {
-        // Word and its gender
-        mHtmlCard.append(QString("<p class=\"word\" align=\"center\"><b>%1</b>"
-                                "<span style=\"font-size:12pt\"> %2</span></p>")
-                .arg(card.word(), card.genderShortString()));
+    // Get flags
+    bool word = elements & CardWidget::Word;
+    bool gender = elements & CardWidget::Gender;
+    bool category = elements & CardWidget::Category;
+    bool transcription = elements & CardWidget::Transcription;
+    bool plural = elements & CardWidget::Plural;
+    bool translation = elements & CardWidget::Translation;
+    bool examples = elements & CardWidget::Examples;
+    bool examplesTranslation = elements & CardWidget::ExamplesTranslation;
 
+    if (word) {
+        // Word
+        mHtmlCard.append(QString("<p class=\"word\" align=\"center\"><b>%1</b>")
+                        .arg(card.word()));
+    }
+
+    if (gender) {
+        // Gender
+        mHtmlCard.append(QString("<span style=\"font-size:12pt\"> %1</span></p>")
+                        .arg(card.genderShortString()));
+    } else if (word) {
+        mHtmlCard.append(QString("</p>")
+                        .arg(card.genderShortString()));
+    }
+
+    if (plural) {
         // Plural
         mHtmlCard.append(QString("<p class=\"plural\" align=\"center\">%1</p>")
                 .arg(card.plural()));
+    }
 
+    if (category) {
         // Category
         mHtmlCard.append(QString("<p class=\"category\" align=\"center\">%1</p>")
                 .arg(card.lexCategoriesShortString()));
+    }
 
-        // Transcription
-        if (!card.transcription().isEmpty()) {
-            mHtmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
-                                    "[%1]</p>")
-                    .arg(card.transcription()));
-        }
-    } else {
+    if (transcription && !card.transcription().isEmpty()) {
+        mHtmlCard.append(QString("<p class=\"transcription\" align=\"center\">"
+                                 "[%1]</p>")
+                         .arg(card.transcription()));
+    }
+
+    // If we don't want to show foreign words, align contents
+    if (!word) {
         // SHIT: Trying to align this fucked up QTextEdit
         mHtmlCard.append("<br />");
         mHtmlCard.append("<br />");
@@ -148,27 +192,33 @@ void CardWidget::showBack(const WordCard& card, bool showForeign)
         mHtmlCard.append("<br />");
     }
 
+    if (translation) {
+        // Translation
+        mHtmlCard.append(QString("<p class=\"translation\" align=\"center\">"
+                                "<b>%1</b></p>")
+                .arg(card.translation()));
+    }
 
-    // Translation
-    mHtmlCard.append(QString("<p class=\"translation\" align=\"center\">"
-                            "<b>%1</b></p>")
-            .arg(card.translation()));
 
     // Examples
-    if (card.examplesSize()) {
+    if (examples && card.examplesSize()) {
         mHtmlCard.append(QString("<p class=\"examples\">%1</p>")
                         .arg(tr("Examples:")));
     }
 
-    for (int i = 0; i < card.examplesSize(); i++) {
-        if (showForeign) {
-            mHtmlCard.append(QString("<p class=\"example\">%1. %2<br />— %3</p>")
-                            .arg(i + 1).arg(card.exampleAt(i).first,
-                                        card.exampleAt(i).second));
-        } else {
-            mHtmlCard.append(QString("<p class=\"example\">%1. %2</p>")
-                            .arg(i + 1).arg(card.exampleAt(i).second));
+    if (examples || examplesTranslation) {
+        for (int i = 0; i < card.examplesSize(); i++) {
+            if (examples && examplesTranslation) {
+                mHtmlCard.append(QString("<p class=\"example\">%1. %2<br />— %3</p>")
+                                .arg(i + 1).arg(card.exampleAt(i).first,
+                                            card.exampleAt(i).second));
+            } else if (!examples && examplesTranslation) {
+                mHtmlCard.append(QString("<p class=\"example\">%1. %2</p>")
+                                .arg(i + 1).arg(card.exampleAt(i).second));
+            } else if (examples && !examplesTranslation) {
+                mHtmlCard.append(QString("<p class=\"example\">%1. %2</p>")
+                                .arg(i + 1).arg(card.exampleAt(i).first));
+            }
         }
-
     }
 }

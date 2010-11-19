@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9 -- Foreign words trainer
+** WordTrain 0.9.1 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -42,6 +42,7 @@ class QAction;
 class QMenu;
 class QMenuBar;
 class QLineEdit;
+class GettingStartedWidget;
 
 // Main window class.
 class MainWindow : public QMainWindow
@@ -87,6 +88,7 @@ private:
     static const int defaultYPosition = 200;
 
     // Creating interface
+    void createStartingWidget();
     void createTableWidget();
     void createActions();
     void createMenus();
@@ -140,6 +142,8 @@ private:
 
     // Path to current file
     QString mCurrentFile;
+
+    GettingStartedWidget *wgtGettingStarted;
 
     // Main widget - table with words of the set
     QTableWidget *tableWords;

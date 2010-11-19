@@ -41,7 +41,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="5"/>
+        <answers value="6"/>
         <example>
             <ex>I got a $100 fine for speeding.</ex>
             <tr>Я получил штраф в $100 за превышение скорости.</tr>
@@ -58,7 +58,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="4"/>
+        <answers value="6"/>
         <example>
             <ex>The boss was livid when yet another deadline was missed.</ex>
             <tr>Босс был в ярости, когда очередной дедлайн был пропущен.</tr>
@@ -75,7 +75,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="4"/>
+        <answers value="5"/>
         <example>
             <ex>Her company has evolved from a hobby into a thriving business.</ex>
             <tr>Ее компания развилась из хобби в процветающий бизнес</tr>
@@ -105,7 +105,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="22"/>
+        <answers value="24"/>
         <example>
             <ex>Merely a common burglary, you say?</ex>
             <tr>Значит, простая кража со взломом, вы говорите?</tr>
@@ -122,7 +122,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="8"/>
+        <answers value="9"/>
         <example>
             <ex>The fare was nothing like as much as that</ex>
             <tr>Мы заплатили гораздо меньшую сумму за проезд</tr>
@@ -135,7 +135,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="4"/>
+        <answers value="5"/>
     </wordcard>
     <wordcard>
         <word value="forgery"/>
@@ -157,14 +157,14 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="6"/>
+        <answers value="0"/>
         <example>
             <ex>The workers said they would not end the strike until their demands were met.</ex>
             <tr>Рабочие сказали, что они не прекратят забастовку, пока их требования не будут выполнены</tr>
         </example>
         <example>
             <ex>The demand for low-income housing is increasing as the economy gets worse.</ex>
-            <tr>Спрос на дешевое жилье растет, в то время как экономическая ситуация ухудшается</tr>
+            <tr>Спрос на дешевое жилье растет, так как экономическая ситуация ухудшается</tr>
         </example>
     </wordcard>
     <wordcard>
@@ -208,7 +208,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="8"/>
+        <answers value="9"/>
         <example>
             <ex>He was arrested for smuggling drugs into the country.</ex>
             <tr>Он был арестован за контрабанду наркотиков.</tr>
@@ -219,34 +219,13 @@
         </example>
     </wordcard>
     <wordcard>
-        <word value="Wasser"/>
-        <transcription value="'vase"/>
-        <translation value="вода"/>
-        <plural value="Wässer"/>
-        <gender value="3"/>
-        <category value="1"/>
-        <answers value="8"/>
-        <example>
-            <ex>Wenn es heiß ist, trinke ich gern Wasser.</ex>
-            <tr>Когда жарко, я с удовольствием пью воду</tr>
-        </example>
-        <example>
-            <ex>Er ging hinunter ans Wasser.</ex>
-            <tr>Он спустился к воде</tr>
-        </example>
-        <example>
-            <ex>Mein Vater ließ das Boot zu Wasser.</ex>
-            <tr>Мой отец спускает лодку на воду</tr>
-        </example>
-    </wordcard>
-    <wordcard>
         <word value="fed-up"/>
         <transcription value="ˈfed ˈəp"/>
         <translation value="уставший, сытый по горло"/>
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="5"/>
+        <answers value="6"/>
         <example>
             <ex>Fed up with the noise and bustle of the big city</ex>
             <tr>Уставший от шума и суеты большого города</tr>
@@ -289,6 +268,58 @@
         <example>
             <ex>She still maintains a close relationship with her college roommate.</ex>
             <tr>Она все еще поддерживает близкие отношения с ее соседкой в колледже.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="indigenous"/>
+        <transcription value="in-ˈdi-jə-nəs"/>
+        <translation value="туземный, природный, врожденный"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="3"/>
+        <answers value="0"/>
+        <example>
+            <ex>There are several indigenous groups that still live in the area.</ex>
+            <tr>В этой области все еще живет несколько групп аборигенов.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="breakthrough"/>
+        <transcription value="ˈbrāk-ˌthrü"/>
+        <translation value="открытие, прорыв, достижение"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+        <example>
+            <ex>The police have announced a breakthrough in the murder case.</ex>
+            <tr>Полиция объявила о прорыве в расследовании дела об убийстве.</tr>
+        </example>
+        <example>
+            <ex>Researchers say they have made a major breakthrough in cancer treatment.</ex>
+            <tr>Исследователи объявили, что они сделали важное открытие в лечении рака.</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="cop-out"/>
+        <transcription value=""/>
+        <translation value="отговорка, уклонение (от обязанностей)"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+    </wordcard>
+    <wordcard>
+        <word value="rehearsal"/>
+        <transcription value="ri-ˈhər-səl"/>
+        <translation value="репетиция"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+        <example>
+            <ex>It's okay to blow your lines in rehearsal.</ex>
+            <tr>На репетиции еще можно путаться в словах.</tr>
         </example>
     </wordcard>
 </wordsset>

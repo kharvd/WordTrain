@@ -26,31 +26,22 @@
 **
 ******************************************************************************/
 
-#ifndef ANSWERWIDGET_H
-#define ANSWERWIDGET_H
+#ifndef GETTINGSTARTEDWIDGET_H
+#define GETTINGSTARTEDWIDGET_H
 
 #include <QWidget>
 
-class QLabel;
-
-// Abstract class for answers in the quiz
-class AnswerWidget : public QWidget
+class GettingStartedWidget : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit AnswerWidget(QWidget *parent = 0);
+    explicit GettingStartedWidget(QWidget *parent = 0);
 
-    // Returns user's answer
-    virtual QString getAnswer() = 0;
-
-    virtual void setCorrect(bool correct);
-
-    // Clears the widget
-    virtual void clear() = 0;
-
-protected:
-    QLabel *imgCorrect;
+signals:
+    void newSet();
+    void openSet();
+    void help();
+    void quit();
 };
 
-#endif // ANSWERWIDGET_H
+#endif // GETTINGSTARTEDWIDGET_H
