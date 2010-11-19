@@ -45,6 +45,7 @@
 #include "neweditcarddialog.h"
 #include "settingsdialog.h"
 #include "aboutdialog.h"
+#include "gettingstartedwidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -54,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     createToolbars();
     createSearchBar();
     createStatusBar();
-    createTableWidget();
+    createStartingWidget();
 
     // "---" means 'empty file'
     setCurrentFile("---");
@@ -74,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
                                                   defaultYPosition)).toPoint();
         QSize size = settings.value("size", QSize(defaultWidth,
                                                   defaultHeight)).toSize();
+        restoreState(settings.value("window_state").toByteArray());
         bool isMax = settings.value("maximized", false).toBool();
         resize(size);
         move(pos);
@@ -126,6 +128,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 
 void MainWindow::newSet()
 {
+    if (!isFileOpened())
+        createTableWidget();
+
     if (maybeSave()) {
         setCurrentFile("");
         setWindowModified(true);
@@ -138,6 +143,7 @@ void MainWindow::newSet()
 
 void MainWindow::openSet()
 {
+
     if (maybeSave()) {
         QString fileName =
                 QFileDialog::getOpenFileName(this, tr("Open set"), "",
@@ -343,7 +349,19 @@ void MainWindow::search(QString str)
     }
 }
 
-void MainWindow::createTableWidget() {
+void MainWindow::createStartingWidget()
+{
+    wgtGettingStarted = new GettingStartedWidget;
+    connect(wgtGettingStarted, SIGNAL(newSet()), SLOT(newSet()));
+    connect(wgtGettingStarted, SIGNAL(openSet()), SLOT(openSet()));
+    connect(wgtGettingStarted, SIGNAL(help()), SLOT(about()));
+    connect(wgtGettingStarted, SIGNAL(quit()), SLOT(close()));
+
+    setCentralWidget(wgtGettingStarted);
+}
+
+void MainWindow::createTableWidget()
+{
     tableWords = new QTableWidget();
 
     tableWords->setColumnCount(4);
@@ -590,6 +608,7 @@ void MainWindow::writeSettings()
             settings.setValue("size", size());
 
         settings.setValue("maximized", isMaximized());
+        settings.setValue("window_state", saveState());
     }
 }
 
@@ -626,6 +645,9 @@ void MainWindow::loadFile(const QString &fileName, bool import)
     QApplication::restoreOverrideCursor();
 #endif
 
+    if (!isFileOpened())
+        createTableWidget();
+
     if (noErrors) {
         if (import) {
             mCards.append(temp);
@@ -635,6 +657,7 @@ void MainWindow::loadFile(const QString &fileName, bool import)
             setCurrentFile(fileName);
             statusBar()->showMessage(tr("File loaded"), 2000);
         }
+
         tableWords->show();
         updateTable(mCards);
         editActionsState();

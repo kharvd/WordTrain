@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     quizdialog.cpp \
     multianswerwidget.cpp \
     settingsdialog.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    gettingstartedwidget.cpp
 HEADERS += mainwindow.h \
     wordscard.h \
     xmlreader.h \
@@ -42,7 +43,8 @@ HEADERS += mainwindow.h \
     multianswerwidget.h \
     utilities.h \
     settingsdialog.h \
-    aboutdialog.h
+    aboutdialog.h \
+    gettingstartedwidget.h
 RESOURCES += resources.qrc
 TRANSLATIONS = wordtrain_de.ts \
                wordtrain_ru.ts
@@ -56,4 +58,3 @@ INSTALLS += target desc icon
 MOC_DIR = ../tmp
 OBJECTS_DIR = ../tmp
 RCC_DIR = ../tmp
-
