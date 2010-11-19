@@ -64,13 +64,13 @@ bool XmlReader::readFile(const QString &fileName)
     file.close();
     if (mReader.hasError()) {
         mErrorMessage = QString("Error: Failed to parse file ")
-                        + qPrintable(fileName)
+                        + qPrintable(fileName) + ": "
                         + qPrintable(mReader.errorString());
         return false;
     } else if (file.error() != QFile::NoError) {
         mErrorMessage = QString("Error: Cannot read file ")
-                        + qPrintable(fileName)
-                        + ": " + qPrintable(file.errorString());
+                        + qPrintable(fileName) + ": "
+                        + qPrintable(file.errorString());
         return false;
     }
     return true;
