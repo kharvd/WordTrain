@@ -1,3 +1,8 @@
+0.9.1 Released 19 November 2010
+    * Added 'Getting started'
+    * Changed source code directory structure
+    * Small bugfixes
+
 0.9 Released 9 November 2010
     * Added search in the set
     * 'Refactored' and commented code for a bit
