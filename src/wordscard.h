@@ -62,7 +62,8 @@ class WordCard
 public:
     /* Constructors */
     WordCard():
-        mGender(Gen_None), mCategory(LC_None), mNumCorrectAnswers(0) {}
+        mGender(Gen_None), mCategory(LC_None), mCorrectAnswers
+(0) {}
 
     /* Operators */
     bool operator==(const WordCard &card);
@@ -76,7 +77,8 @@ public:
     void setGender(Gender gender);
     void setCategory(int category);
     void setGender(int gender);
-    void setNumCorrectAnswers(unsigned int num);
+    void setCorrectAnswers
+(unsigned int num);
     void incCorrectAnswers();
     void setExamples(const Examples & examples);
     void setExampleAt(int index, const Example & example);
@@ -92,7 +94,9 @@ public:
     const QString plural() const { return mPlural; }
     LexicalCategory category() const { return mCategory; }
     Gender gender() const { return mGender; }
-    unsigned int numCorrectAnswers() const { return mNumCorrectAnswers; }
+    unsigned int correctAnswers
+() const { return mCorrectAnswers
+; }
     const Example exampleAt(int index) const { return mExamples[index]; }
     const Examples examples() const { return mExamples; }
     int examplesSize() const { return mExamples.size(); }
@@ -126,7 +130,8 @@ private:
     QString mTranslation;
     QString mPlural;
     Examples mExamples;
-    unsigned int mNumCorrectAnswers;
+    unsigned int mCorrectAnswers
+;
 };
 
 #endif // WORDSCARD_H

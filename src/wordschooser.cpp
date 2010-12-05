@@ -60,7 +60,8 @@ WordsPtrSet WordsChooser::getFirstN(int number, bool includeLearned)
 
     // i goes through all elements of list, n counts 'number'
     for (int i = 0, n = 0; (i < mCards.size()) && (n < number); i++) {
-        bool learned = (mCards.at(i)->numCorrectAnswers() / corrAnsForLearned
+        bool learned = (mCards.at(i)->correctAnswers
+() / corrAnsForLearned
                        == 1);
 
         // If we include learned words or word is not learned

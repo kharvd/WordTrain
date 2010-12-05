@@ -56,6 +56,9 @@ public slots:
 
     // Show plural and gender boxes only if the word is noun
     void switchPluralGender(int);
+    
+    // Set cards answers field to 0
+    void resetProgress();
 
 private:
     static const int defaultWidth = 550;
@@ -73,6 +76,7 @@ private:
     QLineEdit *txtTranscription;
     QLineEdit *txtTranslation;
     QLineEdit *txtPlural;
+    QLineEdit *txtProgress;
     QComboBox *cmbCategory;
     QComboBox *cmbGender;
     QPushButton *btnAddExample;

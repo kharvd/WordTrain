@@ -265,10 +265,12 @@ void MainWindow::importSet()
                                          tr("Words set file (*.wsf);;"
                                             "XML files (*.xml);;"
                                             "All files (*)"));
-    if (!fileName.isEmpty())
+    if (!fileName.isEmpty()) {
         loadFile(fileName, true);
+        setWindowModified(true);
+    }
 
-    setWindowModified(true);
+
 }
 
 void MainWindow::settings()
@@ -277,7 +279,8 @@ void MainWindow::settings()
 
     if (dlgSettings->exec()) {
         readSettings();
-        updateTable(mCards);
+        if (isFileOpened())
+            updateTable(mCards);
     }
 
     delete dlgSettings;
@@ -395,21 +398,24 @@ void MainWindow::createTableWidget()
 void MainWindow::createActions()
 {
     // New set
-    actionNewSet = new QAction(QIcon(":/icons/new.png"),
+    actionNewSet = new QAction(QIcon::fromTheme("document-new",
+                               QIcon(":/icons/new.png")),
                                tr("&New set..."), this);
     actionNewSet->setShortcuts(QKeySequence::New);
     actionNewSet->setStatusTip(tr("Create a new card set"));
     connect(actionNewSet, SIGNAL(triggered()), this, SLOT(newSet()));
 
     // Open set
-    actionOpenSet = new QAction(QIcon(":/icons/open.png"),
+    actionOpenSet = new QAction(QIcon::fromTheme("document-open",
+                                QIcon(":/icons/open.png")),
                                 tr("&Open set..."), this);
     actionOpenSet->setShortcuts(QKeySequence::Open);
     actionOpenSet->setStatusTip(tr("Open an existing card set"));
     connect(actionOpenSet, SIGNAL(triggered()), this, SLOT(openSet()));
 
     // Save set
-    actionSaveSet = new QAction(QIcon(":/icons/save.png"),
+    actionSaveSet = new QAction(QIcon::fromTheme("document-save",
+                                QIcon(":/icons/save.png")),
                                 tr("&Save set"), this);
     actionSaveSet->setShortcuts(QKeySequence::Save);
     actionSaveSet->setStatusTip(tr("Save the card set to disk"));
@@ -422,19 +428,23 @@ void MainWindow::createActions()
     connect(actionSaveSetAs, SIGNAL(triggered()), this, SLOT(saveSetAs()));
 
     // Quit
-    actionQuit = new QAction(QIcon(":/icons/quit.png"), tr("&Quit"), this);
+    actionQuit = new QAction(QIcon::fromTheme("application-exit",
+                             QIcon(":/icons/quit.png")),
+                             tr("&Quit"), this);
     actionQuit->setShortcuts(QKeySequence::Quit);
     actionQuit->setStatusTip(tr("Quit the application"));
     connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 
     // Add card
-    actionAddCard = new QAction(QIcon(":/icons/add.png"),
+    actionAddCard = new QAction(QIcon::fromTheme("list-add",
+                                QIcon(":/icons/add.png")),
                                 tr("&Add card..."), this);
     actionAddCard->setStatusTip(tr("Add a new word card to the set"));
     connect(actionAddCard, SIGNAL(triggered()), this, SLOT(addCard()));
 
     // View card
-    actionViewCard = new QAction(QIcon(":/icons/view.png"),
+    actionViewCard = new QAction(QIcon::fromTheme("edit-select-all",
+                                 QIcon(":/icons/view.png")),
                                  tr("&View card..."), this);
     actionViewCard->setStatusTip(tr("View current word card"));
     connect(actionViewCard, SIGNAL(triggered()), this, SLOT(viewCard()));
@@ -446,7 +456,8 @@ void MainWindow::createActions()
     connect(actionEditCard, SIGNAL(triggered()), this, SLOT(editCard()));
 
     // Delete card
-    actionDeleteCard = new QAction(QIcon(":/icons/remove.png"),
+    actionDeleteCard = new QAction(QIcon::fromTheme("list-remove",
+                                   QIcon(":/icons/remove.png")),
                                    tr("&Delete card"), this);
     actionDeleteCard->setShortcuts(QKeySequence::Delete);
     actionDeleteCard->setStatusTip(tr("Delete the word card from the set"));
@@ -455,12 +466,13 @@ void MainWindow::createActions()
     // Import set
     actionImportSet = new QAction(tr("&Import set..."), this);
     actionImportSet->setStatusTip(
-            tr("Append an existing set to the current"));
+        tr("Append an existing set to the current"));
     connect(actionImportSet, SIGNAL(triggered()), this, SLOT(importSet()));
 
     // Settings
-    actionSettings = new QAction(QIcon(":/icons/settings.png"),
-                                    tr("Settings..."), this);
+    actionSettings = new QAction(QIcon::fromTheme("document-properties",
+                                 QIcon(":/icons/settings.png")),
+                                 tr("Settings..."), this);
     actionSettings->setStatusTip(tr("Settings"));
     connect(actionSettings, SIGNAL(triggered()),
             this, SLOT(settings()));
@@ -472,10 +484,11 @@ void MainWindow::createActions()
             this, SLOT(startTraining()));
 
     // Start quiz
-    actionStartQuiz = new QAction(QIcon(":/icons/start_quiz.png"),
+    actionStartQuiz = new QAction(QIcon::fromTheme("media-playback-start",
+                                  QIcon(":/icons/start_quiz.png")),
                                   tr("Start qui&z..."), this);
     actionStartQuiz->setStatusTip(
-            tr("Test your knowledge of words from the set"));
+        tr("Test your knowledge of words from the set"));
     connect(actionStartQuiz, SIGNAL(triggered()),
             this, SLOT(startQuiz()));
 
@@ -488,20 +501,6 @@ void MainWindow::createActions()
     actionAboutQt = new QAction(tr("About &Qt"), this);
     actionAboutQt->setStatusTip(tr("Show the Qt library's About box"));
     connect(actionAboutQt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-
-    // If Linux, get icons frome desktop theme
-#ifdef Q_OS_LINUX
-    actionNewSet->setIcon(QIcon::fromTheme("document-new"));
-    actionOpenSet->setIcon(QIcon::fromTheme("document-open"));
-    actionSaveSet->setIcon(QIcon::fromTheme("document-save"));
-    actionQuit->setIcon(QIcon::fromTheme("application-exit"));
-    actionAddCard->setIcon(QIcon::fromTheme("list-add"));
-    actionViewCard->setIcon(QIcon::fromTheme("edit-select-all"));
-    actionEditCard->setIcon(QIcon::fromTheme("gtk-edit"));
-    actionDeleteCard->setIcon(QIcon::fromTheme("list-remove"));
-    actionStartQuiz->setIcon(QIcon::fromTheme("media-playback-start"));
-    actionSettings->setIcon(QIcon::fromTheme("document-properties"));
-#endif
 }
 
 void MainWindow::createMenus()
@@ -742,7 +741,8 @@ void MainWindow::updateTable(WordsSet words)
         tableWords->setItem(rowCount, 2, tmp);
 
         // Learning progress in %
-        int progress = (double(it->numCorrectAnswers()) / corrAnsForLearned
+        int progress = (double(it->correctAnswers
+()) / corrAnsForLearned
                         * 100);
         progress = (progress > 100) ? 100 : progress;
 
@@ -784,7 +784,8 @@ void MainWindow::updateTable(WordsPtrSet words)
         tableWords->setItem(rowCount, 2, tmp);
 
         // Learning progress in %
-        int progress = (double((*it)->numCorrectAnswers()) / corrAnsForLearned
+        int progress = (double((*it)->correctAnswers
+()) / corrAnsForLearned
                         * 100);
         progress = (progress > 100) ? 100 : progress;
 

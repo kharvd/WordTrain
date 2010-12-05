@@ -32,6 +32,7 @@
 #include <QTranslator>
 #include <QTextCodec>
 #include "mainwindow.h"
+#include <qstyle.h>
 
 int main(int argc, char *argv[])
 {
