@@ -179,7 +179,7 @@ bool MainWindow::saveSetAs()
 
 void MainWindow::addCard()
 {
-    NewEditCardDialog *dlg = new NewEditCardDialog();
+    NewEditCardDialog *dlg = new NewEditCardDialog(this);
     if(dlg->exec()) {
         // Getting new card's contents
         mCards.push_back(dlg->getNewCard());
@@ -202,9 +202,9 @@ void MainWindow::editCard()
         NewEditCardDialog* dlg;
 
         if (mSearching)
-            dlg = new NewEditCardDialog(*mSearchResults.at(curr));
+            dlg = new NewEditCardDialog(*mSearchResults.at(curr), this);
         else
-            dlg = new NewEditCardDialog(mCards.at(curr));
+            dlg = new NewEditCardDialog(mCards.at(curr), this);
 
         if (dlg->exec()) {
             // Updating card's contents
@@ -275,7 +275,7 @@ void MainWindow::importSet()
 
 void MainWindow::settings()
 {
-    SettingsDialog *dlgSettings = new SettingsDialog;
+    SettingsDialog *dlgSettings = new SettingsDialog(this);
 
     if (dlgSettings->exec()) {
         readSettings();
@@ -295,14 +295,14 @@ void MainWindow::startQuiz()
 {
     // Set shouldn't be empty
     if (tableWords->rowCount()) {
-        StartQuizDialog* dlg = new StartQuizDialog(&mCards);
+        StartQuizDialog* dlg = new StartQuizDialog(&mCards, this);
 
         if (dlg->exec()) {
             if (dlg->getCards().size()) {
                 QuizDialog *quizDlg = new QuizDialog(dlg->getCards(),
                                                      dlg->getChoiceMode(),
                                                      dlg->getHideMode(),
-                                                     getPointersSet());
+                                                     getPointersSet(), this);
                 tableWords->hide();
                 quizDlg->exec();
                 tableWords->show();
@@ -439,6 +439,7 @@ void MainWindow::createActions()
     actionAddCard = new QAction(QIcon::fromTheme("list-add",
                                 QIcon(":/icons/add.png")),
                                 tr("&Add card..."), this);
+    actionAddCard->setShortcut(QKeySequence("Ctrl+A"));
     actionAddCard->setStatusTip(tr("Add a new word card to the set"));
     connect(actionAddCard, SIGNAL(triggered()), this, SLOT(addCard()));
 
@@ -487,8 +488,9 @@ void MainWindow::createActions()
     actionStartQuiz = new QAction(QIcon::fromTheme("media-playback-start",
                                   QIcon(":/icons/start_quiz.png")),
                                   tr("Start qui&z..."), this);
+    actionStartQuiz->setShortcut(QKeySequence("Ctrl+T"));
     actionStartQuiz->setStatusTip(
-        tr("Test your knowledge of words from the set"));
+            tr("Test your knowledge of words from the set"));
     connect(actionStartQuiz, SIGNAL(triggered()),
             this, SLOT(startQuiz()));
 
@@ -821,9 +823,9 @@ void MainWindow::showCard(int index)
     if (isInRange(index)) {
         ViewCardDialog *viewDlg;
         if (mSearching)
-            viewDlg = new ViewCardDialog(mSearchResults);
+            viewDlg = new ViewCardDialog(mSearchResults, this);
         else
-            viewDlg = new ViewCardDialog(&mCards);
+            viewDlg = new ViewCardDialog(&mCards, this);
 
         viewDlg->setCurrentCard(index);
 
