@@ -139,8 +139,7 @@ void XmlReader::readWordCard()
                 mReader.readNext();
                 skipWhitespaces();
             } else if (mReader.name() == "answers") {
-                card.setCorrectAnswers
-(
+                card.setCorrectAnswers(
                         mReader.attributes().value("value").toString().toInt());
                 mReader.readNext();
                 skipWhitespaces();

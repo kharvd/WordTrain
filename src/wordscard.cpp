@@ -37,9 +37,7 @@ bool WordCard::operator==(const WordCard &card)
             && (mTranslation == card.translation())
             && (mPlural == card.plural())
             && (mExamples == card.examples())
-            && (mCorrectAnswers
- == card.correctAnswers
-());
+            && (mCorrectAnswers == card.correctAnswers());
     return result;
 }
 
@@ -87,17 +85,14 @@ void WordCard::setGender(int gender)
     setGender(Gender(gender));
 }
 
-void WordCard::setCorrectAnswers
-(unsigned int num)
+void WordCard::setCorrectAnswers(int num)
 {
-    mCorrectAnswers
- = num;
+    mCorrectAnswers = num;
 }
 
 void WordCard::incCorrectAnswers()
 {
-    mCorrectAnswers
-++;
+    mCorrectAnswers++;
 }
 
 void WordCard::setExamples(const Examples & examples)
@@ -136,8 +131,7 @@ void WordCard::clearAll()
     setPlural("");
     setCategory(LC_None);
     setGender(Gen_None);
-    setCorrectAnswers
-(0);
+    setCorrectAnswers(0);
     clearExamples();
 }
 

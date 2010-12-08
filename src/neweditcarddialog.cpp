@@ -102,8 +102,7 @@ void NewEditCardDialog::resetProgress()
     QSettings settings;
     int corrAnsForLearned = settings.value("corr_answers", 10).toInt();
     txtProgress->setText(QString("0/%1").arg(corrAnsForLearned));
-    mNewCard.setCorrectAnswers
-(0);
+    mNewCard.setCorrectAnswers(0);
 }
 
 void NewEditCardDialog::switchPluralGender(int cat)
@@ -210,8 +209,7 @@ void NewEditCardDialog::fillForm()
     txtTranscription->setText(mNewCard.transcription());
     txtTranslation->setText(mNewCard.translation());
     txtPlural->setText(mNewCard.plural());
-    txtProgress->setText(QString("%1/%2").arg(mNewCard.correctAnswers
-())
+    txtProgress->setText(QString("%1/%2").arg(mNewCard.correctAnswers())
                          .arg(corrAnsForLearned));
     cmbCategory->setCurrentIndex(mNewCard.category());
     cmbGender->setCurrentIndex(mNewCard.gender());

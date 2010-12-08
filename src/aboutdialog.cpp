@@ -85,6 +85,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     // License info box
     QTextEdit *license = new QTextEdit();
+    license->setReadOnly(true);
 
     QFile file(":/COPYING");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {

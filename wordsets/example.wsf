@@ -322,4 +322,71 @@
             <tr>На репетиции еще можно путаться в словах.</tr>
         </example>
     </wordcard>
+    <wordcard>
+        <word value="loom"/>
+        <transcription value=""/>
+        <translation value="надвигаться, грозить"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="3"/>
+        <answers value="0"/>
+        <example>
+            <ex>There could be a format war looming over 3D glasses</ex>
+            <tr>Возможно, надвигается война форматов 3D-очков</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="cuff"/>
+        <transcription value="'kəf"/>
+        <translation value="манжета, конец рукава"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+    </wordcard>
+    <wordcard>
+        <word value="collar"/>
+        <transcription value="ˈkä-lər"/>
+        <translation value="ошейник, воротник"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+    </wordcard>
+    <wordcard>
+        <word value="corduroy"/>
+        <transcription value="ˈkȯr-də-ˌrȯi"/>
+        <translation value="вельвет"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+    </wordcard>
+    <wordcard>
+        <word value="velvet"/>
+        <transcription value="ˈvel-vət"/>
+        <translation value="бархат"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+    </wordcard>
+    <wordcard>
+        <word value="wool"/>
+        <transcription value="ˈwʊl"/>
+        <translation value="шерсть"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+    </wordcard>
+    <wordcard>
+        <word value="suede"/>
+        <transcription value="ˈsweɪd"/>
+        <translation value="замша"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+    </wordcard>
 </wordsset>

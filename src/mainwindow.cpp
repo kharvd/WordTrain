@@ -741,8 +741,7 @@ void MainWindow::updateTable(WordsSet words)
         tableWords->setItem(rowCount, 2, tmp);
 
         // Learning progress in %
-        int progress = (double(it->correctAnswers
-()) / corrAnsForLearned
+        int progress = (double(it->correctAnswers()) / corrAnsForLearned
                         * 100);
         progress = (progress > 100) ? 100 : progress;
 
@@ -784,8 +783,7 @@ void MainWindow::updateTable(WordsPtrSet words)
         tableWords->setItem(rowCount, 2, tmp);
 
         // Learning progress in %
-        int progress = (double((*it)->correctAnswers
-()) / corrAnsForLearned
+        int progress = (double((*it)->correctAnswers()) / corrAnsForLearned
                         * 100);
         progress = (progress > 100) ? 100 : progress;
 

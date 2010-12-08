@@ -80,8 +80,7 @@ void XmlWriter::writeCard(WordsSet::const_iterator it) {
     mWriter.writeAttribute("value", QString::number(it->category()));
 
     mWriter.writeEmptyElement("answers");
-    mWriter.writeAttribute("value", QString::number(it->correctAnswers
-()));
+    mWriter.writeAttribute("value", QString::number(it->correctAnswers()));
 
     Examples::const_iterator exIt = it->examples().begin();
     for ( ; exIt != it->examples().end(); exIt++) {
