@@ -158,9 +158,9 @@ WordsPtrSet StartQuizDialog::getCards()
     return chooser.getCards();
 }
 
-ChoiceMode StartQuizDialog::getChoiceMode()
+Choice StartQuizDialog::getChoiceMode()
 {
-    return (ChoiceMode)grpChoiceMode->checkedId();
+    return (Choice)grpChoiceMode->checkedId();
 }
 
 HideMode StartQuizDialog::getHideMode()

@@ -37,8 +37,9 @@ class QPushButton;
 class QLabel;
 class AnswerWidget;
 class CardWidget;
+class Quiz;
+enum Choice;
 
-enum ChoiceMode { Choice_MultiChoice = 0, Choice_NoChoice };
 enum HideMode { Hide_Random = 0, Hide_Translation, Hide_Word };
 
 // Dialog with the quiz, similar to ViewCardDialog.
@@ -48,10 +49,10 @@ class QuizDialog : public QDialog
 
 public:
     // This class should be able to edit contents of the cards
-    QuizDialog(const WordsPtrSet & cards, ChoiceMode choice,
+    QuizDialog(const WordsPtrSet & cards, Choice choice,
                HideMode hide, const WordsPtrSet & allCards,
                QWidget *parent = 0);
-    QuizDialog(WordsSet *cards, ChoiceMode choice,
+    QuizDialog(WordsSet *cards, Choice choice,
                HideMode hide, const WordsPtrSet & allCards,
                QWidget *parent = 0);
 
@@ -67,7 +68,7 @@ private:
     static const int numChoices = 4;
 
     // Convenience function for initialization
-    void constructor(ChoiceMode choice, HideMode hide);
+    void constructor(Choice choice, HideMode hide);
 
     // Changes buttons' text to appropriate, when something is clicked
     void switchButtons();
@@ -103,9 +104,9 @@ private:
     bool mModified;
 
     HideMode mHideMode;
-    ChoiceMode mChoiceMode;
+    Choice mChoiceMode;
 
-    // If we hide mode is Hide_Translation now
+    // If the hide mode is Hide_Translation now
     bool mHideTranslation;
 
     // If user answered all words
@@ -121,6 +122,8 @@ private:
 
     // All cards of current set
     WordsPtrSet mAllCards;
+
+    Quiz mQuiz;
 };
 
 #endif // QUIZDIALOG_H

@@ -34,6 +34,7 @@
 #include <QProgressBar>
 #include <QMessageBox>
 #include <ctime>
+
 #include "utilities.h"
 #include "neweditcarddialog.h"
 #include "cardwidget.h"
@@ -41,8 +42,9 @@
 #include "lineanswerwidget.h"
 #include "multianswerwidget.h"
 #include "wordschooser.h"
+#include "quiz.h"
 
-QuizDialog::QuizDialog(const WordsPtrSet & cards, ChoiceMode choice,
+QuizDialog::QuizDialog(const WordsPtrSet & cards, Choice choice,
                        HideMode hide, const WordsPtrSet & allCards,
                        QWidget *parent)
                            : QDialog(parent)
@@ -53,7 +55,7 @@ QuizDialog::QuizDialog(const WordsPtrSet & cards, ChoiceMode choice,
     constructor(choice, hide);
 }
 
-QuizDialog::QuizDialog(WordsSet *cards, ChoiceMode choice, HideMode hide,
+QuizDialog::QuizDialog(WordsSet *cards, Choice choice, HideMode hide,
                        const WordsPtrSet & allCards, QWidget *parent)
     : QDialog(parent)
 {
@@ -65,7 +67,7 @@ QuizDialog::QuizDialog(WordsSet *cards, ChoiceMode choice, HideMode hide,
     constructor(choice, hide);
 }
 
-void QuizDialog::constructor(ChoiceMode choice, HideMode hide)
+void QuizDialog::constructor(Choice choice, HideMode hide)
 {
     qsrand(time(NULL));
     mCorrectAnswers = 0;
@@ -169,7 +171,6 @@ void QuizDialog::setCurrentCard(int index)
     CardWidget::CardElements WOCategory = CardWidget::BackAll;
     WOCategory &= ~CardWidget::Category;
 
-    Qt::Alignment al = Qt::AlignBottom | Qt::AlignHCenter;
     // What is to be hidden?
     switch (mHideMode) {
     case Hide_Translation:

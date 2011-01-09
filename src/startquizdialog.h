@@ -50,7 +50,7 @@ public:
     WordsPtrSet getCards();
 
     // Returns selected choice mode
-    ChoiceMode getChoiceMode();
+    Choice getChoiceMode();
 
     // Returns selected hiding mode
     HideMode getHideMode();

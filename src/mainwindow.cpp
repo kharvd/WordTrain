@@ -143,7 +143,6 @@ void MainWindow::newSet()
 
 void MainWindow::openSet()
 {
-
     if (maybeSave()) {
         QString fileName =
                 QFileDialog::getOpenFileName(this, tr("Open set"), "",
@@ -167,7 +166,7 @@ bool MainWindow::saveSet()
 bool MainWindow::saveSetAs()
 {
     QString fileName =
-            QFileDialog::getSaveFileName(this,tr("Save set"), "",
+            QFileDialog::getSaveFileName(this, tr("Save set"), "",
                                          tr("Words set file (*.wsf);;"
                                             "XML files (*.xml);;"
                                             "All files (*)"));
@@ -180,7 +179,7 @@ bool MainWindow::saveSetAs()
 void MainWindow::addCard()
 {
     NewEditCardDialog *dlg = new NewEditCardDialog(this);
-    if(dlg->exec()) {
+    if (dlg->exec()) {
         // Getting new card's contents
         mCards.push_back(dlg->getNewCard());
 
@@ -211,8 +210,7 @@ void MainWindow::editCard()
             if (mSearching) {
                 *mSearchResults[curr] = dlg->getNewCard();
                 updateTable(mSearchResults);
-            }
-            else {
+            } else {
                 mCards.replace(curr, dlg->getNewCard());
                 updateTable(mCards);
             }
@@ -269,8 +267,6 @@ void MainWindow::importSet()
         loadFile(fileName, true);
         setWindowModified(true);
     }
-
-
 }
 
 void MainWindow::settings()
@@ -743,8 +739,8 @@ void MainWindow::updateTable(WordsSet words)
         tableWords->setItem(rowCount, 2, tmp);
 
         // Learning progress in %
-        int progress = (double(it->correctAnswers()) / corrAnsForLearned
-                        * 100);
+        int progress = (static_cast<double>(it->correctAnswers())
+                            / corrAnsForLearned * 100);
         progress = (progress > 100) ? 100 : progress;
 
         tmp = new QTableWidgetItem(QString("%1%").arg(progress));
@@ -756,7 +752,7 @@ void MainWindow::updateTable(WordsSet words)
     tableWords->setCurrentCell(0, 0);
 }
 
-void MainWindow::updateTable(WordsPtrSet words)
+void MainWindow::updateTable(WordsPtrSet words) 
 {
     tableWords->clearContents();
     tableWords->setRowCount(0);
@@ -785,8 +781,8 @@ void MainWindow::updateTable(WordsPtrSet words)
         tableWords->setItem(rowCount, 2, tmp);
 
         // Learning progress in %
-        int progress = (double((*it)->correctAnswers()) / corrAnsForLearned
-                        * 100);
+        int progress = (static_cast<double>((*it)->correctAnswers())
+                            / corrAnsForLearned * 100);
         progress = (progress > 100) ? 100 : progress;
 
         tmp = new QTableWidgetItem(QString("%1%").arg(progress));

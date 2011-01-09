@@ -50,7 +50,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
     // If import is true, we append existing file to current
@@ -181,4 +181,4 @@ private:
     QLineEdit *editSearch;
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H
