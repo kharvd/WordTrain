@@ -46,8 +46,13 @@ public:
 
     virtual void setCorrect(bool correct);
 
+    virtual void setAnswers(const QStringList & answers) = 0;
+
     // Clears the widget
     virtual void clear() = 0;
+
+signals:
+    void answered();
 
 protected:
     QLabel *imgCorrect;

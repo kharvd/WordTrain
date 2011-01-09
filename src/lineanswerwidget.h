@@ -30,6 +30,7 @@
 #define LINEANSWERWIDGET_H
 
 #include "answerwidget.h"
+
 class QLineEdit;
 
 // Widget for answering without choice
@@ -41,6 +42,8 @@ public:
 
     // Returns user's answer
     virtual QString getAnswer();
+
+    virtual void setAnswers(const QStringList & answers) { }
 
     // Clears the widget
     virtual void clear();

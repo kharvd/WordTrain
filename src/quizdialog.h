@@ -31,16 +31,16 @@
 
 #include <QDialog>
 #include "wordscard.h"
+#include "quiz.h"
 
 class QProgressBar;
 class QPushButton;
 class QLabel;
 class AnswerWidget;
 class CardWidget;
-class Quiz;
-enum Choice;
 
-enum HideMode { Hide_Random = 0, Hide_Translation, Hide_Word };
+enum HideMode { Hide_First = 0, Hide_Random = 0, Hide_Translation, Hide_Word,
+                Hide_Last = Hide_Word};
 
 // Dialog with the quiz, similar to ViewCardDialog.
 class QuizDialog : public QDialog
@@ -49,10 +49,10 @@ class QuizDialog : public QDialog
 
 public:
     // This class should be able to edit contents of the cards
-    QuizDialog(const WordsPtrSet & cards, Choice choice,
+    QuizDialog(const WordsPtrSet & cards, QuestionType choice,
                HideMode hide, const WordsPtrSet & allCards,
                QWidget *parent = 0);
-    QuizDialog(WordsSet *cards, Choice choice,
+    QuizDialog(WordsSet *cards, QuestionType choice,
                HideMode hide, const WordsPtrSet & allCards,
                QWidget *parent = 0);
 
@@ -68,7 +68,7 @@ private:
     static const int numChoices = 4;
 
     // Convenience function for initialization
-    void constructor(Choice choice, HideMode hide);
+    void constructor(QuestionType choice, HideMode hide);
 
     // Changes buttons' text to appropriate, when something is clicked
     void switchButtons();
@@ -79,7 +79,7 @@ private:
     void createInterface();
 
     // Selects some words for choices in MultiAnswerWidget
-    QStringList getAnswersMultiChoice(QString correct, bool translation);
+    QList<QString> getAnswersMultiChoice(QString correct, bool translation);
 
     // Checks answer
     void checkAnswer();
@@ -87,27 +87,26 @@ private:
     // Shows result of the quiz
     void showResult();
 
+    // Fills quiz with questions
+    void fillQuiz();
+
+    // Changes the type of the current answer widget
+    // and returns pointer to current widget
+    AnswerWidget * switchAnsWidget(QuestionType type);
+
     QPushButton *btnDontKnow;
     QProgressBar *prgProgress;
     QLabel *lblProgress;
     QPushButton *btnCheckNext;
     CardWidget *cardText;
     AnswerWidget *wgtAnswer;
-
-    // Number of cards
-    int mCardsNumber;
-
-    // Number of all correct answers
-    int mCorrectAnswers;
+    QList<AnswerWidget*> answerWgts;
 
     // If user answered correctly at least one question
     bool mModified;
 
     HideMode mHideMode;
-    Choice mChoiceMode;
-
-    // If the hide mode is Hide_Translation now
-    bool mHideTranslation;
+    QuestionType mChoiceMode;
 
     // If user answered all words
     bool mThatsAll;
@@ -123,7 +122,9 @@ private:
     // All cards of current set
     WordsPtrSet mAllCards;
 
-    Quiz mQuiz;
+    Quiz<WordCard, QString> mQuiz;
+    QList<HideMode> mHideModes;
+    QList<QuestionType> mQuestionTypes;
 };
 
 #endif // QUIZDIALOG_H

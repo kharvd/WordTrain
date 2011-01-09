@@ -28,74 +28,22 @@
 
 #include "quiz.h"
 
-#include <QString>
-#include <QList>
-
-void Quiz::addQuestion(const QString &_question, const QString &_correctAnswer,
-                           const Choices &_choices, QuestionType _type)
+// Specialization for Quiz<WordCard, QString>. Allows to compare answer imprecisely
+template <>
+bool Quiz<WordCard, QString>::isUsersAnswerCorrectAt(int index) const
 {
-    QuizQuestion q(_question, _correctAnswer, _choices, _type);
-    m_Questions.push_back(q);
-}
+    bool correct;
 
-void Quiz::addQuestion(const QuizQuestion &question)
-{
-    m_Questions.push_back(question);
-}
-
-void Quiz::removeQuestion(int index)
-{
-    m_Questions.removeAt(index);
-}
-
-void Quiz::setQuestionAt(int index, const QString &_question, const QString &_correctAnswer,
-                   const Choices &_choices, QuestionType _type)
-{
-    QuizQuestion q(_question, _correctAnswer, _choices, _type);
-    m_Questions[index] = q;
-}
-
-void Quiz::setQuestionAt(int index, const QuizQuestion &question)
-{
-    m_Questions[index] = question;
-}
-
-int Quiz::correctAnswers() const
-{
-    int count = 0;
-
-    foreach (QuizQuestion q, m_Questions) {
-        if (q.correctAnswer() == q.usersAnswer()) {
-            count++;
-        }
+    if (m_exactComparison) {
+        correct = (m_Questions.at(index).usersAnswer()
+                  == m_Questions.at(index).correctAnswer());
+    } else {
+        correct = m_Questions.at(index).correctAnswer().
+                  contains(m_Questions.at(index).usersAnswer(),
+                           Qt::CaseInsensitive);
     }
 
-    return count;
+    return correct;
 }
 
-int Quiz::incorrectAnswers() const
-{
-    return (m_Questions.size() - correctAnswers());
-}
-
-int Quiz::questionsCount() const
-{
-    return m_Questions.size();
-}
-
-QuizQuestion Quiz::questionAt(int questionNumber) const
-{
-    return m_Questions.at(questionNumber);
-}
-
-bool Quiz::setUsersAnswer(int index, const QString &_answer)
-{
-    m_Questions[index].setUsersAnswer(_answer);
-    return (_answer == m_Questions.at(index).correctAnswer());
-}
-
-bool Quiz::isUsersAnswerCorrect(int index) const
-{
-    return (m_Questions.at(index).usersAnswer()
-            == m_Questions.at(index).correctAnswer());
-}
+// Definition is in the header file because Quiz is a template class

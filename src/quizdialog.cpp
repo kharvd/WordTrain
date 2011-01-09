@@ -42,9 +42,8 @@
 #include "lineanswerwidget.h"
 #include "multianswerwidget.h"
 #include "wordschooser.h"
-#include "quiz.h"
 
-QuizDialog::QuizDialog(const WordsPtrSet & cards, Choice choice,
+QuizDialog::QuizDialog(const WordsPtrSet & cards, QuestionType choice,
                        HideMode hide, const WordsPtrSet & allCards,
                        QWidget *parent)
                            : QDialog(parent)
@@ -55,7 +54,7 @@ QuizDialog::QuizDialog(const WordsPtrSet & cards, Choice choice,
     constructor(choice, hide);
 }
 
-QuizDialog::QuizDialog(WordsSet *cards, Choice choice, HideMode hide,
+QuizDialog::QuizDialog(WordsSet *cards, QuestionType choice, HideMode hide,
                        const WordsPtrSet & allCards, QWidget *parent)
     : QDialog(parent)
 {
@@ -67,21 +66,16 @@ QuizDialog::QuizDialog(WordsSet *cards, Choice choice, HideMode hide,
     constructor(choice, hide);
 }
 
-void QuizDialog::constructor(Choice choice, HideMode hide)
+void QuizDialog::constructor(QuestionType choice, HideMode hide)
 {
     qsrand(time(NULL));
-    mCorrectAnswers = 0;
-    mCardsNumber = mCards.size();
     mAnswered = false;
     mModified = false;
     mThatsAll = false;
     mChoiceMode = choice;
     mHideMode = hide;
 
-    if (mHideMode == Hide_Translation)
-        mHideTranslation = true;
-    else
-        mHideTranslation = false;
+    fillQuiz();
 
     createInterface();
     setCurrentCard(0);
@@ -103,21 +97,19 @@ void QuizDialog::createInterface()
 
     prgProgress = new QProgressBar();
     prgProgress->setMinimum(0);
-    prgProgress->setMaximum(mCardsNumber);
+    prgProgress->setMaximum(mCards.size());
     prgProgress->setValue(0);
 
-    lblProgress = new QLabel(QString("0/%1").arg(mCardsNumber));
+    lblProgress = new QLabel(QString("0/%1").arg(mCards.size()));
 
-    switch (mChoiceMode) {
-    case Choice_NoChoice:
-        wgtAnswer = new LineAnswerWidget();
-        break;
-    case Choice_MultiChoice:
-        wgtAnswer = new MultiAnswerWidget();
-        break;
-    }
+    answerWgts.push_back(new MultiAnswerWidget(this));
+    answerWgts[Choice_MultiChoice]->hide();
+    answerWgts.push_back(new LineAnswerWidget(this));
+    answerWgts[Choice_NoChoice]->hide();
 
-    Q_ASSERT(wgtAnswer);
+
+    if (mChoiceMode != Choice_Random)
+        wgtAnswer = answerWgts[mChoiceMode];
 
     QHBoxLayout *prgLayout = new QHBoxLayout;
     prgLayout->addWidget(prgProgress);
@@ -133,7 +125,12 @@ void QuizDialog::createInterface()
     mainLayout->addLayout(prgLayout);
     mainLayout->addWidget(cardText);
     mainLayout->addWidget(lbl);
-    mainLayout->addWidget(wgtAnswer);
+
+    foreach (AnswerWidget *wgt, answerWgts) {
+        mainLayout->addWidget(wgt);
+        connect(wgt, SIGNAL(answered()), SLOT(nextCheckWord()));
+    }
+
     mainLayout->addLayout(hLayout);
 
     setLayout(mainLayout);
@@ -162,49 +159,43 @@ void QuizDialog::switchButtons()
     }
 }
 
+AnswerWidget * QuizDialog::switchAnsWidget(QuestionType type)
+{
+    foreach (AnswerWidget *wgt, answerWgts)
+        wgt->hide();
+
+    answerWgts[type]->show();
+    return answerWgts[type];
+}
+
 void QuizDialog::setCurrentCard(int index)
 {
     mCurrentCard = index;
+
+    wgtAnswer = switchAnsWidget(mQuestionTypes.at(index));
     wgtAnswer->clear();
+
     switchButtons();
 
     CardWidget::CardElements WOCategory = CardWidget::BackAll;
     WOCategory &= ~CardWidget::Category;
 
-    // What is to be hidden?
-    switch (mHideMode) {
+    switch (mHideModes.at(index)) {
     case Hide_Translation:
         // Don't show category
         cardText->showCard(*mCards.at(index), CardWidget::Face, WOCategory);
         break;
+
     case Hide_Word:
         cardText->showCard(*mCards.at(index), CardWidget::Back,
                            CardWidget::BackNoForeign);
         break;
-    case Hide_Random:
-        mHideTranslation = qrand() % 2;
 
-        CardWidget::CardSide side = mHideTranslation
-                                    ? CardWidget::Face
-                                    : CardWidget::Back;
-
-        CardWidget::CardElements elements = mHideTranslation
-                                            ? WOCategory
-                                            : CardWidget::BackNoForeign;
-
-        cardText->showCard(*mCards.at(index), side, elements);
+    case Hide_Random:  // Impossible
         break;
     }
 
-    // Setting choices to the multianswer widget
-    if (mChoiceMode == Choice_MultiChoice) {
-        QString correctAnswer
-                = mHideTranslation ? mCards.at(mCurrentCard)->translation()
-                                   : mCards.at(mCurrentCard)->word();
-        qobject_cast<MultiAnswerWidget *>(wgtAnswer)->
-                setAnswers(getAnswersMultiChoice(correctAnswer,
-                                                 mHideTranslation));
-    }
+    wgtAnswer->setAnswers(mQuiz.choicesAt(index));
 }
 
 void QuizDialog::nextCheckWord()
@@ -217,11 +208,11 @@ void QuizDialog::nextCheckWord()
             mCurrentCard++;
             mAnswered = false;
             lblProgress->setText(QString("%1/%2").arg(mCurrentCard).
-                                 arg(mCardsNumber));
+                                 arg(mCards.size()));
             prgProgress->setValue(prgProgress->value() + 1);
             setCurrentCard(mCurrentCard);
         } else {
-            if (mHideTranslation)
+            if (mHideModes.at(mCurrentCard) == Hide_Translation)
                 cardText->showOtherSide();
             else
                 cardText->showCard(CardWidget::Back, CardWidget::BackAll);
@@ -236,18 +227,10 @@ void QuizDialog::nextCheckWord()
 
 void QuizDialog::checkAnswer()
 {
-    QString correctAnswer
-            = mHideTranslation ? mCards.at(mCurrentCard)->translation()
-                               : mCards.at(mCurrentCard)->word();
-
-    bool correct = (!(wgtAnswer->getAnswer().isEmpty()))
-                   && (correctAnswer.contains(wgtAnswer->getAnswer(),
-                                            Qt::CaseInsensitive));
-
+    bool correct = mQuiz.setUsersAnswerAt(mCurrentCard, wgtAnswer->getAnswer());
     wgtAnswer->setCorrect(correct);
 
     if (correct) {
-        mCorrectAnswers++;
         mCards.at(mCurrentCard)->incCorrectAnswers();
         mModified = true;
     }
@@ -257,10 +240,11 @@ void QuizDialog::showResult()
 {
     QMessageBox msgBox;
     QString msg;
-    double mark = (mCorrectAnswers * 5.0) / mCardsNumber;
+
+    double mark = (mQuiz.correctAnswers() * 5.0) / mCards.size();
     mark = (mark < 2) ? 2 : mark;
 
-    msg.append(tr("Correct answers: %1/%2\n").arg(mCorrectAnswers)
+    msg.append(tr("Correct answers: %1/%2\n").arg(mQuiz.correctAnswers())
                   .arg(mCards.size()));
     msg.append(tr("Your mark: %1").arg(mark));
 
@@ -274,7 +258,7 @@ void QuizDialog::showResult()
 
 void QuizDialog::dontKnow()
 {
-    if (mHideTranslation)
+    if (mHideModes.at(mCurrentCard))
         cardText->showOtherSide();
     else
         cardText->showCard(CardWidget::Back, CardWidget::BackAll);
@@ -284,7 +268,7 @@ void QuizDialog::dontKnow()
     switchButtons();
 }
 
-QStringList QuizDialog::getAnswersMultiChoice(QString correct, bool translation)
+QList<QString> QuizDialog::getAnswersMultiChoice(QString correct, bool translation)
 {
     // Shuffle words
     WordsPtrSet wrds = shuffleContainer(mAllCards, mAllCards.size());
@@ -311,4 +295,40 @@ QStringList QuizDialog::getAnswersMultiChoice(QString correct, bool translation)
     tmp = shuffleContainer(tmp, tmp.size());
 
     return tmp;
+}
+
+void QuizDialog::fillQuiz()
+{
+    QString correct;
+
+    mHideModes.clear();
+
+    for (int i = 0; i < mCards.size(); i++) {
+        HideMode hMode;
+        QuestionType chMode;
+
+        if (mHideMode == Hide_Random)
+            hMode = HideMode(qrand() % Hide_Last + 1);
+        else
+            hMode = mHideMode;
+
+        if (mChoiceMode == Choice_Random)
+            chMode = QuestionType(qrand() % Choice_Last);
+        else
+            chMode = mChoiceMode;
+
+        bool translation = (hMode == Hide_Translation);
+
+        if (translation)
+            correct = mCards.at(i)->translation();
+        else
+            correct = mCards.at(i)->word();
+
+        mQuiz.addQuestion(*mCards.at(i), correct,
+                          getAnswersMultiChoice(correct, translation),
+                          chMode);
+
+        mHideModes.push_back(hMode);
+        mQuestionTypes.push_back(chMode);
+    }
 }

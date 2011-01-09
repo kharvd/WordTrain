@@ -34,8 +34,6 @@
 
 class QTextEdit;
 
-
-
 /*
 **  Widget for displaying contents of the card. Has two 'sides' - 'face' with the
 **  word and it's transcription, and 'back' with the full info about the word

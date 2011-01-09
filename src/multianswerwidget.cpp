@@ -32,6 +32,7 @@
 #include <QLayout>
 #include <QButtonGroup>
 #include <QLabel>
+#include <QDebug>
 
 MultiAnswerWidget::MultiAnswerWidget(QWidget *parent) :
     AnswerWidget(parent)
@@ -58,6 +59,7 @@ void MultiAnswerWidget::createRadios()
 {
     for (int i = 0; i < mAnswers.size(); i++) {
         QRadioButton *tmp = new QRadioButton(mAnswers[i]);
+        connect(tmp, SIGNAL(toggled(bool)), SIGNAL(answered()));
         grpAnswers->addButton(tmp, i);
         ltRadios->addWidget(tmp);
     }

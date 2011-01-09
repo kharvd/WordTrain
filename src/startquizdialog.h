@@ -50,7 +50,7 @@ public:
     WordsPtrSet getCards();
 
     // Returns selected choice mode
-    Choice getChoiceMode();
+    QuestionType getChoiceMode();
 
     // Returns selected hiding mode
     HideMode getHideMode();
@@ -67,6 +67,7 @@ private:
     QButtonGroup *grpHideMode;
     QRadioButton *radioMultiChoiceMode;
     QRadioButton *radioNoChoiceMode;
+    QRadioButton *radioRandomMode;
     QRadioButton *radioRandomOrder;
     QRadioButton *radioListOrder;
     QRadioButton *radioWordHide;

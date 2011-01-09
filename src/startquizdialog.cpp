@@ -56,16 +56,19 @@ void StartQuizDialog::createInterface()
     // Mode
     radioMultiChoiceMode = new QRadioButton(tr("Multiple choice"));
     radioNoChoiceMode = new QRadioButton(tr("Without choice"));
+    radioRandomMode = new QRadioButton(tr("Random", "Mode"));
 
     grpChoiceMode = new QButtonGroup(this);
-    grpChoiceMode->addButton(radioMultiChoiceMode, 0);
-    grpChoiceMode->addButton(radioNoChoiceMode, 1);
+    grpChoiceMode->addButton(radioMultiChoiceMode, Choice_MultiChoice);
+    grpChoiceMode->addButton(radioNoChoiceMode, Choice_NoChoice);
+    grpChoiceMode->addButton(radioRandomMode, Choice_Random);
 
     radioMultiChoiceMode->setChecked(true);
 
     QVBoxLayout *ltRadioMode = new QVBoxLayout;
     ltRadioMode->addWidget(radioMultiChoiceMode);
     ltRadioMode->addWidget(radioNoChoiceMode);
+    ltRadioMode->addWidget(radioRandomMode);
 
     ltFormQuiz->addRow(tr("Mode:", "Quiz"), ltRadioMode);
 
@@ -158,9 +161,9 @@ WordsPtrSet StartQuizDialog::getCards()
     return chooser.getCards();
 }
 
-Choice StartQuizDialog::getChoiceMode()
+QuestionType StartQuizDialog::getChoiceMode()
 {
-    return (Choice)grpChoiceMode->checkedId();
+    return (QuestionType)grpChoiceMode->checkedId();
 }
 
 HideMode StartQuizDialog::getHideMode()
