@@ -41,12 +41,14 @@ public:
     XmlWriter(const WordsSet *cards);
     bool writeFile(const QString & fileName);
     QString getErrorMessage();
+
 private:
     void writeCard(WordsSet::const_iterator it);
     void writeExample(Examples::const_iterator it);
-    QXmlStreamWriter mWriter;
-    const WordsSet *mCards;
-    QString mErrorMessage;
+
+    QXmlStreamWriter m_Writer;
+    const WordsSet *m_Cards;
+    QString m_ErrorMessage;
 };
 
 #endif // XMLWRITER_H

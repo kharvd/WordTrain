@@ -71,21 +71,21 @@ MainWindow::MainWindow(QWidget *parent)
         settings.setValue("save_pos", true);
 
     if (settings.value("save_pos").toBool()) {
-        QPoint pos = settings.value("pos", QPoint(defaultXPosition,
-                                                  defaultYPosition)).toPoint();
-        QSize size = settings.value("size", QSize(defaultWidth,
-                                                  defaultHeight)).toSize();
+        QPoint pos = settings.value("pos", QPoint(kDefaultXPosition,
+                                                  kDefaultYPosition)).toPoint();
+        QSize size = settings.value("size", QSize(kDefaultWidth,
+                                                  kDefaultHeight)).toSize();
         restoreState(settings.value("window_state").toByteArray());
         bool isMax = settings.value("maximized", false).toBool();
         resize(size);
         move(pos);
         isMax ? showMaximized() : showNormal();
     } else {
-        resize(defaultWidth, defaultHeight);
-        move(defaultXPosition, defaultYPosition);
+        resize(kDefaultWidth, kDefaultHeight);
+        move(kDefaultXPosition, kDefaultYPosition);
     }
 
-    mSearching = false;
+    m_Searching = false;
 }
 
 MainWindow::~MainWindow()
@@ -134,9 +134,9 @@ void MainWindow::newSet()
     if (maybeSave()) {
         setCurrentFile("");
         setWindowModified(true);
-        mCards.clear();
+        m_Cards.clear();
         tableWords->show();
-        updateTable(mCards);
+        updateTable(m_Cards);
         editActionsState();
     }
 }
@@ -157,10 +157,10 @@ void MainWindow::openSet()
 
 bool MainWindow::saveSet()
 {
-    if (mCurrentFile.isEmpty())
+    if (m_CurrentFile.isEmpty())
         return saveSetAs();
     else
-        return saveFile(mCurrentFile);
+        return saveFile(m_CurrentFile);
 }
 
 bool MainWindow::saveSetAs()
@@ -181,11 +181,11 @@ void MainWindow::addCard()
     NewEditCardDialog *dlg = new NewEditCardDialog(this);
     if (dlg->exec()) {
         // Getting new card's contents
-        mCards.push_back(dlg->getNewCard());
+        m_Cards.push_back(dlg->newCard());
 
         // Set is modified now
         setWindowModified(true);
-        updateTable(mCards);
+        updateTable(m_Cards);
 
         // Setting selection to the new card
         tableWords->setCurrentCell(tableWords->rowCount() - 1, 0);
@@ -200,19 +200,19 @@ void MainWindow::editCard()
     if (isInRange(curr)) {
         NewEditCardDialog* dlg;
 
-        if (mSearching)
-            dlg = new NewEditCardDialog(*mSearchResults.at(curr), this);
+        if (m_Searching)
+            dlg = new NewEditCardDialog(*m_SearchResults.at(curr), this);
         else
-            dlg = new NewEditCardDialog(mCards.at(curr), this);
+            dlg = new NewEditCardDialog(m_Cards.at(curr), this);
 
         if (dlg->exec()) {
             // Updating card's contents
-            if (mSearching) {
-                *mSearchResults[curr] = dlg->getNewCard();
-                updateTable(mSearchResults);
+            if (m_Searching) {
+                *m_SearchResults[curr] = dlg->newCard();
+                updateTable(m_SearchResults);
             } else {
-                mCards.replace(curr, dlg->getNewCard());
-                updateTable(mCards);
+                m_Cards.replace(curr, dlg->newCard());
+                updateTable(m_Cards);
             }
 
             // Set is modified now
@@ -235,18 +235,18 @@ void MainWindow::deleteCard()
     int curr = tableWords->currentRow();
     if (isInRange(curr)) {
         // Removing card
-        if (mSearching)
-            mCards.removeOne(*mSearchResults.at(curr));
+        if (m_Searching)
+            m_Cards.removeOne(*m_SearchResults.at(curr));
         else
-            mCards.removeAt(curr);
+            m_Cards.removeAt(curr);
 
-        mSearching = false;
-        editSearch->clear();
+        m_Searching = false;
+        txtSearch->clear();
 
         // Set is modified now
         setWindowModified(true);
 
-        updateTable(mCards);
+        updateTable(m_Cards);
 
         // Selecting previous or the first card
         if (curr != 0)
@@ -276,7 +276,7 @@ void MainWindow::settings()
     if (dlgSettings->exec()) {
         readSettings();
         if (isFileOpened())
-            updateTable(mCards);
+            updateTable(m_Cards);
     }
 
     delete dlgSettings;
@@ -291,13 +291,13 @@ void MainWindow::startQuiz()
 {
     // Set shouldn't be empty
     if (tableWords->rowCount()) {
-        StartQuizDialog* dlg = new StartQuizDialog(&mCards, this);
+        StartQuizDialog* dlg = new StartQuizDialog(&m_Cards, this);
 
         if (dlg->exec()) {
-            if (dlg->getCards().size()) {
-                QuizDialog *quizDlg = new QuizDialog(dlg->getCards(),
-                                                     dlg->getChoiceMode(),
-                                                     dlg->getHideMode(),
+            if (dlg->cards().size()) {
+                QuizDialog *quizDlg = new QuizDialog(dlg->cards(),
+                                                     dlg->choiceMode(),
+                                                     dlg->hideMode(),
                                                      getPointersSet(), this);
                 tableWords->hide();
                 quizDlg->exec();
@@ -305,7 +305,7 @@ void MainWindow::startQuiz()
 
                 if (quizDlg->isModified()) {
                     setWindowModified(true);
-                    updateTable(mCards);
+                    updateTable(m_Cards);
                 }
 
                 delete quizDlg;
@@ -330,21 +330,21 @@ void MainWindow::about()
 
 void MainWindow::search(QString str)
 {
-    mSearchResults.clear();
+    m_SearchResults.clear();
 
     if (!str.isEmpty()) {
-        mSearching = true;
+        m_Searching = true;
 
-        for (int i = 0; i < mCards.size(); i++) {
-            if (mCards.at(i).word().contains(str, Qt::CaseInsensitive)
-             || mCards.at(i).translation().contains(str, Qt::CaseInsensitive)) {
-                mSearchResults.push_back(&mCards[i]);
+        for (int i = 0; i < m_Cards.size(); i++) {
+            if (m_Cards.at(i).word().contains(str, Qt::CaseInsensitive)
+             || m_Cards.at(i).translation().contains(str, Qt::CaseInsensitive)) {
+                m_SearchResults.push_back(&m_Cards[i]);
             }
         }
-        updateTable(mSearchResults);
+        updateTable(m_SearchResults);
     } else {
-        mSearching = false;
-        updateTable(mCards);
+        m_Searching = false;
+        updateTable(m_Cards);
     }
 }
 
@@ -561,19 +561,19 @@ void MainWindow::createToolbars()
 
 void MainWindow::createSearchBar()
 {
-    editSearch = new QLineEdit();
-    connect(editSearch, SIGNAL(textChanged(QString)), SLOT(search(QString)));
+    txtSearch = new QLineEdit();
+    connect(txtSearch, SIGNAL(textChanged(QString)), SLOT(search(QString)));
 
     QToolButton *btnClear = new QToolButton();
     btnClear->setToolTip(tr("Clear"));
     btnClear->setIcon(QIcon(":/icons/fileclose.png"));
     btnClear->setStyleSheet("QToolButton { border: none; padding: 0px; }");
-    connect(btnClear, SIGNAL(clicked()), editSearch, SLOT(clear()));
+    connect(btnClear, SIGNAL(clicked()), txtSearch, SLOT(clear()));
 
     QHBoxLayout *lt = new QHBoxLayout;
     lt->addStretch(1);
     lt->addWidget(new QLabel(tr("Search")));
-    lt->addWidget(editSearch);
+    lt->addWidget(txtSearch);
     lt->addWidget(btnClear);
 
     QWidget *searchWgt = new QWidget();
@@ -590,7 +590,7 @@ void MainWindow::createStatusBar()
 void MainWindow::readSettings()
 {
     QSettings settings;
-    corrAnsForLearned = settings.value("corr_answers", 10).toInt();
+    m_CorrAnsForLearned = settings.value("corr_answers", 10).toInt();
 }
 
 void MainWindow::writeSettings()
@@ -600,7 +600,7 @@ void MainWindow::writeSettings()
         settings.setValue("pos", pos());
 
         if (isMaximized())
-            settings.setValue("size", QSize(defaultWidth, defaultHeight));
+            settings.setValue("size", QSize(kDefaultWidth, kDefaultHeight));
         else
             settings.setValue("size", size());
 
@@ -611,13 +611,13 @@ void MainWindow::writeSettings()
 
 void MainWindow::setCurrentFile(const QString &fileName)
 {
-    mCurrentFile = fileName;
+    m_CurrentFile = fileName;
     setWindowModified(false);
 
-    QString shownName = mCurrentFile;
+    QString shownName = m_CurrentFile;
 
     if (isFileOpened()) {
-        if (mCurrentFile.isEmpty())
+        if (m_CurrentFile.isEmpty())
             shownName = "untitled.wsf";
 
         setWindowTitle(shownName + "[*]" + " \u2014 "
@@ -647,16 +647,16 @@ void MainWindow::loadFile(const QString &fileName, bool import)
 
     if (noErrors) {
         if (import) {
-            mCards.append(temp);
+            m_Cards.append(temp);
             statusBar()->showMessage(tr("File imported"), 2000);
         } else {
-            mCards = temp;
+            m_Cards = temp;
             setCurrentFile(fileName);
             statusBar()->showMessage(tr("File loaded"), 2000);
         }
 
         tableWords->show();
-        updateTable(mCards);
+        updateTable(m_Cards);
         editActionsState();
     } else {
         QMessageBox::critical(this, tr("Error"), reader.getErrorMessage(),
@@ -666,7 +666,7 @@ void MainWindow::loadFile(const QString &fileName, bool import)
 
 bool MainWindow::saveFile(const QString & fileName)
 {
-    XmlWriter writer(&mCards);
+    XmlWriter writer(&m_Cards);
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -709,8 +709,8 @@ bool MainWindow::maybeSave()
 
 void MainWindow::updateTable(WordsSet words)
 {
-    mSearching = false;
-    editSearch->clear();
+    m_Searching = false;
+    txtSearch->clear();
 
     tableWords->clearContents();
     tableWords->setRowCount(0);
@@ -740,7 +740,7 @@ void MainWindow::updateTable(WordsSet words)
 
         // Learning progress in %
         int progress = (static_cast<double>(it->correctAnswers())
-                            / corrAnsForLearned * 100);
+                            / m_CorrAnsForLearned * 100);
         progress = (progress > 100) ? 100 : progress;
 
         tmp = new QTableWidgetItem(QString("%1%").arg(progress));
@@ -752,7 +752,7 @@ void MainWindow::updateTable(WordsSet words)
     tableWords->setCurrentCell(0, 0);
 }
 
-void MainWindow::updateTable(WordsPtrSet words) 
+void MainWindow::updateTable(WordsPtrSet words)
 {
     tableWords->clearContents();
     tableWords->setRowCount(0);
@@ -782,7 +782,7 @@ void MainWindow::updateTable(WordsPtrSet words)
 
         // Learning progress in %
         int progress = (static_cast<double>((*it)->correctAnswers())
-                            / corrAnsForLearned * 100);
+                            / m_CorrAnsForLearned * 100);
         progress = (progress > 100) ? 100 : progress;
 
         tmp = new QTableWidgetItem(QString("%1%").arg(progress));
@@ -796,7 +796,7 @@ void MainWindow::updateTable(WordsPtrSet words)
 
 bool MainWindow::isFileOpened()
 {
-    return (mCurrentFile != "---");
+    return (m_CurrentFile != "---");
 }
 
 void MainWindow::editActionsState()
@@ -811,17 +811,17 @@ void MainWindow::editActionsState()
     actionImportSet->setEnabled(state);
     actionStartTraining->setEnabled(state);
     actionStartQuiz->setEnabled(state);
-    editSearch->setEnabled(state);
+    txtSearch->setEnabled(state);
 }
 
 void MainWindow::showCard(int index)
 {
     if (isInRange(index)) {
         ViewCardDialog *viewDlg;
-        if (mSearching)
-            viewDlg = new ViewCardDialog(mSearchResults, this);
+        if (m_Searching)
+            viewDlg = new ViewCardDialog(m_SearchResults, this);
         else
-            viewDlg = new ViewCardDialog(&mCards, this);
+            viewDlg = new ViewCardDialog(&m_Cards, this);
 
         viewDlg->setCurrentCard(index);
 
@@ -829,10 +829,10 @@ void MainWindow::showCard(int index)
 
         if (viewDlg->isModified()) {
             setWindowModified(true);
-            if (mSearching)
-                updateTable(mSearchResults);
+            if (m_Searching)
+                updateTable(m_SearchResults);
             else
-                updateTable(mCards);
+                updateTable(m_Cards);
         }
 
         delete viewDlg;
@@ -841,14 +841,14 @@ void MainWindow::showCard(int index)
 
 bool MainWindow::isInRange(int curr)
 {
-    return ((curr >= 0) && (curr < mCards.size()));
+    return ((curr >= 0) && (curr < m_Cards.size()));
 }
 
 WordsPtrSet MainWindow::getPointersSet()
 {
     WordsPtrSet tmp;
-    for (int i = 0; i < mCards.size(); i++)
-        tmp.push_back(&mCards[i]);
+    for (int i = 0; i < m_Cards.size(); i++)
+        tmp.push_back(&m_Cards[i]);
 
     return tmp;
 }

@@ -39,8 +39,9 @@ class QLabel;
 class AnswerWidget;
 class CardWidget;
 
-enum HideMode { Hide_First = 0, Hide_Random = 0, Hide_Translation, Hide_Word,
-                Hide_Last = Hide_Word};
+enum HideMode {
+    HideFirst = 0, HideRandom = 0, HideTranslation, HideWord, HideLast = HideWord
+};
 
 // Dialog with the quiz, similar to ViewCardDialog.
 class QuizDialog : public QDialog
@@ -52,9 +53,6 @@ public:
     QuizDialog(const WordsPtrSet & cards, QuestionType choice,
                HideMode hide, const WordsPtrSet & allCards,
                QWidget *parent = 0);
-    QuizDialog(WordsSet *cards, QuestionType choice,
-               HideMode hide, const WordsPtrSet & allCards,
-               QWidget *parent = 0);
 
     bool isModified();
 
@@ -63,12 +61,9 @@ private slots:
     void dontKnow();
 
 private:
-    static const int defaultWidth = 400;
-    static const int defaultHeight = 360;
-    static const int numChoices = 4;
-
-    // Convenience function for initialization
-    void constructor(QuestionType choice, HideMode hide);
+    static const int kDefaultWidth = 400;
+    static const int kDefaultHeight = 360;
+    static const int kNumOfChoices = 4;
 
     // Changes buttons' text to appropriate, when something is clicked
     void switchButtons();
@@ -98,33 +93,33 @@ private:
     QProgressBar *prgProgress;
     QLabel *lblProgress;
     QPushButton *btnCheckNext;
-    CardWidget *cardText;
+    CardWidget *wgtCard;
     AnswerWidget *wgtAnswer;
     QList<AnswerWidget*> answerWgts;
 
     // If user answered correctly at least one question
-    bool mModified;
+    bool m_Modified;
 
-    HideMode mHideMode;
-    QuestionType mChoiceMode;
+    HideMode m_HideMode;
+    QuestionType m_ChoiceMode;
 
     // If user answered all words
-    bool mThatsAll;
+    bool m_ThatsAll;
 
     // If "Check" has been clicked
-    bool mAnswered;
+    bool m_Answered;
 
-    int mCurrentCard;
+    int m_CurrentCard;
 
     // Cards to be tested
-    WordsPtrSet mCards;
+    WordsPtrSet m_Cards;
 
     // All cards of current set
-    WordsPtrSet mAllCards;
+    WordsPtrSet m_AllCards;
 
-    Quiz<WordCard, QString> mQuiz;
-    QList<HideMode> mHideModes;
-    QList<QuestionType> mQuestionTypes;
+    Quiz<WordCard, QString> m_Quiz;
+    QList<HideMode> m_HideModes;
+    QList<QuestionType> m_QuestionTypes;
 };
 
 #endif // QUIZDIALOG_H

@@ -47,13 +47,13 @@ public:
     explicit StartQuizDialog(WordsSet * words, QWidget *parent = 0);
 
     // Returns chosen words
-    WordsPtrSet getCards();
+    WordsPtrSet cards();
 
     // Returns selected choice mode
-    QuestionType getChoiceMode();
+    QuestionType choiceMode();
 
     // Returns selected hiding mode
-    HideMode getHideMode();
+    HideMode hideMode();
 
 private slots:
     /* Enables or disables line edit with number of words depending on
@@ -76,10 +76,8 @@ private:
     QCheckBox *chckIncLearned;
     QCheckBox *chckAllWords;
     QLineEdit *txtNumWords;
-    QPushButton *btnOk;
-    QPushButton *btnCancel;
 
-    WordsPtrSet mCards;
+    WordsPtrSet m_Cards;
 };
 
 #endif // STARTQUIZDIALOG_H

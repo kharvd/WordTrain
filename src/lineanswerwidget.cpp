@@ -47,7 +47,7 @@ LineAnswerWidget::LineAnswerWidget(QWidget *parent) :
     setLayout(lt);
 }
 
-QString LineAnswerWidget::getAnswer()
+QString LineAnswerWidget::answer()
 {
     return txtAnswer->text();
 }

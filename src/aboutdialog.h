@@ -38,9 +38,10 @@ class AboutDialog : public QDialog
 
 public:
     explicit AboutDialog(QWidget *parent = 0);
+
 private:
-    static const int defaultWidth = 500;
-    static const int defaultHeight = 400;
+    static const int kDefaultWidth = 500;
+    static const int kDefaultHeight = 400;
 };
 
 #endif // ABOUTDIALOG_H

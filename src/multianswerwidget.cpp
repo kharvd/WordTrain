@@ -51,24 +51,24 @@ MultiAnswerWidget::MultiAnswerWidget(QWidget *parent) :
 
 void MultiAnswerWidget::setAnswers(const QStringList & answers)
 {
-    mAnswers = answers;
+    m_Answers = answers;
     createRadios();
 }
 
 void MultiAnswerWidget::createRadios()
 {
-    for (int i = 0; i < mAnswers.size(); i++) {
-        QRadioButton *tmp = new QRadioButton(mAnswers[i]);
+    for (int i = 0; i < m_Answers.size(); i++) {
+        QRadioButton *tmp = new QRadioButton(m_Answers[i]);
         connect(tmp, SIGNAL(toggled(bool)), SIGNAL(answered()));
         grpAnswers->addButton(tmp, i);
         ltRadios->addWidget(tmp);
     }
 }
 
-QString MultiAnswerWidget::getAnswer()
+QString MultiAnswerWidget::answer()
 {
     if (grpAnswers->checkedId() != -1)
-        return mAnswers.at(grpAnswers->checkedId());
+        return m_Answers.at(grpAnswers->checkedId());
 
     return "";
 }
@@ -87,6 +87,6 @@ void MultiAnswerWidget::clear()
         delete btn;
     }
 
-    mAnswers.clear();
+    m_Answers.clear();
     imgCorrect->clear();
 }

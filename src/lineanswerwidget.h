@@ -37,11 +37,12 @@ class QLineEdit;
 class LineAnswerWidget : public AnswerWidget
 {
     Q_OBJECT
+
 public:
     explicit LineAnswerWidget(QWidget *parent = 0);
 
     // Returns user's answer
-    virtual QString getAnswer();
+    virtual QString answer();
 
     virtual void setAnswers(const QStringList & answers) { }
 

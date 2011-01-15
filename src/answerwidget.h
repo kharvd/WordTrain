@@ -42,10 +42,9 @@ public:
     explicit AnswerWidget(QWidget *parent = 0);
 
     // Returns user's answer
-    virtual QString getAnswer() = 0;
+    virtual QString answer() = 0;
 
     virtual void setCorrect(bool correct);
-
     virtual void setAnswers(const QStringList & answers) = 0;
 
     // Clears the widget

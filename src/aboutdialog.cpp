@@ -41,7 +41,7 @@
 AboutDialog::AboutDialog(QWidget *parent) :
     QDialog(parent)
 {
-    resize(defaultWidth, defaultHeight);
+    resize(kDefaultWidth, kDefaultHeight);
     setWindowTitle(tr("About WordTrain"));
 
     // Setting big icon

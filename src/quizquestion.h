@@ -32,8 +32,10 @@
 #include <QStringList>
 #include <QString>
 
-enum QuestionType { Choice_First = 0, Choice_MultiChoice = 0, Choice_NoChoice,
-                    Choice_Random, Choice_Last = Choice_Random};
+enum QuestionType {
+    QuestionTypeFirst = 0, QuestionTypeMultiChoice = 0, QuestionTypeNoChoice,
+    QuestionTypeRandom, QuestionTypeLast = QuestionTypeRandom
+};
 
 // Quiz question. Task - type of the task (default QString),
 // Answer - type of answer and choices
@@ -41,12 +43,12 @@ template <class Task = QString, class Answer = QString>
 class QuizQuestion
 {
 public:
-    QuizQuestion(QuestionType _type = Choice_MultiChoice)
+    QuizQuestion(QuestionType _type = QuestionTypeMultiChoice)
         : m_Type(_type) {}
 
     QuizQuestion(const Task &_task, const Answer &_correctAnswer,
                  const QList<Answer> &_choices = QList<Answer>(),
-                 QuestionType _type = Choice_NoChoice);
+                 QuestionType _type = QuestionTypeNoChoice);
 
     Task task() const { return m_Task; }
     void setTask(const Task &_task);

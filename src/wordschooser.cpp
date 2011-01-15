@@ -35,17 +35,17 @@ WordsChooser::WordsChooser(const WordsPtrSet & cards, bool random,
     // Init PRNG
     qsrand(time(0));
 
-    mCards = cards;
+    m_Cards = cards;
 
     if (random)
-        mCards = shuffleContainer(mCards, mCards.size());
+        m_Cards = Utilities::shuffleContainer(m_Cards, m_Cards.size());
 
-    mCards = getFirstN(number, includeLearned);
+    m_Cards = getFirstN(number, includeLearned);
 }
 
 WordsPtrSet WordsChooser::getCards()
 {
-    return mCards;
+    return m_Cards;
 }
 
 WordsPtrSet WordsChooser::getFirstN(int number, bool includeLearned)
@@ -53,20 +53,19 @@ WordsPtrSet WordsChooser::getFirstN(int number, bool includeLearned)
     WordsPtrSet tmp;
 
     // -1 means all words
-    number = (number == -1) ? mCards.size() : number;
+    number = (number == -1) ? m_Cards.size() : number;
 
     QSettings settings;
     int corrAnsForLearned = settings.value("corr_answers", 10).toInt();
 
     // i goes through all elements of list, n counts 'number'
-    for (int i = 0, n = 0; (i < mCards.size()) && (n < number); i++) {
-        bool learned = (mCards.at(i)->correctAnswers
-() / corrAnsForLearned
+    for (int i = 0, n = 0; (i < m_Cards.size()) && (n < number); i++) {
+        bool learned = (m_Cards.at(i)->correctAnswers() / corrAnsForLearned
                        == 1);
 
         // If we include learned words or word is not learned
         if (includeLearned || !learned) {
-            tmp.push_back(mCards.at(i));
+            tmp.push_back(m_Cards.at(i));
             n++;
         }
     }

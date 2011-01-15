@@ -47,8 +47,8 @@ private slots:
     void writeSettings();
 
 private:
-    static const int defaultWidth = 300;
-    static const int defaultHeight = 200;
+    static const int kDefaultWidth = 300;
+    static const int kDefaultHeight = 200;
 
     // Dynamically gets available languages from resources
     void fillLanguages();
@@ -56,8 +56,6 @@ private:
     QComboBox *cmbLanguages;
     QLineEdit *txtCorrAnswers;
     QCheckBox *chckSaveWinPosition;
-    QPushButton *btnOk;
-    QPushButton *btnCancel;
 };
 
 #endif // SETTINGSDIALOG_H

@@ -45,7 +45,7 @@ private:
     // Returns first N elements from mCards
     WordsPtrSet getFirstN(int number, bool includeLearned);
 
-    WordsPtrSet mCards;
+    WordsPtrSet m_Cards;
 };
 
 #endif // WORDSCHOOSER_H

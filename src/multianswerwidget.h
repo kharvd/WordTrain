@@ -42,7 +42,7 @@ public:
     explicit MultiAnswerWidget(QWidget *parent = 0);
 
     // Returns user's answer
-    virtual QString getAnswer();
+    virtual QString answer();
 
     // Sets choices
     virtual void setAnswers(const QStringList & answers);
@@ -57,7 +57,8 @@ private:
 protected:
     QButtonGroup *grpAnswers;
     QVBoxLayout *ltRadios;
-    QStringList mAnswers;
+
+    QStringList m_Answers;
 };
 
 #endif // MULTIANSWERWIDGET_H

@@ -67,10 +67,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     chckSaveWinPosition = new QCheckBox(tr("Save window position and size"));
     chckSaveWinPosition->setChecked(settings.value("save_pos", 1).toBool());
 
-    btnOk = new QPushButton(tr("OK"));
+    QPushButton *btnOk = new QPushButton(tr("OK"));
     connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
 
-    btnCancel = new QPushButton(tr("Cancel"));
+    QPushButton *btnCancel = new QPushButton(tr("Cancel"));
     connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
 
     QHBoxLayout *ltButtons = new QHBoxLayout();
@@ -92,7 +92,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     connect(this, SIGNAL(accepted()), SLOT(writeSettings()));
 
     setWindowTitle(tr("Settings"));
-    resize(defaultWidth, defaultHeight);
+    resize(kDefaultWidth, kDefaultHeight);
     setLayout(ltMain);
 }
 

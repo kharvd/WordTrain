@@ -33,19 +33,23 @@
 #include <QtCore>
 #include <QtAlgorithms>
 
-// Generic shuffle
-template <class T>
-T shuffleContainer(const T & container, int size) {
-    T tmp = container;
+namespace Utilities {
+    // Generic shuffle
+    template <class T>
+    T shuffleContainer(const T & container, int size) {
+        T tmp = container;
 
-    int newPos;
+        int newPos;
 
-    for (int i = 0; i < size; i++) {
-        newPos = qrand() % size;
-        qSwap(tmp[i], tmp[newPos]);
+        for (int i = 0; i < size; i++) {
+            newPos = qrand() % size;
+            qSwap(tmp[i], tmp[newPos]);
+        }
+
+        return tmp;
     }
-
-    return tmp;
 }
+
+
 
 #endif // UTILITIES_H

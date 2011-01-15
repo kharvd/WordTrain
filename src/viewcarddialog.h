@@ -53,8 +53,8 @@ private slots:
     void editCard();
 
 private:
-    static const int defaultWidth = 400;
-    static const int defaultHeight = 360;
+    static const int kDefaultWidth = 400;
+    static const int kDefaultHeight = 360;
 
     void createInterface();
 
@@ -65,11 +65,11 @@ private:
     QPushButton *btnTurn;
     QPushButton *btnNext;
     QPushButton *btnEdit;
-    CardWidget *cardText;
+    CardWidget *wgtCard;
 
-    bool mModified;
-    int mCurrentCard;
-    WordsPtrSet mCards;
+    bool m_Modified;
+    int m_CurrentCard;
+    WordsPtrSet m_Cards;
 };
 
 #endif // VIEWCARDDIALOG_H

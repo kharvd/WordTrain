@@ -43,7 +43,7 @@ StartQuizDialog::StartQuizDialog(WordsSet * words, QWidget *parent) :
     QDialog(parent)
 {
     for (int i = 0; i < words->size(); i++)
-        mCards.push_back(&words[0][i]);
+        m_Cards.push_back(&words[0][i]);
 
     setWindowTitle(tr("Start test"));
     createInterface();
@@ -59,9 +59,9 @@ void StartQuizDialog::createInterface()
     radioRandomMode = new QRadioButton(tr("Random", "Mode"));
 
     grpChoiceMode = new QButtonGroup(this);
-    grpChoiceMode->addButton(radioMultiChoiceMode, Choice_MultiChoice);
-    grpChoiceMode->addButton(radioNoChoiceMode, Choice_NoChoice);
-    grpChoiceMode->addButton(radioRandomMode, Choice_Random);
+    grpChoiceMode->addButton(radioMultiChoiceMode, QuestionTypeMultiChoice);
+    grpChoiceMode->addButton(radioNoChoiceMode, QuestionTypeNoChoice);
+    grpChoiceMode->addButton(radioRandomMode, QuestionTypeRandom);
 
     radioMultiChoiceMode->setChecked(true);
 
@@ -115,9 +115,9 @@ void StartQuizDialog::createInterface()
     radioRandomHide = new QRadioButton(tr("Random", "Hide"));
     radioRandomHide->setChecked(true);
     grpHideMode = new QButtonGroup(this);
-    grpHideMode->addButton(radioRandomHide, Hide_Random);
-    grpHideMode->addButton(radioTranslationHide, Hide_Translation);
-    grpHideMode->addButton(radioWordHide, Hide_Word);
+    grpHideMode->addButton(radioRandomHide, HideRandom);
+    grpHideMode->addButton(radioTranslationHide, HideTranslation);
+    grpHideMode->addButton(radioWordHide, HideWord);
 
     QVBoxLayout *ltRadioHide = new QVBoxLayout;
     ltRadioHide->addWidget(radioRandomHide);
@@ -130,9 +130,9 @@ void StartQuizDialog::createInterface()
     QGroupBox *grpBox = new QGroupBox(windowTitle());
     grpBox->setLayout(ltFormQuiz);
 
-    btnOk = new QPushButton(tr("OK"));
+    QPushButton *btnOk = new QPushButton(tr("OK"));
     connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
-    btnCancel = new QPushButton(tr("Cancel"));
+    QPushButton *btnCancel = new QPushButton(tr("Cancel"));
     connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
 
     QVBoxLayout *ltBtns = new QVBoxLayout();
@@ -152,21 +152,21 @@ void StartQuizDialog::toggleTxtNumWords(bool disable)
     txtNumWords->setEnabled(!disable);
 }
 
-WordsPtrSet StartQuizDialog::getCards()
+WordsPtrSet StartQuizDialog::cards()
 {
     // Getting words from the set according to selected options
     int numWords = chckAllWords->isChecked() ? -1 : txtNumWords->text().toInt();
-    WordsChooser chooser(mCards, radioRandomOrder->isChecked(),
+    WordsChooser chooser(m_Cards, radioRandomOrder->isChecked(),
                          chckIncLearned->isChecked(), numWords);
     return chooser.getCards();
 }
 
-QuestionType StartQuizDialog::getChoiceMode()
+QuestionType StartQuizDialog::choiceMode()
 {
     return (QuestionType)grpChoiceMode->checkedId();
 }
 
-HideMode StartQuizDialog::getHideMode()
+HideMode StartQuizDialog::hideMode()
 {
     return (HideMode)grpHideMode->checkedId();
 }

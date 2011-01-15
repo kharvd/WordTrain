@@ -48,10 +48,10 @@ public:
 
     void addQuestion(const Task &_task, const Answer &_correctAnswer,
                      const QList<Answer> &_choices = QList<Answer>(),
-                     QuestionType _type = Choice_NoChoice);
+                     QuestionType _type = QuestionTypeNoChoice);
     void setQuestionAt(int index, const Task &_task, const Answer &_correctAnswer,
                        const QList<Answer> &_choices = QList<Answer>(),
-                       QuestionType _type = Choice_NoChoice);
+                       QuestionType _type = QuestionTypeNoChoice);
     void removeQuestionAt(int index);
     void clear();
 

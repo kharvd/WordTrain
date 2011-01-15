@@ -37,8 +37,8 @@ ViewCardDialog::ViewCardDialog(const WordsPtrSet & cards, QWidget *parent) :
     QDialog(parent)
 {
     Q_ASSERT(cards.size());
-    mModified = false;
-    mCards = cards;
+    m_Modified = false;
+    m_Cards = cards;
     createInterface();
     setCurrentCard(0);
 }
@@ -48,9 +48,9 @@ ViewCardDialog::ViewCardDialog(WordsSet *cards, QWidget *parent) :
 {
     Q_ASSERT(cards->size());
     for (int i = 0; i < cards->size(); i++)
-        mCards.push_back(&cards[0][i]);
+        m_Cards.push_back(&cards[0][i]);
 
-    mModified = false;
+    m_Modified = false;
     createInterface();
     setCurrentCard(0);
 }
@@ -58,9 +58,9 @@ ViewCardDialog::ViewCardDialog(WordsSet *cards, QWidget *parent) :
 void ViewCardDialog::createInterface()
 {
     setWindowTitle(tr("View card"));
-    resize(defaultWidth, defaultHeight);
+    resize(kDefaultWidth, kDefaultHeight);
 
-    cardText = new CardWidget();
+    wgtCard = new CardWidget();
 
     btnPrevious = new QPushButton(tr("Previous"));
     connect(btnPrevious, SIGNAL(clicked()), this, SLOT(prevCard()));
@@ -73,7 +73,7 @@ void ViewCardDialog::createInterface()
     connect(btnEdit, SIGNAL(clicked()), this, SLOT(editCard()));
 
     btnTurn = new QPushButton(tr("Show other side"));
-    connect(btnTurn, SIGNAL(clicked()), cardText, SLOT(showOtherSide()));
+    connect(btnTurn, SIGNAL(clicked()), wgtCard, SLOT(showOtherSide()));
 
     QHBoxLayout *hLayout1 = new QHBoxLayout;
     hLayout1->addWidget(btnEdit);
@@ -86,7 +86,7 @@ void ViewCardDialog::createInterface()
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(hLayout1);
-    mainLayout->addWidget(cardText);
+    mainLayout->addWidget(wgtCard);
     mainLayout->addLayout(hLayout2);
 
     setLayout(mainLayout);
@@ -94,39 +94,39 @@ void ViewCardDialog::createInterface()
 
 void ViewCardDialog::switchButtons()
 {
-    btnPrevious->setEnabled(mCurrentCard != 0);
-    btnNext->setEnabled(mCurrentCard != (mCards.size() - 1));
+    btnPrevious->setEnabled(m_CurrentCard != 0);
+    btnNext->setEnabled(m_CurrentCard != (m_Cards.size() - 1));
 }
 
 void ViewCardDialog::setCurrentCard(int index)
 {
-    mCurrentCard = index;
+    m_CurrentCard = index;
     switchButtons();
-    cardText->showCard(*(mCards[index]));
+    wgtCard->showCard(*(m_Cards[index]));
 }
 
 bool ViewCardDialog::isModified()
 {
-    return mModified;
+    return m_Modified;
 }
 
 void ViewCardDialog::prevCard()
 {
-    setCurrentCard(mCurrentCard - 1);
+    setCurrentCard(m_CurrentCard - 1);
 }
 
 void ViewCardDialog::nextCard()
 {
-    setCurrentCard(mCurrentCard + 1);
+    setCurrentCard(m_CurrentCard + 1);
 }
 
 void ViewCardDialog::editCard()
 {
-    NewEditCardDialog* dlg = new NewEditCardDialog(*(mCards[mCurrentCard]));
+    NewEditCardDialog* dlg = new NewEditCardDialog(*(m_Cards[m_CurrentCard]));
     if (dlg->exec()) {
-        *mCards[mCurrentCard] = dlg->getNewCard();
-        mModified = true;
-        setCurrentCard(mCurrentCard); // Update
+        *m_Cards[m_CurrentCard] = dlg->newCard();
+        m_Modified = true;
+        setCurrentCard(m_CurrentCard); // Update
     }
 }
 

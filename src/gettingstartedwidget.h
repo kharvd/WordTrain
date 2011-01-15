@@ -34,6 +34,7 @@
 class GettingStartedWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit GettingStartedWidget(QWidget *parent = 0);
 

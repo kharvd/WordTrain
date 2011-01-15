@@ -30,45 +30,45 @@
 
 XmlReader::XmlReader(WordsSet *cards)
 {
-    mCards = cards;
+    m_Cards = cards;
 }
 
 bool XmlReader::readFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        mErrorMessage = QString("Error: Cannot read file ")
+        m_ErrorMessage = QString("Error: Cannot read file ")
                         + qPrintable(fileName)
                         + ": " + qPrintable(file.errorString());
         return false;
     }
 
-    mReader.setDevice(&file);
+    m_Reader.setDevice(&file);
 
-    mReader.readNext();
+    m_Reader.readNext();
     skipWhitespaces();
 
-    while (!mReader.atEnd()) {
-        if (mReader.isStartElement()) {
-            if (mReader.name() == "wordsset") {
+    while (!m_Reader.atEnd()) {
+        if (m_Reader.isStartElement()) {
+            if (m_Reader.name() == "wordsset") {
                 readWordsSet();
             } else {
-                mReader.raiseError(QObject::tr("Not a words set file"));
+                m_Reader.raiseError(QObject::tr("Not a words set file"));
             }
         } else {
-            mReader.readNext();
+            m_Reader.readNext();
             skipWhitespaces();
         }
     }
 
     file.close();
-    if (mReader.hasError()) {
-        mErrorMessage = QString("Error: Failed to parse file ")
+    if (m_Reader.hasError()) {
+        m_ErrorMessage = QString("Error: Failed to parse file ")
                         + qPrintable(fileName) + ": "
-                        + qPrintable(mReader.errorString());
+                        + qPrintable(m_Reader.errorString());
         return false;
     } else if (file.error() != QFile::NoError) {
-        mErrorMessage = QString("Error: Cannot read file ")
+        m_ErrorMessage = QString("Error: Cannot read file ")
                         + qPrintable(fileName) + ": "
                         + qPrintable(file.errorString());
         return false;
@@ -78,102 +78,102 @@ bool XmlReader::readFile(const QString &fileName)
 
 void XmlReader::readWordsSet()
 {
-    mReader.readNext();
+    m_Reader.readNext();
     skipWhitespaces();
 
-    while (!mReader.atEnd() && !mReader.isEndElement()) {
-        if (mReader.isStartElement()) {
-            if (mReader.name() == "wordcard") {
+    while (!m_Reader.atEnd() && !m_Reader.isEndElement()) {
+        if (m_Reader.isStartElement()) {
+            if (m_Reader.name() == "wordcard") {
                 WordCard curr;
-                mCards->push_back(curr);
+                m_Cards->push_back(curr);
                 readWordCard();
             } else {
                 skipUnknownElement();
             }
         } else {
-            mReader.readNext();
+            m_Reader.readNext();
             skipWhitespaces();
         }
     }
 
-    mReader.readNext();
+    m_Reader.readNext();
 }
 
 void XmlReader::readWordCard()
 {
-    WordCard & card = mCards->last();
-    mReader.readNext();
+    WordCard & card = m_Cards->last();
+    m_Reader.readNext();
     skipWhitespaces();
 
-    while (!mReader.atEnd() && !(mReader.isEndElement()
-        && mReader.name() == "wordcard"))
+    while (!m_Reader.atEnd() && !(m_Reader.isEndElement()
+        && m_Reader.name() == "wordcard"))
     {
-        if (mReader.isStartElement()) {
-            if (mReader.name() == "word") {
-                card.setWord(mReader.attributes().value("value").toString());
-                mReader.readNext();
+        if (m_Reader.isStartElement()) {
+            if (m_Reader.name() == "word") {
+                card.setWord(m_Reader.attributes().value("value").toString());
+                m_Reader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "transcription") {
+            } else if (m_Reader.name() == "transcription") {
                 card.setTranscription(
-                        mReader.attributes().value("value").toString());
-                mReader.readNext();
+                        m_Reader.attributes().value("value").toString());
+                m_Reader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "translation") {
+            } else if (m_Reader.name() == "translation") {
                 card.setTranslation(
-                        mReader.attributes().value("value").toString());
-                mReader.readNext();
+                        m_Reader.attributes().value("value").toString());
+                m_Reader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "plural") {
+            } else if (m_Reader.name() == "plural") {
                 card.setPlural(
-                        mReader.attributes().value("value").toString());
-                mReader.readNext();
+                        m_Reader.attributes().value("value").toString());
+                m_Reader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "gender") {
+            } else if (m_Reader.name() == "gender") {
                 card.setGender(
-                        mReader.attributes().value("value").toString().toInt());
-                mReader.readNext();
+                        m_Reader.attributes().value("value").toString().toInt());
+                m_Reader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "category") {
+            } else if (m_Reader.name() == "category") {
                 card.setCategory(
-                        mReader.attributes().value("value").toString().toInt());
-                mReader.readNext();
+                        m_Reader.attributes().value("value").toString().toInt());
+                m_Reader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "answers") {
+            } else if (m_Reader.name() == "answers") {
                 card.setCorrectAnswers(
-                        mReader.attributes().value("value").toString().toInt());
-                mReader.readNext();
+                        m_Reader.attributes().value("value").toString().toInt());
+                m_Reader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "example") {
+            } else if (m_Reader.name() == "example") {
                 readExample();
             } else {
                 skipUnknownElement();
             }
         } else {
-            mReader.readNext();
+            m_Reader.readNext();
             skipWhitespaces();
         }
     }
 
-    mReader.readNext();
+    m_Reader.readNext();
 }
 
 void XmlReader::readExample() {
-    WordCard & card = mCards->last();
+    WordCard & card = m_Cards->last();
 
-    mReader.readNext();
+    m_Reader.readNext();
     skipWhitespaces();
     QString currEx;
     QString currTr;
 
-    while (!mReader.atEnd() && !mReader.isEndElement()) {
-        if (mReader.isStartElement()) {
-            if (mReader.name() == "ex") {
-                currEx = mReader.readElementText();
-                mReader.readNext();
+    while (!m_Reader.atEnd() && !m_Reader.isEndElement()) {
+        if (m_Reader.isStartElement()) {
+            if (m_Reader.name() == "ex") {
+                currEx = m_Reader.readElementText();
+                m_Reader.readNext();
                 skipWhitespaces();
-            } else if (mReader.name() == "tr") {
-                currTr = mReader.readElementText();
-                mReader.readNext();
+            } else if (m_Reader.name() == "tr") {
+                currTr = m_Reader.readElementText();
+                m_Reader.readNext();
                 skipWhitespaces();
             } else {
                 skipUnknownElement();
@@ -181,34 +181,34 @@ void XmlReader::readExample() {
         }
     }
 
-    mReader.readNext();
+    m_Reader.readNext();
     card.addExample(currEx, currTr);
 }
 
 void XmlReader::skipUnknownElement()
 {
-    mReader.readNext();
+    m_Reader.readNext();
     skipWhitespaces();
-    while (!mReader.atEnd() && !mReader.isEndElement()) {
-        if (mReader.isStartElement()) {
+    while (!m_Reader.atEnd() && !m_Reader.isEndElement()) {
+        if (m_Reader.isStartElement()) {
             skipUnknownElement();
         } else {
-            mReader.readNext();
+            m_Reader.readNext();
             skipWhitespaces();
         }
     }
 
-    mReader.readNext();
+    m_Reader.readNext();
 }
 
 /* FIXME: without this function program goes into an infinite loop
  if there are a lot of spaces in the file... */
 void XmlReader::skipWhitespaces() {
-    if (mReader.isWhitespace()) {
-        mReader.readNext();
+    if (m_Reader.isWhitespace()) {
+        m_Reader.readNext();
     }
 }
 
 QString XmlReader::getErrorMessage() {
-    return mErrorMessage;
+    return m_ErrorMessage;
 }

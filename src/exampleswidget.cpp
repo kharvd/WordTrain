@@ -45,7 +45,7 @@ int ExamplesWidget::examplesCount() {
 }
 
 bool ExamplesWidget::canAdd() {
-    return (examplesCount() < maxExamples);
+    return (examplesCount() < kMaxExamples);
 }
 
 void ExamplesWidget::addExample() {
@@ -74,7 +74,7 @@ void ExamplesWidget::setExampleAt(int index, Example example) {
     lineTranslation->setText(example.second);
 }
 
-Example ExamplesWidget::getExampleAt(int index) {
+Example ExamplesWidget::exampleAt(int index) {
     // Getting widgets
     QLineEdit* example = qobject_cast<QLineEdit *>(ltExamples->itemAt
                                                      (index * 4 + 1)->widget());

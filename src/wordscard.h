@@ -41,16 +41,18 @@ typedef QList<WordCard *> WordsPtrSet;
 typedef QPair<QString, QString> Example;
 typedef QVector<Example> Examples;
 
-/* If something added or deleted, don't forget
-to change condition in bounds checking */
 enum LexicalCategory {
-    LC_None, LC_Noun, LC_Verb, LC_Adjective, LC_Pronoun, LC_Adverb,
-    LC_Preposition, LC_Conjunction, LC_Interjection, LC_Participle, LC_Article,
-    LC_Clitic, LC_Particle
+    CategoryFirst = 0,
+    CategoryNone = 0, CategoryNoun, CategoryVerb,
+    CategoryAdjective, CategoryPronoun, CategoryAdverb, CategoryPreposition,
+    CategoryConjunction, CategoryInterjection, CategoryParticiple,
+    CategoryArticle, CategoryClitic, CategoryParticle,
+    CategoryLast = CategoryParticle
 };
 
 enum Gender {
-    Gen_None, Gen_Masculine, Gen_Femenine, Gen_Neuter, Gen_Common
+    GenderFirst = 0, GenderNone = 0, GenderMasculine, GenderFemenine,
+    GenderNeuter, GenderCommon, GenderLast = GenderCommon
 };
 
 /* Word card class */
@@ -62,7 +64,7 @@ class WordCard
 public:
     /* Constructors */
     WordCard():
-        mGender(Gen_None), mCategory(LC_None), mCorrectAnswers(0) {}
+        m_Gender(GenderNone), m_Category(CategoryNone), m_CorrectAnswers(0) {}
 
     /* Operators */
     bool operator==(const WordCard &card);
@@ -86,16 +88,16 @@ public:
     void clearExamples();
 
     /* Getters */
-    const QString word() const { return mWord; }
-    const QString transcription() const { return mTranscription; }
-    const QString translation() const { return mTranslation; }
-    const QString plural() const { return mPlural; }
-    LexicalCategory category() const { return mCategory; }
-    Gender gender() const { return mGender; }
-    int correctAnswers() const { return mCorrectAnswers; }
-    const Example exampleAt(int index) const { return mExamples[index]; }
-    const Examples examples() const { return mExamples; }
-    int examplesSize() const { return mExamples.size(); }
+    const QString word() const { return m_Word; }
+    const QString transcription() const { return m_Transcription; }
+    const QString translation() const { return m_Translation; }
+    const QString plural() const { return m_Plural; }
+    LexicalCategory category() const { return m_Category; }
+    Gender gender() const { return m_Gender; }
+    int correctAnswers() const { return m_CorrectAnswers; }
+    const Example exampleAt(int index) const { return m_Examples[index]; }
+    const Examples examples() const { return m_Examples; }
+    int examplesSize() const { return m_Examples.size(); }
 
     // Returns short string interpretations of LexicalCategory
     QString lexCategoriesShortString() const;
@@ -119,14 +121,14 @@ public:
     static QString genderShortString(Gender gen);
 
 private:
-    QString mWord;
-    Gender mGender;
-    LexicalCategory mCategory;
-    QString mTranscription;
-    QString mTranslation;
-    QString mPlural;
-    Examples mExamples;
-    int mCorrectAnswers;
+    QString m_Word;
+    Gender m_Gender;
+    LexicalCategory m_Category;
+    QString m_Transcription;
+    QString m_Translation;
+    QString m_Plural;
+    Examples m_Examples;
+    int m_CorrectAnswers;
 };
 
 #endif // WORDSCARD_H

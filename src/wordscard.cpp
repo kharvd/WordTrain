@@ -31,40 +31,40 @@
 bool WordCard::operator==(const WordCard &card)
 {
     bool result =
-            (mWord == card.word()) && (mGender == card.gender())
-            && (mCategory == card.category())
-            && (mTranscription == card.transcription())
-            && (mTranslation == card.translation())
-            && (mPlural == card.plural())
-            && (mExamples == card.examples())
-            && (mCorrectAnswers == card.correctAnswers());
+            (m_Word == card.word()) && (m_Gender == card.gender())
+            && (m_Category == card.category())
+            && (m_Transcription == card.transcription())
+            && (m_Translation == card.translation())
+            && (m_Plural == card.plural())
+            && (m_Examples == card.examples())
+            && (m_CorrectAnswers == card.correctAnswers());
     return result;
 }
 
 void WordCard::setWord(const QString & word)
 {
-    mWord = word.trimmed();
+    m_Word = word.trimmed();
 }
 
 void WordCard::setTranscription(const QString & transcription)
 {
-    mTranscription = transcription.trimmed();
+    m_Transcription = transcription.trimmed();
 }
 
 void WordCard::setTranslation(const QString & translation)
 {
-    mTranslation = translation.trimmed();
+    m_Translation = translation.trimmed();
 }
 
 void WordCard::setPlural(const QString & plural)
 {
-    mPlural = plural.trimmed();
+    m_Plural = plural.trimmed();
 }
 
 void WordCard::setCategory(LexicalCategory category)
 {
-    if ((category <= LC_Particle) && (category >= 0)) {
-        mCategory = category;
+    if ((category <= CategoryLast) && (category >= CategoryFirst)) {
+        m_Category = category;
     }
 }
 
@@ -75,8 +75,8 @@ void WordCard::setCategory(int category)
 
 void WordCard::setGender(Gender gender)
 {
-    if ((gender <= Gen_Common) && (gender >= 0)) {
-        mGender = gender;
+    if ((gender <= GenderLast) && (gender >= GenderFirst)) {
+        m_Gender = gender;
     }
 }
 
@@ -87,40 +87,40 @@ void WordCard::setGender(int gender)
 
 void WordCard::setCorrectAnswers(int num)
 {
-    mCorrectAnswers = num;
+    m_CorrectAnswers = num;
 }
 
 void WordCard::incCorrectAnswers()
 {
-    mCorrectAnswers++;
+    m_CorrectAnswers++;
 }
 
 void WordCard::setExamples(const Examples & examples)
 {
-    mExamples = examples;
+    m_Examples = examples;
 }
 
 void WordCard::setExampleAt(int index, const Example & example)
 {
-    if ((index < mExamples.size()) && (index >= 0)) {
-        mExamples[index] = example;
+    if ((index < m_Examples.size()) && (index >= 0)) {
+        m_Examples[index] = example;
     }
 }
 
 void WordCard::addExample(const QString & example,
                           const QString & translation)
 {
-    mExamples.push_back(qMakePair(example.trimmed(), translation.trimmed()));
+    m_Examples.push_back(qMakePair(example.trimmed(), translation.trimmed()));
 }
 
 void WordCard::addExample(const Example & example)
 {
-    mExamples.push_back(example);
+    m_Examples.push_back(example);
 }
 
 void WordCard::clearExamples()
 {
-    mExamples.clear();
+    m_Examples.clear();
 }
 
 void WordCard::clearAll()
@@ -129,8 +129,8 @@ void WordCard::clearAll()
     setTranscription("");
     setTranslation("");
     setPlural("");
-    setCategory(LC_None);
-    setGender(Gen_None);
+    setCategory(CategoryNone);
+    setGender(GenderNone);
     setCorrectAnswers(0);
     clearExamples();
 }
@@ -199,10 +199,10 @@ QString WordCard::genderShortString(Gender gen)
 
 QString WordCard::lexCategoriesShortString() const
 {
-    return lexCategoriesShortStrings().at((int) mCategory);
+    return lexCategoriesShortStrings().at((int) m_Category);
 }
 
 QString WordCard::genderShortString() const
 {
-    return genderShortStrings().at((int) mGender);
+    return genderShortStrings().at((int) m_Gender);
 }

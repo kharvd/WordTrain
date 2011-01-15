@@ -47,9 +47,9 @@ private:
     void skipUnknownElement();
     void skipWhitespaces();
 
-    WordsSet *mCards;
-    QXmlStreamReader mReader;
-    QString mErrorMessage;
+    WordsSet *m_Cards;
+    QXmlStreamReader m_Reader;
+    QString m_ErrorMessage;
 };
 
 #endif // XMLSTREAMREADER_H
