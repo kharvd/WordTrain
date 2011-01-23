@@ -3,7 +3,8 @@
 # -------------------------------------------------
 QT += core \
     gui \
-    xml
+    xml \
+    testlib
 CONFIG += release \
     warn_on \
     qt

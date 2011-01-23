@@ -28,7 +28,7 @@
 
 #include "quiz.h"
 
-// Specialization for Quiz<WordCard, QString>. Allows to compare answer imprecisely
+// Specialization for Quiz<WordCard, QString>. Allows to check answer imprecisely
 template <>
 bool Quiz<WordCard, QString>::isUsersAnswerCorrectAt(int index) const
 {

@@ -160,6 +160,7 @@ void NewEditCardDialog::createInterface()
     QHBoxLayout *progressLayout = NULL;
     QPushButton *btnResetProgress = NULL;
 
+    // If we create new card, don't show progress field and "Reset button"
     if (!m_isNew) {
         txtProgress = new QLineEdit();
         txtProgress->setReadOnly(true);

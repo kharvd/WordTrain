@@ -259,17 +259,19 @@ QList<QString> QuizDialog::getAnswersMultiChoice(QString correct, bool translati
     QStringList tmp;
     QString choice;
 
-    // FIXME It's not very beatiful part here...
     /* Choosing numChoices - 1 words for answers in MultiChoice. n - general
      counter, goes through the whole list; i counts selected answers.
      Answers should contain only one correct answer, so if chosen word
      equals correct, continue the loop without incrementing i.*/
-    for (int i = 0, n = 0; (n < (wrds.size())) && (i < kNumOfChoices - 1); i++, n++) {
+    int n = 0;
+    int i = 0;
+    while ((n < (wrds.size())) && i < kNumOfChoices - 1) {
         choice = (translation ? wrds.at(n)->translation() : wrds.at(n)->word());
-        if (choice == correct)
-            i--;
-        else
+        if (choice != correct) {
+            i++;
             tmp << choice;
+        }
+        n++;
     }
 
     // Pushing the correct answer

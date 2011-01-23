@@ -44,7 +44,7 @@ public:
     // Returns user's answer
     virtual QString answer();
 
-    virtual void setAnswers(const QStringList & answers) { }
+    virtual void setAnswers(const QStringList &) { }
 
     // Clears the widget
     virtual void clear();
