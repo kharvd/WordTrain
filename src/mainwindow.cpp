@@ -76,14 +76,15 @@ MainWindow::MainWindow(QWidget *parent)
         QSize size = settings.value("size", QSize(kDefaultWidth,
                                                   kDefaultHeight)).toSize();
         restoreState(settings.value("window_state").toByteArray());
-        bool isMax = settings.value("maximized", false).toBool();
         resize(size);
         move(pos);
+        bool isMax = settings.value("maximized", false).toBool();
         isMax ? showMaximized() : showNormal();
     } else {
         resize(kDefaultWidth, kDefaultHeight);
         move(kDefaultXPosition, kDefaultYPosition);
     }
+
 
     m_Searching = false;
 }
@@ -389,6 +390,7 @@ void MainWindow::createTableWidget()
 
     tableWords->hide();
     setCentralWidget(tableWords);
+    tableWords->setFocus();
 }
 
 void MainWindow::createActions()
@@ -557,6 +559,8 @@ void MainWindow::createToolbars()
     toolBar->addAction(actionQuit);
 
     toolBar->addSeparator();
+
+    toolBar->setObjectName("Toolbar");
 }
 
 void MainWindow::createSearchBar()
