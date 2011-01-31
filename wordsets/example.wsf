@@ -88,7 +88,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="3"/>
+        <answers value="4"/>
         <example>
             <ex>These plants thrive with relatively little sunlight.</ex>
             <tr>Эти растения цветут при относительно слабом освещении.</tr>
@@ -238,7 +238,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="0"/>
-        <answers value="8"/>
+        <answers value="9"/>
         <example>
             <ex>She bustled around the kitchen getting ready for dinner guests.</ex>
             <tr>Она суетилась на кухне, готовясь к приходу гостей.</tr>

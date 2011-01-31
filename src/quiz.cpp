@@ -38,7 +38,8 @@ bool Quiz<WordCard, QString>::isUsersAnswerCorrectAt(int index) const
         correct = (m_Questions.at(index).usersAnswer()
                   == m_Questions.at(index).correctAnswer());
     } else {
-        correct = m_Questions.at(index).correctAnswer().
+        correct = !m_Questions.at(index).usersAnswer().isEmpty()
+                  && m_Questions.at(index).correctAnswer().
                   contains(m_Questions.at(index).usersAnswer(),
                            Qt::CaseInsensitive);
     }

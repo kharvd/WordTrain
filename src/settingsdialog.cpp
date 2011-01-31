@@ -120,7 +120,8 @@ void SettingsDialog::fillLanguages()
         QTranslator translator;
         translator.load(fileNames[i], qmDir.absolutePath());
         QString language = translator.translate("Languages",
-                                                "English");
+                                                "English",
+                                                "Replace with the name of your language");
 
         cmbLanguages->addItem(QIcon(), language);
 

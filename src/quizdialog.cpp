@@ -43,6 +43,8 @@
 #include "multianswerwidget.h"
 #include "wordschooser.h"
 
+#include <QApplication>
+
 QuizDialog::QuizDialog(const WordsPtrSet & cards, QuestionType choice,
                        HideMode hide, const WordsPtrSet & allCards,
                        QWidget *parent)
@@ -71,6 +73,7 @@ void QuizDialog::createInterface()
     resize(kDefaultWidth, kDefaultHeight);
 
     wgtCard = new CardWidget();
+    wgtCard->setFocusPolicy(Qt::NoFocus);
 
     btnDontKnow = new QPushButton(tr("Don't know"));
     connect(btnDontKnow, SIGNAL(clicked()), this, SLOT(dontKnow()));
@@ -179,6 +182,7 @@ void QuizDialog::setCurrentCard(int index)
     }
 
     wgtAnswer->setAnswers(m_Quiz.choicesAt(index));
+    wgtAnswer->setFocus();
 }
 
 void QuizDialog::nextCheckWord()
@@ -241,14 +245,8 @@ void QuizDialog::showResult()
 
 void QuizDialog::dontKnow()
 {
-    if (m_HideModes.at(m_CurrentCard))
-        wgtCard->showOtherSide();
-    else
-        wgtCard->showCard(CardWidget::BackSide, CardWidget::BackAll);
-
-    wgtAnswer->setCorrect(false);
-    m_Answered = true;
-    switchButtons();
+    wgtAnswer->clear();
+    nextCheckWord();
 }
 
 QList<QString> QuizDialog::getAnswersMultiChoice(QString correct, bool translation)

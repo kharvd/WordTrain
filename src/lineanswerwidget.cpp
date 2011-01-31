@@ -44,12 +44,23 @@ LineAnswerWidget::LineAnswerWidget(QWidget *parent) :
 
     lt->setMargin(0);
 
+    setFocusPolicy(Qt::StrongFocus);
     setLayout(lt);
 }
 
 QString LineAnswerWidget::answer()
 {
     return txtAnswer->text();
+}
+
+void LineAnswerWidget::setFocus()
+{
+    txtAnswer->setFocus(Qt::MouseFocusReason);
+}
+
+void LineAnswerWidget::setFocus(Qt::FocusReason reason)
+{
+    txtAnswer->setFocus(reason);
 }
 
 void LineAnswerWidget::clear()

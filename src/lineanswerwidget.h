@@ -45,6 +45,8 @@ public:
     virtual QString answer();
 
     virtual void setAnswers(const QStringList &) { }
+    virtual void setFocus();
+    virtual void setFocus(Qt::FocusReason reason);
 
     // Clears the widget
     virtual void clear();
