@@ -26,30 +26,6 @@
 **
 ******************************************************************************/
 
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#include "quizquestion.h"
 
-#include <ctime>
-#include <QtCore>
-#include <QtAlgorithms>
-
-namespace Utilities {
-    // Generic shuffle
-    template <class T>
-    T shuffleContainer(const T & container, int size) {
-        T tmp = container;
-
-        int newPos;
-
-        for (int i = 0; i < size; i++) {
-            newPos = qrand() % size;
-            qSwap(tmp[i], tmp[newPos]);
-        }
-
-        return tmp;
-    }
-}
-
-
-
-#endif // UTILITIES_H
+// Definition is in the header file because QuizQuestion is a template class

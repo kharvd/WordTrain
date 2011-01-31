@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -42,12 +42,16 @@ public:
     explicit AnswerWidget(QWidget *parent = 0);
 
     // Returns user's answer
-    virtual QString getAnswer() = 0;
+    virtual QString answer() = 0;
 
     virtual void setCorrect(bool correct);
+    virtual void setAnswers(const QStringList & answers) = 0;
 
     // Clears the widget
     virtual void clear() = 0;
+
+signals:
+    void answered();
 
 protected:
     QLabel *imgCorrect;

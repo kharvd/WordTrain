@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -37,6 +37,7 @@ class QFormLayout;
 class ExamplesWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit ExamplesWidget(QWidget *parent = 0);
 
@@ -44,7 +45,7 @@ public:
     void setExampleAt(int index, Example example);
 
     // Returns example at index
-    Example getExampleAt(int index);
+    Example exampleAt(int index);
 
     // Returns number of examples in the widget
     int examplesCount();
@@ -53,7 +54,7 @@ public:
     bool canAdd();
 
     // Maximum number of examples in the widget
-    const static int maxExamples = 50;
+    const static int kMaxExamples = 50;
 
 public slots:
     void addExample();

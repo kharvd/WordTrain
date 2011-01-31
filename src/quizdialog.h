@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -31,6 +31,7 @@
 
 #include <QDialog>
 #include "wordscard.h"
+#include "quiz.h"
 
 class QProgressBar;
 class QPushButton;
@@ -38,8 +39,9 @@ class QLabel;
 class AnswerWidget;
 class CardWidget;
 
-enum ChoiceMode { Choice_MultiChoice = 0, Choice_NoChoice };
-enum HideMode { Hide_Random = 0, Hide_Translation, Hide_Word };
+enum HideMode {
+    HideFirst = 0, HideRandom = 0, HideTranslation, HideWord, HideLast = HideWord
+};
 
 // Dialog with the quiz, similar to ViewCardDialog.
 class QuizDialog : public QDialog
@@ -48,10 +50,7 @@ class QuizDialog : public QDialog
 
 public:
     // This class should be able to edit contents of the cards
-    QuizDialog(const WordsPtrSet & cards, ChoiceMode choice,
-               HideMode hide, const WordsPtrSet & allCards,
-               QWidget *parent = 0);
-    QuizDialog(WordsSet *cards, ChoiceMode choice,
+    QuizDialog(const WordsPtrSet & cards, QuestionType choice,
                HideMode hide, const WordsPtrSet & allCards,
                QWidget *parent = 0);
 
@@ -62,12 +61,9 @@ private slots:
     void dontKnow();
 
 private:
-    static const int defaultWidth = 400;
-    static const int defaultHeight = 360;
-    static const int numChoices = 4;
-
-    // Convenience function for initialization
-    void constructor(ChoiceMode choice, HideMode hide);
+    static const int kDefaultWidth = 400;
+    static const int kDefaultHeight = 360;
+    static const int kNumOfChoices = 4;
 
     // Changes buttons' text to appropriate, when something is clicked
     void switchButtons();
@@ -78,7 +74,7 @@ private:
     void createInterface();
 
     // Selects some words for choices in MultiAnswerWidget
-    QStringList getAnswersMultiChoice(QString correct, bool translation);
+    QList<QString> getAnswersMultiChoice(QString correct, bool translation);
 
     // Checks answer
     void checkAnswer();
@@ -86,41 +82,44 @@ private:
     // Shows result of the quiz
     void showResult();
 
+    // Fills quiz with questions
+    void fillQuiz();
+
+    // Changes the type of the current answer widget
+    // and returns pointer to current widget
+    AnswerWidget * switchAnsWidget(QuestionType type);
+
     QPushButton *btnDontKnow;
     QProgressBar *prgProgress;
     QLabel *lblProgress;
     QPushButton *btnCheckNext;
-    CardWidget *cardText;
+    CardWidget *wgtCard;
     AnswerWidget *wgtAnswer;
-
-    // Number of cards
-    int mCardsNumber;
-
-    // Number of all correct answers
-    int mCorrectAnswers;
+    QList<AnswerWidget*> answerWgts;
 
     // If user answered correctly at least one question
-    bool mModified;
+    bool m_Modified;
 
-    HideMode mHideMode;
-    ChoiceMode mChoiceMode;
-
-    // If we hide mode is Hide_Translation now
-    bool mHideTranslation;
+    HideMode m_HideMode;
+    QuestionType m_ChoiceMode;
 
     // If user answered all words
-    bool mThatsAll;
+    bool m_ThatsAll;
 
     // If "Check" has been clicked
-    bool mAnswered;
+    bool m_Answered;
 
-    int mCurrentCard;
+    int m_CurrentCard;
 
     // Cards to be tested
-    WordsPtrSet mCards;
+    WordsPtrSet m_Cards;
 
     // All cards of current set
-    WordsPtrSet mAllCards;
+    WordsPtrSet m_AllCards;
+
+    Quiz<WordCard, QString> m_Quiz;
+    QList<HideMode> m_HideModes;
+    QList<QuestionType> m_QuestionTypes;
 };
 
 #endif // QUIZDIALOG_H

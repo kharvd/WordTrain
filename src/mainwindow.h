@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -50,7 +50,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
     // If import is true, we append existing file to current
@@ -77,15 +77,14 @@ private slots:
     void startTraining();
     void startQuiz();
     void about();
-
     void search(QString str);
 
 private:
     // Some constants
-    static const int defaultWidth = 640;
-    static const int defaultHeight = 480;
-    static const int defaultXPosition = 200;
-    static const int defaultYPosition = 200;
+    static const int kDefaultWidth = 640;
+    static const int kDefaultHeight = 480;
+    static const int kDefaultXPosition = 200;
+    static const int kDefaultYPosition = 200;
 
     // Creating interface
     void createStartingWidget();
@@ -126,22 +125,22 @@ private:
     // Returns set of the pointers to all words in the main set
     WordsPtrSet getPointersSet();
 
-    // Word is learned after this number of correct answers
-    int corrAnsForLearned;
-
     //=============================================================
 
+    // Word is learned after this number of correct answers
+    int m_CorrAnsForLearned;
+
     // True if search box is not empty
-    bool mSearching;
+    bool m_Searching;
 
     // All the words of the current set.
-    WordsSet mCards;
+    WordsSet m_Cards;
 
     // Pointers to results of search
-    WordsPtrSet mSearchResults;
+    WordsPtrSet m_SearchResults;
 
     // Path to current file
-    QString mCurrentFile;
+    QString m_CurrentFile;
 
     GettingStartedWidget *wgtGettingStarted;
 
@@ -178,7 +177,7 @@ private:
     QToolBar *toolBar;
 
     // Search bar
-    QLineEdit *editSearch;
+    QLineEdit *txtSearch;
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

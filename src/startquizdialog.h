@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -47,13 +47,13 @@ public:
     explicit StartQuizDialog(WordsSet * words, QWidget *parent = 0);
 
     // Returns chosen words
-    WordsPtrSet getCards();
+    WordsPtrSet cards();
 
     // Returns selected choice mode
-    ChoiceMode getChoiceMode();
+    QuestionType choiceMode();
 
     // Returns selected hiding mode
-    HideMode getHideMode();
+    HideMode hideMode();
 
 private slots:
     /* Enables or disables line edit with number of words depending on
@@ -67,6 +67,7 @@ private:
     QButtonGroup *grpHideMode;
     QRadioButton *radioMultiChoiceMode;
     QRadioButton *radioNoChoiceMode;
+    QRadioButton *radioRandomMode;
     QRadioButton *radioRandomOrder;
     QRadioButton *radioListOrder;
     QRadioButton *radioWordHide;
@@ -75,10 +76,8 @@ private:
     QCheckBox *chckIncLearned;
     QCheckBox *chckAllWords;
     QLineEdit *txtNumWords;
-    QPushButton *btnOk;
-    QPushButton *btnCancel;
 
-    WordsPtrSet mCards;
+    WordsPtrSet m_Cards;
 };
 
 #endif // STARTQUIZDIALOG_H

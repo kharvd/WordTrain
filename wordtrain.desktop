@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=WordTrain
+Comment=Simple program for learning words
+GenericName=Language Learning Flashcards
+Exec=wordtrain
+Icon=wordtrain
+Categories=Education;Languages;KDE;
+Terminal=false
+Type=Application
+Version=1.0

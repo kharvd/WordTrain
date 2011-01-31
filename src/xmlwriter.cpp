@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -30,73 +30,73 @@
 
 XmlWriter::XmlWriter(const WordsSet *cards)
 {
-    mCards = cards;
-    mWriter.setAutoFormatting(true);
+    m_Cards = cards;
+    m_Writer.setAutoFormatting(true);
 }
 
 bool XmlWriter::writeFile(const QString & fileName) {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        mErrorMessage = QString("Error: Cannot open file ")
+        m_ErrorMessage = QString("Error: Cannot open file ")
                         + qPrintable(fileName)
                         + ": " + qPrintable(file.errorString());
         return false;
     }
 
-    mWriter.setDevice(&file);
+    m_Writer.setDevice(&file);
 
-    mWriter.writeStartDocument();
-    mWriter.writeStartElement("wordsset");
+    m_Writer.writeStartDocument();
+    m_Writer.writeStartElement("wordsset");
 
-    WordsSet::const_iterator it = mCards->begin();
-    for ( ; it != mCards->end(); it++) {
+    WordsSet::const_iterator it = m_Cards->begin();
+    for ( ; it != m_Cards->end(); it++) {
         writeCard(it);
     }
 
-    mWriter.writeEndElement();
+    m_Writer.writeEndElement();
 
     return true;
 }
 
 void XmlWriter::writeCard(WordsSet::const_iterator it) {
-    mWriter.writeStartElement("wordcard");
+    m_Writer.writeStartElement("wordcard");
 
-    mWriter.writeEmptyElement("word");
-    mWriter.writeAttribute("value", it->word());
+    m_Writer.writeEmptyElement("word");
+    m_Writer.writeAttribute("value", it->word());
 
-    mWriter.writeEmptyElement("transcription");
-    mWriter.writeAttribute("value", it->transcription());
+    m_Writer.writeEmptyElement("transcription");
+    m_Writer.writeAttribute("value", it->transcription());
 
-    mWriter.writeEmptyElement("translation");
-    mWriter.writeAttribute("value", it->translation());
+    m_Writer.writeEmptyElement("translation");
+    m_Writer.writeAttribute("value", it->translation());
 
-    mWriter.writeEmptyElement("plural");
-    mWriter.writeAttribute("value", it->plural());
+    m_Writer.writeEmptyElement("plural");
+    m_Writer.writeAttribute("value", it->plural());
 
-    mWriter.writeEmptyElement("gender");
-    mWriter.writeAttribute("value", QString::number(it->gender()));
+    m_Writer.writeEmptyElement("gender");
+    m_Writer.writeAttribute("value", QString::number(it->gender()));
 
-    mWriter.writeEmptyElement("category");
-    mWriter.writeAttribute("value", QString::number(it->category()));
+    m_Writer.writeEmptyElement("category");
+    m_Writer.writeAttribute("value", QString::number(it->category()));
 
-    mWriter.writeEmptyElement("answers");
-    mWriter.writeAttribute("value", QString::number(it->numCorrectAnswers()));
+    m_Writer.writeEmptyElement("answers");
+    m_Writer.writeAttribute("value", QString::number(it->correctAnswers()));
 
     Examples::const_iterator exIt = it->examples().begin();
     for ( ; exIt != it->examples().end(); exIt++) {
         writeExample(exIt);
     }
 
-    mWriter.writeEndElement();
+    m_Writer.writeEndElement();
 }
 
 void XmlWriter::writeExample(Examples::const_iterator it) {
-    mWriter.writeStartElement("example");
-    mWriter.writeTextElement("ex", it->first);
-    mWriter.writeTextElement("tr", it->second);
-    mWriter.writeEndElement();
+    m_Writer.writeStartElement("example");
+    m_Writer.writeTextElement("ex", it->first);
+    m_Writer.writeTextElement("tr", it->second);
+    m_Writer.writeEndElement();
 }
 
 QString XmlWriter::getErrorMessage() {
-    return mErrorMessage;
+    return m_ErrorMessage;
 }

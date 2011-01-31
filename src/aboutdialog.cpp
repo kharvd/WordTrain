@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -41,7 +41,7 @@
 AboutDialog::AboutDialog(QWidget *parent) :
     QDialog(parent)
 {
-    resize(defaultWidth, defaultHeight);
+    resize(kDefaultWidth, kDefaultHeight);
     setWindowTitle(tr("About WordTrain"));
 
     // Setting big icon
@@ -85,6 +85,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     // License info box
     QTextEdit *license = new QTextEdit();
+    license->setReadOnly(true);
 
     QFile file(":/COPYING");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {

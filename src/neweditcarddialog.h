@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -49,7 +49,8 @@ public:
     /* If we want to edit existing card (we don't change value of card directly,
        you should use getNewCard() to get new values) */
     NewEditCardDialog(const WordCard &card, QWidget *parent = 0);
-    const WordCard& getNewCard();
+
+    WordCard newCard();
 
 public slots:
     void addExample();
@@ -57,22 +58,26 @@ public slots:
     // Show plural and gender boxes only if the word is noun
     void switchPluralGender(int);
 
+    // Set cards answers field to 0
+    void resetProgress();
+
 private:
-    static const int defaultWidth = 550;
-    static const int defaultHeight = 250;
-    static const int exampleHeight = 50;
-    static const int maxAutoHeight = 420;
+    static const int kDefaultWidth = 550;
+    static const int kDefaultHeight = 250;
+    static const int kExampleHeight = 50;
+    static const int kMaxAutoHeight = 420;
 
     void createInterface();
 
     // Fills the form with current card's contents
     void fillForm();
 
-    QFormLayout *fLayout;
+    QFormLayout *ltFields;
     QLineEdit *txtWord;
     QLineEdit *txtTranscription;
     QLineEdit *txtTranslation;
     QLineEdit *txtPlural;
+    QLineEdit *txtProgress;
     QComboBox *cmbCategory;
     QComboBox *cmbGender;
     QPushButton *btnAddExample;
@@ -81,8 +86,10 @@ private:
     ExamplesWidget *wgtExamples;
     QScrollArea *scrollExamples;
 
+    bool m_isNew;
+
     // Temporary card for holding new values
-    WordCard mNewCard;
+    WordCard m_NewCard;
 };
 
 #endif // NEWCARDDIALOG_H

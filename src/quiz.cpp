@@ -26,30 +26,25 @@
 **
 ******************************************************************************/
 
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#include "quiz.h"
 
-#include <ctime>
-#include <QtCore>
-#include <QtAlgorithms>
+// Specialization for Quiz<WordCard, QString>. Allows to check answer imprecisely
+template <>
+bool Quiz<WordCard, QString>::isUsersAnswerCorrectAt(int index) const
+{
+    bool correct;
 
-namespace Utilities {
-    // Generic shuffle
-    template <class T>
-    T shuffleContainer(const T & container, int size) {
-        T tmp = container;
-
-        int newPos;
-
-        for (int i = 0; i < size; i++) {
-            newPos = qrand() % size;
-            qSwap(tmp[i], tmp[newPos]);
-        }
-
-        return tmp;
+    if (m_exactComparison) {
+        correct = (m_Questions.at(index).usersAnswer()
+                  == m_Questions.at(index).correctAnswer());
+    } else {
+        correct = !m_Questions.at(index).usersAnswer().isEmpty()
+                  && m_Questions.at(index).correctAnswer().
+                  contains(m_Questions.at(index).usersAnswer(),
+                           Qt::CaseInsensitive);
     }
+
+    return correct;
 }
 
-
-
-#endif // UTILITIES_H
+// Definition is in the header file because Quiz is a template class

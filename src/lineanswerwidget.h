@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -30,17 +30,23 @@
 #define LINEANSWERWIDGET_H
 
 #include "answerwidget.h"
+
 class QLineEdit;
 
 // Widget for answering without choice
 class LineAnswerWidget : public AnswerWidget
 {
     Q_OBJECT
+
 public:
     explicit LineAnswerWidget(QWidget *parent = 0);
 
     // Returns user's answer
-    virtual QString getAnswer();
+    virtual QString answer();
+
+    virtual void setAnswers(const QStringList &) { }
+    virtual void setFocus();
+    virtual void setFocus(Qt::FocusReason reason);
 
     // Clears the widget
     virtual void clear();

@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -41,6 +41,7 @@
 NewEditCardDialog::NewEditCardDialog(QWidget *parent) :
         QDialog(parent)
 {
+    m_isNew = true;
     setWindowTitle(tr("New card"));
     createInterface();
 }
@@ -49,73 +50,82 @@ NewEditCardDialog::NewEditCardDialog(QWidget *parent) :
 NewEditCardDialog::NewEditCardDialog(const WordCard &card, QWidget *parent) :
         QDialog(parent)
 {
-    mNewCard = card;
+    m_isNew = false;
+    m_NewCard = card;
     setWindowTitle(tr("Edit card"));
     createInterface();
     fillForm();
 }
 
-const WordCard& NewEditCardDialog::getNewCard()
+WordCard NewEditCardDialog::newCard()
 {
     // Getting data from the form
-    mNewCard.setWord(txtWord->text());
-    mNewCard.setTranscription(txtTranscription->text());
-    mNewCard.setTranslation(txtTranslation->text());
-    mNewCard.setPlural(txtPlural->text());
-    mNewCard.setCategory(cmbCategory->currentIndex());
-    mNewCard.setGender(cmbGender->currentIndex());
-    mNewCard.setNumCorrectAnswers(0);
-    mNewCard.clearExamples();
+    m_NewCard.setWord(txtWord->text());
+    m_NewCard.setTranscription(txtTranscription->text());
+    m_NewCard.setTranslation(txtTranslation->text());
+    m_NewCard.setPlural(txtPlural->text());
+    m_NewCard.setCategory(cmbCategory->currentIndex());
+    m_NewCard.setGender(cmbGender->currentIndex());
+    m_NewCard.clearExamples();
 
     for (int i = 0; (i < wgtExamples->examplesCount())
-        && (i <= ExamplesWidget::maxExamples); i++)
+        && (i <= ExamplesWidget::kMaxExamples); i++)
     {
-        Example ex = wgtExamples->getExampleAt(i);
+        Example ex = wgtExamples->exampleAt(i);
         if (!ex.first.isEmpty())
-            mNewCard.addExample(wgtExamples->getExampleAt(i));
+            m_NewCard.addExample(wgtExamples->exampleAt(i));
     }
 
-    return mNewCard;
+    return m_NewCard;
 }
 
-void NewEditCardDialog::addExample() {
+void NewEditCardDialog::addExample()
+{
     // Adding new example and resizing the window
     scrollExamples->show();
 
     // Height for window with examples
-    int optimalHeight = height() + exampleHeight;
-    optimalHeight = (optimalHeight > maxAutoHeight) ? maxAutoHeight
+    int optimalHeight = height() + kExampleHeight;
+    optimalHeight = (optimalHeight > kMaxAutoHeight) ? kMaxAutoHeight
                                                     : optimalHeight;
     resize(width(), optimalHeight);
 
     wgtExamples->addExample();
     scrollExamples->verticalScrollBar()->
             triggerAction(QAbstractSlider::SliderToMaximum);
-	    
+
     // If we cannot add another example
     if (!wgtExamples->canAdd())
         btnAddExample->setEnabled(false);
 }
 
+void NewEditCardDialog::resetProgress()
+{
+    QSettings settings;
+    int corrAnsForLearned = settings.value("corr_answers", 10).toInt();
+    txtProgress->setText(QString("0/%1").arg(corrAnsForLearned));
+    m_NewCard.setCorrectAnswers(0);
+}
+
 void NewEditCardDialog::switchPluralGender(int cat)
 {
     // If the word is noun, show plural and gender fields, otherwise hide them
-    if (cat == (int)LC_Noun) {
+    if (cat == (int)CategoryNoun) {
         txtPlural->show();
         cmbGender->show();
-        fLayout->labelForField(txtPlural)->show();
-        fLayout->labelForField(cmbGender)->show();
+        ltFields->labelForField(txtPlural)->show();
+        ltFields->labelForField(cmbGender)->show();
     } else {
         txtPlural->hide();
         cmbGender->hide();
-        fLayout->labelForField(txtPlural)->hide();
-        fLayout->labelForField(cmbGender)->hide();
+        ltFields->labelForField(txtPlural)->hide();
+        ltFields->labelForField(cmbGender)->hide();
     }
 }
 
 void NewEditCardDialog::createInterface()
 {
-    resize(defaultWidth, defaultHeight);
+    resize(kDefaultWidth, kDefaultHeight);
     txtWord = new QLineEdit();
 
     txtTranscription = new QLineEdit();
@@ -139,27 +149,51 @@ void NewEditCardDialog::createInterface()
     scrollExamples->setAlignment(Qt::AlignTop);
     scrollExamples->hide();
 
+    QPushButton *btnOk;
+    QPushButton *btnCancel;
     btnOk = new QPushButton(tr("OK"));
     btnOk->setDefault(true);
     connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
     btnCancel = new QPushButton(tr("Cancel"));
     connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
 
-    fLayout = new QFormLayout();
-    fLayout->addRow(tr("Word:"), txtWord);
-    fLayout->addRow(tr("Transcription:"), txtTranscription);
-    fLayout->addRow(tr("Translation:"), txtTranslation);
-    fLayout->addRow(tr("Category:"), cmbCategory);
-    fLayout->addRow(tr("Plural:"), txtPlural);
-    fLayout->addRow(tr("Gender:"), cmbGender);
-    fLayout->addRow(tr("Examples:"), btnAddExample);
+    QHBoxLayout *progressLayout = NULL;
+    QPushButton *btnResetProgress = NULL;
+
+    // If we create new card, don't show progress field and "Reset button"
+    if (!m_isNew) {
+        txtProgress = new QLineEdit();
+        txtProgress->setReadOnly(true);
+
+        btnResetProgress = new QPushButton(tr("Reset progress"));
+        connect(btnResetProgress, SIGNAL(clicked(bool)), SLOT(resetProgress()));
+
+        progressLayout = new QHBoxLayout;
+        progressLayout->addWidget(txtProgress);
+        progressLayout->addWidget(btnResetProgress);
+        progressLayout->addStretch();
+    }
+
+    ltFields = new QFormLayout();
+    ltFields->addRow(tr("Word:"), txtWord);
+    ltFields->addRow(tr("Transcription:"), txtTranscription);
+    ltFields->addRow(tr("Translation:"), txtTranslation);
+    ltFields->addRow(tr("Category:"), cmbCategory);
+    ltFields->addRow(tr("Plural:"), txtPlural);
+    ltFields->addRow(tr("Gender:"), cmbGender);
+
+    if (!m_isNew) {
+        ltFields->addRow(tr("Progress:"), progressLayout);
+    }
+
+    ltFields->addRow(tr("Examples:"), btnAddExample);
 
     connect(cmbCategory, SIGNAL(currentIndexChanged(int)),
             SLOT(switchPluralGender(int)));
     switchPluralGender(0);
 
     QVBoxLayout *hLayout = new QVBoxLayout();
-    hLayout->addLayout(fLayout);
+    hLayout->addLayout(ltFields);
     hLayout->addWidget(scrollExamples);
 
     QGroupBox *grBox = new QGroupBox(windowTitle());
@@ -179,18 +213,22 @@ void NewEditCardDialog::createInterface()
 
 void NewEditCardDialog::fillForm()
 {
-    // Filling the form with the word card's contents
-    txtWord->setText(mNewCard.word());
-    txtTranscription->setText(mNewCard.transcription());
-    txtTranslation->setText(mNewCard.translation());
-    txtPlural->setText(mNewCard.plural());
-    cmbCategory->setCurrentIndex(mNewCard.category());
-    cmbGender->setCurrentIndex(mNewCard.gender());
+    QSettings settings;
+    int corrAnsForLearned = settings.value("corr_answers", 10).toInt();
 
-    for (int i = 0; i < (mNewCard.examplesSize())
-        && (i <= ExamplesWidget::maxExamples); i++)
-    {
+    // Filling the form with the word card's contents
+    txtWord->setText(m_NewCard.word());
+    txtTranscription->setText(m_NewCard.transcription());
+    txtTranslation->setText(m_NewCard.translation());
+    txtPlural->setText(m_NewCard.plural());
+    txtProgress->setText(QString("%1/%2").arg(m_NewCard.correctAnswers())
+                         .arg(corrAnsForLearned));
+    cmbCategory->setCurrentIndex(m_NewCard.category());
+    cmbGender->setCurrentIndex(m_NewCard.gender());
+
+    for (int i = 0; i < (m_NewCard.examplesSize())
+            && (i <= ExamplesWidget::kMaxExamples); i++) {
         addExample();
-        wgtExamples->setExampleAt(i, mNewCard.exampleAt(i));
+        wgtExamples->setExampleAt(i, m_NewCard.exampleAt(i));
     }
 }

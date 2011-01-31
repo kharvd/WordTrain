@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -47,9 +47,9 @@ private:
     void skipUnknownElement();
     void skipWhitespaces();
 
-    WordsSet *mCards;
-    QXmlStreamReader mReader;
-    QString mErrorMessage;
+    WordsSet *m_Cards;
+    QXmlStreamReader m_Reader;
+    QString m_ErrorMessage;
 };
 
 #endif // XMLSTREAMREADER_H

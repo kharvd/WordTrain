@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -34,6 +34,7 @@
 class GettingStartedWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit GettingStartedWidget(QWidget *parent = 0);
 

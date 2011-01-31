@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -44,12 +44,23 @@ LineAnswerWidget::LineAnswerWidget(QWidget *parent) :
 
     lt->setMargin(0);
 
+    setFocusPolicy(Qt::StrongFocus);
     setLayout(lt);
 }
 
-QString LineAnswerWidget::getAnswer()
+QString LineAnswerWidget::answer()
 {
     return txtAnswer->text();
+}
+
+void LineAnswerWidget::setFocus()
+{
+    txtAnswer->setFocus(Qt::MouseFocusReason);
+}
+
+void LineAnswerWidget::setFocus(Qt::FocusReason reason)
+{
+    txtAnswer->setFocus(reason);
 }
 
 void LineAnswerWidget::clear()

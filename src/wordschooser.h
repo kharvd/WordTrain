@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -45,7 +45,7 @@ private:
     // Returns first N elements from mCards
     WordsPtrSet getFirstN(int number, bool includeLearned);
 
-    WordsPtrSet mCards;
+    WordsPtrSet m_Cards;
 };
 
 #endif // WORDSCHOOSER_H

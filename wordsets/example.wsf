@@ -7,7 +7,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="5"/>
+        <answers value="6"/>
         <example>
             <ex>Jack proposed going to the cinema.</ex>
             <tr>Джек предложил сходить в кино.</tr>
@@ -24,7 +24,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="5"/>
+        <answers value="6"/>
         <example>
             <ex>He was ecstatic when he heard that he was going to be a father.</ex>
             <tr>Он был в восторге, когда услышал, что станет отцом.</tr>
@@ -41,7 +41,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="6"/>
+        <answers value="7"/>
         <example>
             <ex>I got a $100 fine for speeding.</ex>
             <tr>Я получил штраф в $100 за превышение скорости.</tr>
@@ -58,7 +58,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="6"/>
+        <answers value="7"/>
         <example>
             <ex>The boss was livid when yet another deadline was missed.</ex>
             <tr>Босс был в ярости, когда очередной дедлайн был пропущен.</tr>
@@ -75,7 +75,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="5"/>
+        <answers value="6"/>
         <example>
             <ex>Her company has evolved from a hobby into a thriving business.</ex>
             <tr>Ее компания развилась из хобби в процветающий бизнес</tr>
@@ -88,7 +88,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="3"/>
+        <answers value="4"/>
         <example>
             <ex>These plants thrive with relatively little sunlight.</ex>
             <tr>Эти растения цветут при относительно слабом освещении.</tr>
@@ -122,7 +122,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="9"/>
+        <answers value="10"/>
         <example>
             <ex>The fare was nothing like as much as that</ex>
             <tr>Мы заплатили гораздо меньшую сумму за проезд</tr>
@@ -157,7 +157,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="0"/>
+        <answers value="1"/>
         <example>
             <ex>The workers said they would not end the strike until their demands were met.</ex>
             <tr>Рабочие сказали, что они не прекратят забастовку, пока их требования не будут выполнены</tr>
@@ -174,7 +174,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="7"/>
+        <answers value="8"/>
         <example>
             <ex>Keep your receipt in case you need to return anything.</ex>
             <tr>Сохраняйте чек, чтобы в случае чего можно было бы вернуть товар</tr>
@@ -225,7 +225,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="6"/>
+        <answers value="7"/>
         <example>
             <ex>Fed up with the noise and bustle of the big city</ex>
             <tr>Уставший от шума и суеты большого города</tr>
@@ -238,7 +238,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="0"/>
-        <answers value="7"/>
+        <answers value="9"/>
         <example>
             <ex>She bustled around the kitchen getting ready for dinner guests.</ex>
             <tr>Она суетилась на кухне, готовясь к приходу гостей.</tr>
@@ -251,7 +251,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="2"/>
+        <answers value="3"/>
     </wordcard>
     <wordcard>
         <word value="maintain"/>
@@ -260,7 +260,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="1"/>
+        <answers value="2"/>
         <example>
             <ex>He has found it difficult to maintain a healthy weight.</ex>
             <tr>Он обнаружил, что непросто держать вес в норме.</tr>
@@ -277,7 +277,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="0"/>
+        <answers value="1"/>
         <example>
             <ex>There are several indigenous groups that still live in the area.</ex>
             <tr>В этой области все еще живет несколько групп аборигенов.</tr>
@@ -290,7 +290,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="0"/>
+        <answers value="1"/>
         <example>
             <ex>The police have announced a breakthrough in the murder case.</ex>
             <tr>Полиция объявила о прорыве в расследовании дела об убийстве.</tr>
@@ -316,10 +316,77 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="0"/>
+        <answers value="1"/>
         <example>
             <ex>It's okay to blow your lines in rehearsal.</ex>
             <tr>На репетиции еще можно путаться в словах.</tr>
         </example>
+    </wordcard>
+    <wordcard>
+        <word value="loom"/>
+        <transcription value=""/>
+        <translation value="надвигаться, грозить"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="3"/>
+        <answers value="1"/>
+        <example>
+            <ex>There could be a format war looming over 3D glasses</ex>
+            <tr>Возможно, надвигается война форматов 3D-очков</tr>
+        </example>
+    </wordcard>
+    <wordcard>
+        <word value="cuff"/>
+        <transcription value="'kəf"/>
+        <translation value="манжета, конец рукава"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="1"/>
+    </wordcard>
+    <wordcard>
+        <word value="collar"/>
+        <transcription value="ˈkä-lər"/>
+        <translation value="ошейник, воротник"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="1"/>
+    </wordcard>
+    <wordcard>
+        <word value="corduroy"/>
+        <transcription value="ˈkȯr-də-ˌrȯi"/>
+        <translation value="вельвет"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="0"/>
+    </wordcard>
+    <wordcard>
+        <word value="velvet"/>
+        <transcription value="ˈvel-vət"/>
+        <translation value="бархат"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="1"/>
+    </wordcard>
+    <wordcard>
+        <word value="wool"/>
+        <transcription value="ˈwʊl"/>
+        <translation value="шерсть"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="1"/>
+    </wordcard>
+    <wordcard>
+        <word value="suede"/>
+        <transcription value="ˈsweɪd"/>
+        <translation value="замша"/>
+        <plural value=""/>
+        <gender value="0"/>
+        <category value="1"/>
+        <answers value="1"/>
     </wordcard>
 </wordsset>

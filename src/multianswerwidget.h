@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -42,7 +42,7 @@ public:
     explicit MultiAnswerWidget(QWidget *parent = 0);
 
     // Returns user's answer
-    virtual QString getAnswer();
+    virtual QString answer();
 
     // Sets choices
     virtual void setAnswers(const QStringList & answers);
@@ -57,7 +57,8 @@ private:
 protected:
     QButtonGroup *grpAnswers;
     QVBoxLayout *ltRadios;
-    QStringList mAnswers;
+
+    QStringList m_Answers;
 };
 
 #endif // MULTIANSWERWIDGET_H

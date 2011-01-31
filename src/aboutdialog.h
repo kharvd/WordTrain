@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.1 -- Foreign words trainer
+** WordTrain 0.9.2 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -38,9 +38,10 @@ class AboutDialog : public QDialog
 
 public:
     explicit AboutDialog(QWidget *parent = 0);
+
 private:
-    static const int defaultWidth = 500;
-    static const int defaultHeight = 400;
+    static const int kDefaultWidth = 500;
+    static const int kDefaultHeight = 400;
 };
 
 #endif // ABOUTDIALOG_H
