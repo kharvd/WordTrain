@@ -1,3 +1,9 @@
+0.9.2 Released 31 January 2011
+    * Small bugfixes
+    * Added "Random" quiz mode
+    * Refactored code
+    * Added "Progress" field to "Edit card" dialog
+
 0.9.1 Released 19 November 2010
     * Added 'Getting started'
     * Changed source code directory structure
