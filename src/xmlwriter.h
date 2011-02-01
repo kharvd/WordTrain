@@ -38,16 +38,16 @@
 class XmlWriter
 {
 public:
-    XmlWriter(const WordsSet *cards);
+    XmlWriter(const WordsSet &cards);
     bool writeFile(const QString & fileName);
     QString getErrorMessage();
 
 private:
-    void writeCard(WordsSet::const_iterator it);
-    void writeExample(Examples::const_iterator it);
+    void writeCard(const WordCard &card);
+    void writeExample(const Example &ex);
 
     QXmlStreamWriter m_Writer;
-    const WordsSet *m_Cards;
+    WordsSet m_Cards;
     QString m_ErrorMessage;
 };
 

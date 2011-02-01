@@ -145,6 +145,11 @@ void XmlReader::readWordCard()
                 skipWhitespaces();
             } else if (m_Reader.name() == "example") {
                 readExample();
+            } else if (m_Reader.name() == "tag") {
+                card.addTag(
+                        m_Reader.attributes().value("value").toString());
+                m_Reader.readNext();
+                skipWhitespaces();
             } else {
                 skipUnknownElement();
             }

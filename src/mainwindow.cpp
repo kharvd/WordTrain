@@ -670,7 +670,7 @@ void MainWindow::loadFile(const QString &fileName, bool import)
 
 bool MainWindow::saveFile(const QString & fileName)
 {
-    XmlWriter writer(&m_Cards);
+    XmlWriter writer(m_Cards);
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -725,6 +725,8 @@ void MainWindow::updateTable(WordsSet words)
     QTableWidgetItem* tmp;
 
     for ( ; it != words.constEnd(); it++) {
+        qDebug() << it->tags();
+
         // Old row count and index of last row
         rowCount = tableWords->rowCount();
 

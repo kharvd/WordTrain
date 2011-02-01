@@ -16,6 +16,7 @@
             <ex>The scientists proposed a new theory.</ex>
             <tr>Ученые предложили новую теорию</tr>
         </example>
+        <tag value="general">
     </wordcard>
     <wordcard>
         <word value="ecstatic"/>
@@ -33,6 +34,7 @@
             <ex>Everyone was ecstatic at the news of the couple's engagement.</ex>
             <tr>Все были в восторге от новости об их помолвке.</tr>
         </example>
+        <tag value="mood">
     </wordcard>
     <wordcard>
         <word value="fine"/>
@@ -114,6 +116,7 @@
             <ex>The professional shook his head over our confessed burglary.</ex>
             <tr>Cыщик покачал головой, услышав исповедь о краже со взломом.</tr>
         </example>
+        <tag value="crimes">
     </wordcard>
     <wordcard>
         <word value="fare"/>
@@ -149,6 +152,7 @@
             <ex>That is a cheap forgery, not an authentic Ming Dynasty vase</ex>
             <tr>Это дешевая подделка, а не ваза династии Минь</tr>
         </example>
+        <tag value="crimes">
     </wordcard>
     <wordcard>
         <word value="demand"/>
