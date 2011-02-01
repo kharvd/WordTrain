@@ -39,7 +39,8 @@ typedef QList<WordCard *> WordsPtrSet;
 /* The first element in the pair is
  * example itself and the second is its translation */
 typedef QPair<QString, QString> Example;
-typedef QVector<Example> Examples;
+typedef QList<Example> Examples;
+typedef QSet<QString> Tags;
 
 enum LexicalCategory {
     CategoryFirst = 0,
@@ -80,12 +81,12 @@ public:
     void setGender(int gender);
     void setCorrectAnswers(int num);
     void incCorrectAnswers();
-    void setExamples(const Examples & examples);
-    void setExampleAt(int index, const Example & example);
     void addExample(const QString & example, const QString & translation);
     void addExample(const Example & example);
-    void clearAll();
     void clearExamples();
+    void setTags(const QStringList &tags);
+    void addTag(const QString &tag);
+    void clearTags();
 
     /* Getters */
     const QString word() const { return m_Word; }
@@ -98,6 +99,7 @@ public:
     const Example exampleAt(int index) const { return m_Examples[index]; }
     const Examples examples() const { return m_Examples; }
     int examplesSize() const { return m_Examples.size(); }
+    const Tags tags() const { return m_Tags; }
 
     // Returns short string interpretations of LexicalCategory
     QString lexCategoriesShortString() const;
@@ -128,6 +130,7 @@ private:
     QString m_Translation;
     QString m_Plural;
     Examples m_Examples;
+    Tags m_Tags;
     int m_CorrectAnswers;
 };
 

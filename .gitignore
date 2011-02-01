@@ -4,3 +4,4 @@ deb
 bin
 tmp
 wordtrain.pro.user
+make_deb.sh
