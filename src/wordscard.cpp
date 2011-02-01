@@ -114,13 +114,14 @@ void WordCard::clearExamples()
 
 void WordCard::setTags(const QStringList &tags)
 {
+    m_Tags.clear();
     foreach (QString tag, tags)
-        m_Tags.insert(tag);
+        m_Tags.insert(tag.trimmed());
 }
 
 void WordCard::addTag(const QString &tag)
 {
-    m_Tags.insert(tag);
+    m_Tags.insert(tag.trimmed());
 }
 
 void WordCard::clearTags()

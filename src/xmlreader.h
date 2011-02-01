@@ -36,10 +36,12 @@
 class XmlReader
 {
 public:
-    XmlReader(WordsSet *cards);
+    XmlReader();
 
     bool readFile(const QString &fileName);
     QString getErrorMessage();
+    WordsSet getNewSet();
+
 private:
     void readWordsSet();
     void readWordCard();
@@ -47,7 +49,7 @@ private:
     void skipUnknownElement();
     void skipWhitespaces();
 
-    WordsSet *m_Cards;
+    WordsSet m_Cards;
     QXmlStreamReader m_Reader;
     QString m_ErrorMessage;
 };

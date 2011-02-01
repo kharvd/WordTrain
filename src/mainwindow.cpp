@@ -633,8 +633,7 @@ void MainWindow::setCurrentFile(const QString &fileName)
 
 void MainWindow::loadFile(const QString &fileName, bool import)
 {
-    WordsSet temp;
-    XmlReader reader(&temp);
+    XmlReader reader;
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -651,10 +650,10 @@ void MainWindow::loadFile(const QString &fileName, bool import)
 
     if (noErrors) {
         if (import) {
-            m_Cards.append(temp);
+            m_Cards.append(reader.getNewSet());
             statusBar()->showMessage(tr("File imported"), 2000);
         } else {
-            m_Cards = temp;
+            m_Cards = reader.getNewSet();
             setCurrentFile(fileName);
             statusBar()->showMessage(tr("File loaded"), 2000);
         }

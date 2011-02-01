@@ -62,7 +62,7 @@ public slots:
     void resetProgress();
 
 private:
-    static const int kDefaultWidth = 550;
+    static const int kDefaultWidth = 610;
     static const int kDefaultHeight = 250;
     static const int kExampleHeight = 50;
     static const int kMaxAutoHeight = 420;
@@ -78,6 +78,7 @@ private:
     QLineEdit *txtTranslation;
     QLineEdit *txtPlural;
     QLineEdit *txtProgress;
+    QLineEdit *txtTags;
     QComboBox *cmbCategory;
     QComboBox *cmbGender;
     QPushButton *btnAddExample;
