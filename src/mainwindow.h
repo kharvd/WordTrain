@@ -78,7 +78,7 @@ private slots:
     void startTraining();
     void startQuiz();
     void about();
-    void search(QString str);
+    void search(const QString &str);
 
 private:
     // Some constants
@@ -111,10 +111,8 @@ private:
     bool isFileOpened();
 
     // Fills the table with words
-    void updateTable(WordsSet words);
-    void updateTable(WordsPtrSet words);
-
-    void updateTags();
+    void updateTable(const WordsSet &words);
+    void updateTags(const WordsSet &words);
 
     // Shows card with index 'index'
     void showCard(int index);
@@ -127,6 +125,8 @@ private:
 
     // Returns set of the pointers to all words in the main set
     WordsPtrSet getPointersSet();
+
+    WordsSet ptrsToWordsSet(const WordsPtrSet &ptrs);
 
     //=============================================================
 
