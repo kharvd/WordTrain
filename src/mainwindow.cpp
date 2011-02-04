@@ -37,6 +37,7 @@
 #include <QLineEdit>
 #include <QHBoxLayout>
 #include <QToolButton>
+#include <QComboBox>
 #include "xmlreader.h"
 #include "xmlwriter.h"
 #include "viewcarddialog.h"
@@ -53,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
     createActions();
     createMenus();
     createToolbars();
-    createSearchBar();
+    createSearchTags();
     createStatusBar();
     createStartingWidget();
 
@@ -563,7 +564,7 @@ void MainWindow::createToolbars()
     toolBar->setObjectName("Toolbar");
 }
 
-void MainWindow::createSearchBar()
+void MainWindow::createSearchTags()
 {
     txtSearch = new QLineEdit();
     connect(txtSearch, SIGNAL(textChanged(QString)), SLOT(search(QString)));
@@ -576,13 +577,17 @@ void MainWindow::createSearchBar()
 
     QHBoxLayout *lt = new QHBoxLayout;
     lt->addStretch(1);
-    lt->addWidget(new QLabel(tr("Search")));
+    lt->addWidget(new QLabel(tr("Search:")));
     lt->addWidget(txtSearch);
     lt->addWidget(btnClear);
 
     QWidget *searchWgt = new QWidget();
     searchWgt->setLayout(lt);
 
+    cmbTags = new QComboBox();
+
+    toolBar->addWidget(new QLabel(tr("Tags:")));
+    toolBar->addWidget(cmbTags);
     toolBar->addWidget(searchWgt);
 }
 
@@ -710,6 +715,18 @@ bool MainWindow::maybeSave()
     return true;
 }
 
+void MainWindow::updateTags()
+{
+    foreach (WordCard card, m_Cards) {
+        m_Tags.unite(card.tags());
+    }
+
+    qDebug() << m_Tags;
+
+    cmbTags->clear();
+    cmbTags->addItems(m_Tags.toList());
+}
+
 void MainWindow::updateTable(WordsSet words)
 {
     m_Searching = false;
@@ -724,8 +741,6 @@ void MainWindow::updateTable(WordsSet words)
     QTableWidgetItem* tmp;
 
     for ( ; it != words.constEnd(); it++) {
-        qDebug() << it->tags();
-
         // Old row count and index of last row
         rowCount = tableWords->rowCount();
 
@@ -755,6 +770,8 @@ void MainWindow::updateTable(WordsSet words)
     }
 
     tableWords->setCurrentCell(0, 0);
+
+    updateTags();
 }
 
 void MainWindow::updateTable(WordsPtrSet words)
@@ -797,6 +814,8 @@ void MainWindow::updateTable(WordsPtrSet words)
     }
 
     tableWords->setCurrentCell(0, 0);
+
+    updateTags();
 }
 
 bool MainWindow::isFileOpened()

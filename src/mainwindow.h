@@ -42,6 +42,7 @@ class QAction;
 class QMenu;
 class QMenuBar;
 class QLineEdit;
+class QComboBox;
 class GettingStartedWidget;
 
 // Main window class.
@@ -94,7 +95,7 @@ private:
     void createContextMenu();
     void createToolbars();
     void createStatusBar();
-    void createSearchBar();
+    void createSearchTags();
     void createInterface();
 
     void readSettings();
@@ -112,6 +113,8 @@ private:
     // Fills the table with words
     void updateTable(WordsSet words);
     void updateTable(WordsPtrSet words);
+
+    void updateTags();
 
     // Shows card with index 'index'
     void showCard(int index);
@@ -133,8 +136,12 @@ private:
     // True if search box is not empty
     bool m_Searching;
 
+    QComboBox *cmbTags;
+
     // All the words of the current set.
     WordsSet m_Cards;
+
+    Tags m_Tags;
 
     // Pointers to results of search
     WordsPtrSet m_SearchResults;
