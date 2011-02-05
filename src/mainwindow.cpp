@@ -47,6 +47,9 @@
 #include "settingsdialog.h"
 #include "aboutdialog.h"
 #include "gettingstartedwidget.h"
+#include "wordfilter.h"
+#include "tagwordfilter.h"
+#include "searchwordfilter.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -86,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
         move(kDefaultXPosition, kDefaultYPosition);
     }
 
-    m_Searching = false;
+    m_Filtering = false;
 }
 
 MainWindow::~MainWindow()
@@ -184,9 +187,9 @@ void MainWindow::addCard()
         // Getting new card's contents
         m_Cards.push_back(dlg->newCard());
 
-        if (m_Searching) {
+        if (m_Filtering) {
             search(txtSearch->text());
-            updateTable(ptrsToWordsSet(m_SearchResults));
+            updateTable(ptrsToWordsSet(m_FilteredSet));
         } else {
             updateTable(m_Cards);
         }
@@ -207,16 +210,16 @@ void MainWindow::editCard()
     if (isInRange(curr)) {
         NewEditCardDialog* dlg;
 
-        if (m_Searching)
-            dlg = new NewEditCardDialog(*m_SearchResults.at(curr), this);
+        if (m_Filtering)
+            dlg = new NewEditCardDialog(*m_FilteredSet.at(curr), this);
         else
             dlg = new NewEditCardDialog(m_Cards.at(curr), this);
 
         if (dlg->exec()) {
             // Updating card's contents
-            if (m_Searching) {
-                *m_SearchResults[curr] = dlg->newCard();
-                updateTable(ptrsToWordsSet(m_SearchResults));
+            if (m_Filtering) {
+                *m_FilteredSet[curr] = dlg->newCard();
+                updateTable(ptrsToWordsSet(m_FilteredSet));
             } else {
                 m_Cards.replace(curr, dlg->newCard());
                 updateTable(m_Cards);
@@ -242,10 +245,10 @@ void MainWindow::deleteCard()
     int curr = tableWords->currentRow();
     if (isInRange(curr)) {
         // Removing card
-        if (m_Searching) {
-            m_Cards.removeOne(*m_SearchResults.at(curr));
-            m_SearchResults.removeAt(curr);
-            updateTable(ptrsToWordsSet(m_SearchResults));
+        if (m_Filtering) {
+            m_Cards.removeOne(*m_FilteredSet.at(curr));
+            m_FilteredSet.removeAt(curr);
+            updateTable(ptrsToWordsSet(m_FilteredSet));
         } else {
             m_Cards.removeAt(curr);
             updateTable(m_Cards);
@@ -337,26 +340,54 @@ void MainWindow::about()
     delete dlg;
 }
 
+void MainWindow::tagFilter(int index)
+{
+    if (index == 0 && txtSearch->text().isEmpty()) {
+        m_Filtering = false;
+        updateTable(m_Cards);
+    } else {
+        m_Filtering = true;
+
+        TagWordFilter filter;
+
+        if (txtSearch->text().isEmpty()) {
+            filter.setWords(getPointersSet());
+        } else {
+            m_FilteredSet.clear();
+            search(txtSearch->text());
+            filter.setWords(m_FilteredSet);
+        }
+
+        if (index != 0)
+            m_FilteredSet = filter.filter(cmbTags->itemData(index).toString());
+
+        updateTable(ptrsToWordsSet(m_FilteredSet));
+    }
+}
+
 void MainWindow::search(const QString &str)
 {
-    m_SearchResults.clear();
-
-    if (!str.isEmpty()) {
-        m_Searching = true;
-
-        for (int i = 0; i < m_Cards.size(); i++) {
-            if (m_Cards.at(i).word().contains(str, Qt::CaseInsensitive)
-             || m_Cards.at(i).translation().contains(str, Qt::CaseInsensitive)) {
-                m_SearchResults.push_back(&m_Cards[i]);
-            }
-        }
-        if (m_SearchResults.isEmpty()) {
-            statusBar()->showMessage(tr("No entries found"), 2500);
-        }
-        updateTable(ptrsToWordsSet(m_SearchResults));
-    } else {
-        m_Searching = false;
+    if ((cmbTags->currentIndex() == 0) && txtSearch->text().isEmpty()) {
+        m_Filtering = false;
         updateTable(m_Cards);
+    } else {
+        m_Filtering = true;
+
+        int index = cmbTags->currentIndex();
+        if (index != 0) {
+            TagWordFilter filter(getPointersSet());
+            m_FilteredSet = filter.filter(cmbTags->itemData(index).toString());
+        } else {
+            m_FilteredSet = getPointersSet();
+        }
+
+        if (!txtSearch->text().isEmpty()) {
+            SearchWordFilter filter;
+            filter.setWords(m_FilteredSet);
+            m_FilteredSet = filter.filter(str);
+        }
+
+        updateTable(ptrsToWordsSet(m_FilteredSet));
     }
 }
 
@@ -586,6 +617,7 @@ void MainWindow::createSearchTags()
     connect(btnClear, SIGNAL(clicked()), txtSearch, SLOT(clear()));
 
     cmbTags = new QComboBox();
+    connect(cmbTags, SIGNAL(currentIndexChanged(int)), SLOT(tagFilter(int)));
 
     QHBoxLayout *lt = new QHBoxLayout;
     lt->addWidget(new QLabel(tr("Filter:")));
@@ -727,14 +759,26 @@ bool MainWindow::maybeSave()
     return true;
 }
 
-void MainWindow::updateTags(const WordsSet &words)
+void MainWindow::updateTags()
 {
+    WordsSet words;
+
     m_Tags.clear();
+
+    if (m_Filtering && !txtSearch->text().isEmpty()) {
+        SearchWordFilter filter(getPointersSet());
+        words = ptrsToWordsSet(filter.filter(txtSearch->text()));
+    } else {
+        words = m_Cards;
+    }
 
     foreach (WordCard card, words) {
         m_Tags.unite(card.tags());
     }
 
+    QString currTag = cmbTags->itemData(cmbTags->currentIndex()).toString();
+
+    disconnect(cmbTags, SIGNAL(currentIndexChanged(int)), this, SLOT(tagFilter(int)));
     cmbTags->clear();
     cmbTags->addItem(tr("All"));
 
@@ -749,44 +793,51 @@ void MainWindow::updateTags(const WordsSet &words)
 
         QString item = tag + QString(" (%1)").arg(count);
 
-        cmbTags->addItem(item);
+        cmbTags->addItem(QIcon(), item, tag);
     }
+
+    for (int i = 0; i < cmbTags->count(); i++) {
+        if (cmbTags->itemData(i).toString() == currTag) {
+            cmbTags->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    connect(cmbTags, SIGNAL(currentIndexChanged(int)), SLOT(tagFilter(int)));
 }
 
 void MainWindow::updateTable(const WordsSet &words)
 {
-    if (txtSearch->text().isEmpty()) {
-        m_Searching = false;
+    if (!m_Filtering) {
+        m_FilteredSet = getPointersSet();
     }
 
     tableWords->clearContents();
     tableWords->setRowCount(0);
 
-    WordsSet::const_iterator it = words.constBegin();
-
     int rowCount;
     QTableWidgetItem* tmp;
 
-    for ( ; it != words.constEnd(); it++) {
+    foreach (WordCard card, words) {
         // Old row count and index of last row
         rowCount = tableWords->rowCount();
 
         tableWords->insertRow(rowCount);
 
         // Word
-        tmp = new QTableWidgetItem(it->word());
+        tmp = new QTableWidgetItem(card.word());
         tableWords->setItem(rowCount, 0, tmp);
 
         // Transcription
-        tmp = new QTableWidgetItem(it->transcription());
+        tmp = new QTableWidgetItem(card.transcription());
         tableWords->setItem(rowCount, 1, tmp);
 
         // Translation
-        tmp = new QTableWidgetItem(it->translation());
+        tmp = new QTableWidgetItem(card.translation());
         tableWords->setItem(rowCount, 2, tmp);
 
         // Learning progress in %
-        int progress = (static_cast<double>(it->correctAnswers())
+        int progress = (static_cast<double>(card.correctAnswers())
                             / m_CorrAnsForLearned * 100);
         progress = (progress > 100) ? 100 : progress;
 
@@ -798,7 +849,7 @@ void MainWindow::updateTable(const WordsSet &words)
 
     tableWords->setCurrentCell(0, 0);
 
-    updateTags(words);
+    updateTags();
 }
 
 bool MainWindow::isFileOpened()
@@ -825,8 +876,8 @@ void MainWindow::showCard(int index)
 {
     if (isInRange(index)) {
         ViewCardDialog *viewDlg;
-        if (m_Searching)
-            viewDlg = new ViewCardDialog(m_SearchResults, this);
+        if (m_Filtering)
+            viewDlg = new ViewCardDialog(m_FilteredSet, this);
         else
             viewDlg = new ViewCardDialog(&m_Cards, this);
 
@@ -836,13 +887,15 @@ void MainWindow::showCard(int index)
 
         if (viewDlg->isModified()) {
             setWindowModified(true);
-            if (m_Searching)
-                updateTable(ptrsToWordsSet(m_SearchResults));
+            if (m_Filtering)
+                updateTable(ptrsToWordsSet(m_FilteredSet));
             else
                 updateTable(m_Cards);
         }
 
         delete viewDlg;
+
+        tableWords->setCurrentCell(index, 0);
     }
 }
 

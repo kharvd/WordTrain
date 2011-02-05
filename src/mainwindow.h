@@ -79,6 +79,7 @@ private slots:
     void startQuiz();
     void about();
     void search(const QString &str);
+    void tagFilter(int index);
 
 private:
     // Some constants
@@ -112,7 +113,7 @@ private:
 
     // Fills the table with words
     void updateTable(const WordsSet &words);
-    void updateTags(const WordsSet &words);
+    void updateTags();
 
     // Shows card with index 'index'
     void showCard(int index);
@@ -133,8 +134,7 @@ private:
     // Word is learned after this number of correct answers
     int m_CorrAnsForLearned;
 
-    // True if search box is not empty
-    bool m_Searching;
+    bool m_Filtering;
 
     QComboBox *cmbTags;
 
@@ -144,7 +144,7 @@ private:
     Tags m_Tags;
 
     // Pointers to results of search
-    WordsPtrSet m_SearchResults;
+    WordsPtrSet m_FilteredSet;
 
     // Path to current file
     QString m_CurrentFile;

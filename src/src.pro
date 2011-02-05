@@ -5,8 +5,7 @@ QT += core \
     gui \
     xml \
     testlib
-CONFIG += release \
-    warn_on \
+CONFIG += warn_on \
     qt
 TARGET = ../bin/wordtrain
 TEMPLATE = app
@@ -29,7 +28,10 @@ SOURCES += main.cpp \
     aboutdialog.cpp \
     gettingstartedwidget.cpp \
     quiz.cpp \
-    quizquestion.cpp
+    quizquestion.cpp \
+    wordfilter.cpp \
+    searchwordfilter.cpp \
+    tagwordfilter.cpp
 HEADERS += mainwindow.h \
     wordscard.h \
     xmlreader.h \
@@ -49,7 +51,10 @@ HEADERS += mainwindow.h \
     aboutdialog.h \
     gettingstartedwidget.h \
     quiz.h \
-    quizquestion.h
+    quizquestion.h \
+    wordfilter.h \
+    searchwordfilter.h \
+    tagwordfilter.h
 RESOURCES += resources.qrc
 TRANSLATIONS = wordtrain_de.ts \
                wordtrain_ru.ts
