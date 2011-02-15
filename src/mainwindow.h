@@ -52,7 +52,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    ~MainWindow() { }
 
     // If import is true, we append existing file to current
     void loadFile(const QString & fileName, bool import = false);
@@ -134,6 +134,7 @@ private:
     // Word is learned after this number of correct answers
     int m_CorrAnsForLearned;
 
+    // True if words are being filtered
     bool m_Filtering;
 
     QComboBox *cmbTags;
@@ -176,6 +177,7 @@ private:
     QMenu *menuEdit;
     QMenu *menuTraining;
     QMenu *menuAbout;
+    QMenu *menuTableContextMenu;
 
     // Main menu
     QMenuBar *menubar;

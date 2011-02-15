@@ -73,8 +73,7 @@ void StartQuizDialog::createInterface()
     ltFormQuiz->addRow(tr("Mode:", "Quiz"), ltRadioMode);
 
     // Num of words
-    QLabel *lblNumWords = new QLabel(
-            tr("Number of words:"));
+    QLabel *lblNumWords = new QLabel(tr("Number of words:"));
 
     txtNumWords = new QLineEdit();
     QIntValidator *validator = new QIntValidator(1, 1000, this);

@@ -69,31 +69,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     editActionsState();
 
-    QSettings settings;
-
-    if (settings.value("save_pos").toString().isEmpty())
-        settings.setValue("save_pos", true);
-
-    if (settings.value("save_pos").toBool()) {
-        QPoint pos = settings.value("pos", QPoint(kDefaultXPosition,
-                                                  kDefaultYPosition)).toPoint();
-        QSize size = settings.value("size", QSize(kDefaultWidth,
-                                                  kDefaultHeight)).toSize();
-        restoreState(settings.value("window_state").toByteArray());
-        resize(size);
-        move(pos);
-        bool isMax = settings.value("maximized", false).toBool();
-        isMax ? showMaximized() : showNormal();
-    } else {
-        resize(kDefaultWidth, kDefaultHeight);
-        move(kDefaultXPosition, kDefaultYPosition);
-    }
-
     m_Filtering = false;
-}
-
-MainWindow::~MainWindow()
-{
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -112,13 +88,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         if (event->type() == QEvent::ContextMenu) {
             QContextMenuEvent *contextMenuEvent
                     = static_cast<QContextMenuEvent *>(event);
-
-            QMenu menu(this);
-            menu.addAction(actionAddCard);
-            menu.addAction(actionViewCard);
-            menu.addAction(actionEditCard);
-            menu.addAction(actionDeleteCard);
-            menu.exec(contextMenuEvent->globalPos());
+            menuTableContextMenu->exec(contextMenuEvent->globalPos());
 
             return true;
         } else {
@@ -578,6 +548,13 @@ void MainWindow::createMenus()
     menuAbout = menuBar()->addMenu(tr("&About"));
     menuAbout->addAction(actionAbout);
     menuAbout->addAction(actionAboutQt);
+
+    // Context menu
+    menuTableContextMenu = new QMenu(this);
+    menuTableContextMenu->addAction(actionAddCard);
+    menuTableContextMenu->addAction(actionViewCard);
+    menuTableContextMenu->addAction(actionEditCard);
+    menuTableContextMenu->addAction(actionDeleteCard);
 }
 
 void MainWindow::createToolbars()
@@ -642,6 +619,24 @@ void MainWindow::readSettings()
 {
     QSettings settings;
     m_CorrAnsForLearned = settings.value("corr_answers", 10).toInt();
+
+    if (settings.value("save_pos").toString().isEmpty())
+        settings.setValue("save_pos", true);
+
+    if (settings.value("save_pos").toBool()) {
+        QPoint pos = settings.value("pos", QPoint(kDefaultXPosition,
+                                                  kDefaultYPosition)).toPoint();
+        QSize size = settings.value("size", QSize(kDefaultWidth,
+                                                  kDefaultHeight)).toSize();
+        restoreState(settings.value("window_state").toByteArray());
+        resize(size);
+        move(pos);
+        bool isMax = settings.value("maximized", false).toBool();
+        isMax ? showMaximized() : showNormal();
+    } else {
+        resize(kDefaultWidth, kDefaultHeight);
+        move(kDefaultXPosition, kDefaultYPosition);
+    }
 }
 
 void MainWindow::writeSettings()
@@ -870,6 +865,7 @@ void MainWindow::editActionsState()
     actionStartTraining->setEnabled(state);
     actionStartQuiz->setEnabled(state);
     txtSearch->setEnabled(state);
+    cmbTags->setEnabled(state);
 }
 
 void MainWindow::showCard(int index)
