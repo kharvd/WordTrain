@@ -35,8 +35,9 @@
 class QTableWidget;
 class QScrollArea;
 class QCheckBox;
+class TagsScrollArea;
 
-class QuizWordChooserDialog /*: public QDialog*/
+class QuizWordChooserDialog : public QDialog
 {
 //    Q_OBJECT
 
@@ -51,17 +52,11 @@ class QuizWordChooserDialog /*: public QDialog*/
 
 //    void createInterface();
 //    void fillTable();
-//    void fillTags();
-//    QCheckBox* addTag(const QString &tag);
-
-
 
 //    WordsPtrSet m_Cards;
 //    QTableWidget *tblWords;
 
-//    // Scroll area widget, includes wgtTags with checkboxes for tags
-//    QScrollArea *scrlTags;
-//    QWidget *wgtTags;
+//    TagsScrollArea *tagsArea;
 };
 
 #endif // QUIZWORDCHOOSERDIALOG_H

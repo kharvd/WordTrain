@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     searchwordfilter.cpp \
     tagwordfilter.cpp \
     quizwordchooserdialog.cpp \
-    tagsscrollarea.cpp
+    tagsscrollarea.cpp \
+    quizwordschoosertable.cpp
 HEADERS += mainwindow.h \
     wordscard.h \
     xmlreader.h \
@@ -58,7 +59,8 @@ HEADERS += mainwindow.h \
     searchwordfilter.h \
     tagwordfilter.h \
     quizwordchooserdialog.h \
-    tagsscrollarea.h
+    tagsscrollarea.h \
+    quizwordschoosertable.h
 RESOURCES += resources.qrc
 TRANSLATIONS = wordtrain_de.ts \
                wordtrain_ru.ts
