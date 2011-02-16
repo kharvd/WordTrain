@@ -28,7 +28,7 @@
 
 #include "cardwidget.h"
 
-#include "wordscard.h"
+#include "wordcard.h"
 #include <QLayout>
 #include <QTextEdit>
 #include <QFile>

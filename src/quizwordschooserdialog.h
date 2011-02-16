@@ -26,29 +26,41 @@
 **
 ******************************************************************************/
 
-#ifndef XMLWRITER_H
-#define XMLWRITER_H
+#ifndef QUIZWORDCHOOSERDIALOG_H
+#define QUIZWORDCHOOSERDIALOG_H
 
-#include <QXmlStreamWriter>
-#include <QtGui>
-#include <QVector>
-#include <QPair>
+#include <QDialog>
 #include "wordcard.h"
 
-class XmlWriter
+class QTableWidget;
+class QScrollArea;
+class QCheckBox;
+class TagsScrollArea;
+class QuizWordsChooserTable;
+
+class QuizWordsChooserDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
-    XmlWriter(const WordsSet &cards);
-    bool writeFile(const QString & fileName);
-    QString getErrorMessage();
+    QuizWordsChooserDialog(const WordsPtrSet &words, QWidget *parent = 0);
+    ~QuizWordsChooserDialog() { }
+
+    WordsPtrSet cards();
+
+private slots:
+    void chooseWordsByTag(const QString& tag, bool checked);
 
 private:
-    void writeCard(const WordCard &card);
-    void writeExample(const Example &ex);
+    static const int kDefaultWidth = 400;
+    static const int kDefaultHeight = 500;
 
-    QXmlStreamWriter m_Writer;
-    WordsSet m_Cards;
-    QString m_ErrorMessage;
+    void createInterface();
+
+    WordsPtrSet m_Cards;
+
+    QuizWordsChooserTable *tblWords;
+    TagsScrollArea *tagsArea;
 };
 
-#endif // XMLWRITER_H
+#endif // QUIZWORDCHOOSERDIALOG_H

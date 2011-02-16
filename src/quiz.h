@@ -30,7 +30,7 @@
 #define QUIZ_H
 
 #include "quizquestion.h"
-#include "wordscard.h"
+#include "wordcard.h"
 
 #include <QString>
 #include <QList>

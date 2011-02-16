@@ -76,6 +76,9 @@ WordCard NewEditCardDialog::newCard()
             m_NewCard.addExample(wgtExamples->exampleAt(i));
     }
 
+    QStringList tags = txtTags->text().split(",", QString::SkipEmptyParts);
+    m_NewCard.setTags(tags);
+
     return m_NewCard;
 }
 
@@ -131,6 +134,7 @@ void NewEditCardDialog::createInterface()
     txtTranscription = new QLineEdit();
     txtTranslation = new QLineEdit();
     txtPlural = new QLineEdit();
+    txtTags = new QLineEdit();
 
     cmbCategory = new QComboBox();
     cmbCategory->addItems(WordCard::lexCategoriesStrings());
@@ -186,6 +190,7 @@ void NewEditCardDialog::createInterface()
         ltFields->addRow(tr("Progress:"), progressLayout);
     }
 
+    ltFields->addRow(tr("Tags (comma-separated):"), txtTags);
     ltFields->addRow(tr("Examples:"), btnAddExample);
 
     connect(cmbCategory, SIGNAL(currentIndexChanged(int)),
@@ -225,6 +230,14 @@ void NewEditCardDialog::fillForm()
                          .arg(corrAnsForLearned));
     cmbCategory->setCurrentIndex(m_NewCard.category());
     cmbGender->setCurrentIndex(m_NewCard.gender());
+
+    QString tags;
+    foreach (QString tag, m_NewCard.tags()) {
+        tags += tag + ", ";
+    }
+    // Chop ", " from the end
+    tags.chop(2);
+    txtTags->setText(tags);
 
     for (int i = 0; i < (m_NewCard.examplesSize())
             && (i <= ExamplesWidget::kMaxExamples); i++) {

@@ -26,26 +26,46 @@
 **
 ******************************************************************************/
 
-#ifndef WORDSCHOOSER_H
-#define WORDSCHOOSER_H
+#ifndef TAGSSCROLLAREA_H
+#define TAGSSCROLLAREA_H
 
-#include "wordscard.h"
+#include <QScrollArea>
+#include "wordcard.h"
 
-// Utility class for choosing words to be tested.
-class WordsChooser
+class QVBoxLayout;
+class QCheckBox;
+
+// Displays checkboxes in scrollarea for tags. Used in QuizWordChooserDialog
+class TagsScrollArea : public QScrollArea
 {
-public:
-    WordsChooser(const WordsPtrSet & cards, bool random = true,
-                 bool includeLearned = true, int number = -1);
+    Q_OBJECT
 
-    // Returns chosen set of cards
-    WordsPtrSet getCards();
+public:
+    explicit TagsScrollArea(const Tags &tags, QWidget *parent = 0);
+    virtual ~TagsScrollArea() { }
+
+    Tags selectedTags();
+
+signals:
+    // Emitted when one of the checkboxes has been clicked
+    // First parameter is the name of the selected tag, and second is its
+    // current state
+    void stateChanged(const QString&, bool);
+
+private slots:
+    void emitStateChanged();
 
 private:
-    // Returns first N elements from mCards
-    WordsPtrSet getFirstN(int number, bool includeLearned);
+    QString chckBoxTextAt(int index);
+    bool chckBoxClickedAt(int index);
 
-    WordsPtrSet m_Cards;
+    void fillTags();
+
+    Tags m_Tags;
+    Tags m_Selected; // Previously selected tags
+
+    QScrollArea *scrlArea;
+    QVBoxLayout *ltTags;
 };
 
-#endif // WORDSCHOOSER_H
+#endif // TAGSSCROLLAREA_H

@@ -30,7 +30,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QWidget;
 class QObject;
@@ -42,6 +42,7 @@ class QAction;
 class QMenu;
 class QMenuBar;
 class QLineEdit;
+class QComboBox;
 class GettingStartedWidget;
 
 // Main window class.
@@ -51,7 +52,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    ~MainWindow() { }
 
     // If import is true, we append existing file to current
     void loadFile(const QString & fileName, bool import = false);
@@ -77,7 +78,8 @@ private slots:
     void startTraining();
     void startQuiz();
     void about();
-    void search(QString str);
+    void search(const QString &str);
+    void tagFilter(int index);
 
 private:
     // Some constants
@@ -94,7 +96,7 @@ private:
     void createContextMenu();
     void createToolbars();
     void createStatusBar();
-    void createSearchBar();
+    void createSearchTags();
     void createInterface();
 
     void readSettings();
@@ -110,8 +112,8 @@ private:
     bool isFileOpened();
 
     // Fills the table with words
-    void updateTable(WordsSet words);
-    void updateTable(WordsPtrSet words);
+    void updateTable(const WordsSet &words);
+    void updateTags();
 
     // Shows card with index 'index'
     void showCard(int index);
@@ -125,19 +127,25 @@ private:
     // Returns set of the pointers to all words in the main set
     WordsPtrSet getPointersSet();
 
+    WordsSet ptrsToWordsSet(const WordsPtrSet &ptrs);
+
     //=============================================================
 
     // Word is learned after this number of correct answers
     int m_CorrAnsForLearned;
 
-    // True if search box is not empty
-    bool m_Searching;
+    // True if words are being filtered
+    bool m_Filtering;
+
+    QComboBox *cmbTags;
 
     // All the words of the current set.
     WordsSet m_Cards;
 
+    Tags m_Tags;
+
     // Pointers to results of search
-    WordsPtrSet m_SearchResults;
+    WordsPtrSet m_FilteredSet;
 
     // Path to current file
     QString m_CurrentFile;
@@ -169,6 +177,7 @@ private:
     QMenu *menuEdit;
     QMenu *menuTraining;
     QMenu *menuAbout;
+    QMenu *menuTableContextMenu;
 
     // Main menu
     QMenuBar *menubar;

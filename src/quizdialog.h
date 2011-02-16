@@ -30,7 +30,7 @@
 #define QUIZDIALOG_H
 
 #include <QDialog>
-#include "wordscard.h"
+#include "wordcard.h"
 #include "quiz.h"
 
 class QProgressBar;

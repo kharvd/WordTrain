@@ -30,7 +30,7 @@
 #define CARDWIDGET_H
 
 #include <QWidget>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QTextEdit;
 

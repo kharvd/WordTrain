@@ -26,18 +26,19 @@
 **
 ******************************************************************************/
 
-#include "wordscard.h"
+#include "wordcard.h"
 
 bool WordCard::operator==(const WordCard &card)
 {
     bool result =
-            (m_Word == card.word()) && (m_Gender == card.gender())
-            && (m_Category == card.category())
-            && (m_Transcription == card.transcription())
-            && (m_Translation == card.translation())
-            && (m_Plural == card.plural())
-            && (m_Examples == card.examples())
-            && (m_CorrectAnswers == card.correctAnswers());
+            (m_Word == card.m_Word) && (m_Gender == card.m_Gender)
+            && (m_Category == card.m_Category)
+            && (m_Transcription == card.m_Transcription)
+            && (m_Translation == card.m_Translation)
+            && (m_Plural == card.m_Plural)
+            && (m_Examples == card.m_Examples)
+            && (m_Tags == card.m_Tags)
+            && (m_CorrectAnswers == card.m_CorrectAnswers);
     return result;
 }
 
@@ -95,18 +96,6 @@ void WordCard::incCorrectAnswers()
     m_CorrectAnswers++;
 }
 
-void WordCard::setExamples(const Examples & examples)
-{
-    m_Examples = examples;
-}
-
-void WordCard::setExampleAt(int index, const Example & example)
-{
-    if ((index < m_Examples.size()) && (index >= 0)) {
-        m_Examples[index] = example;
-    }
-}
-
 void WordCard::addExample(const QString & example,
                           const QString & translation)
 {
@@ -123,16 +112,21 @@ void WordCard::clearExamples()
     m_Examples.clear();
 }
 
-void WordCard::clearAll()
+void WordCard::setTags(const QStringList &tags)
 {
-    setWord("");
-    setTranscription("");
-    setTranslation("");
-    setPlural("");
-    setCategory(CategoryNone);
-    setGender(GenderNone);
-    setCorrectAnswers(0);
-    clearExamples();
+    m_Tags.clear();
+    foreach (QString tag, tags)
+        m_Tags.insert(tag.trimmed());
+}
+
+void WordCard::addTag(const QString &tag)
+{
+    m_Tags.insert(tag.trimmed());
+}
+
+void WordCard::clearTags()
+{
+    m_Tags.clear();
 }
 
 QStringList WordCard::lexCategoriesStrings()

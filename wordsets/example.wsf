@@ -16,6 +16,7 @@
             <ex>The scientists proposed a new theory.</ex>
             <tr>Ученые предложили новую теорию</tr>
         </example>
+        <tag value="general"/>
     </wordcard>
     <wordcard>
         <word value="ecstatic"/>
@@ -33,6 +34,7 @@
             <ex>Everyone was ecstatic at the news of the couple's engagement.</ex>
             <tr>Все были в восторге от новости об их помолвке.</tr>
         </example>
+        <tag value="mood"/>
     </wordcard>
     <wordcard>
         <word value="fine"/>
@@ -50,6 +52,8 @@
             <ex>He had to pay a hefty fine.</ex>
             <tr>Ему пришлось заплатить крупный штраф.</tr>
         </example>
+        <tag value="money"/>
+        <tag value="crimes"/>
     </wordcard>
     <wordcard>
         <word value="livid"/>
@@ -67,6 +71,7 @@
             <ex>Her face was livid with fear.</ex>
             <tr>Ее лицо было мертвенно-бледным от страха.</tr>
         </example>
+        <tag value="mood"/>
     </wordcard>
     <wordcard>
         <word value="evolve"/>
@@ -114,6 +119,7 @@
             <ex>The professional shook his head over our confessed burglary.</ex>
             <tr>Cыщик покачал головой, услышав исповедь о краже со взломом.</tr>
         </example>
+        <tag value="crimes"/>
     </wordcard>
     <wordcard>
         <word value="fare"/>
@@ -127,6 +133,7 @@
             <ex>The fare was nothing like as much as that</ex>
             <tr>Мы заплатили гораздо меньшую сумму за проезд</tr>
         </example>
+        <tag value="money"/>
     </wordcard>
     <wordcard>
         <word value="redundant"/>
@@ -149,6 +156,7 @@
             <ex>That is a cheap forgery, not an authentic Ming Dynasty vase</ex>
             <tr>Это дешевая подделка, а не ваза династии Минь</tr>
         </example>
+        <tag value="crimes"/>
     </wordcard>
     <wordcard>
         <word value="demand"/>
@@ -170,7 +178,7 @@
     <wordcard>
         <word value="receipt"/>
         <transcription value="ri-'sēt"/>
-        <translation value="получение, чек"/>
+        <translation value="чек, получение"/>
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
@@ -183,6 +191,7 @@
             <ex>The form should be completed and returned within 30 days of receipt.</ex>
             <tr>Форма должна быть заполнена и отправлена в течение 30 дней с момента получения</tr>
         </example>
+        <tag value="money"/>
     </wordcard>
     <wordcard>
         <word value="plead"/>

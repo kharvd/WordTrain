@@ -28,9 +28,13 @@
 
 #include "xmlreader.h"
 
-XmlReader::XmlReader(WordsSet *cards)
+XmlReader::XmlReader()
 {
-    m_Cards = cards;
+}
+
+WordsSet XmlReader::getNewSet()
+{
+    return m_Cards;
 }
 
 bool XmlReader::readFile(const QString &fileName)
@@ -85,7 +89,7 @@ void XmlReader::readWordsSet()
         if (m_Reader.isStartElement()) {
             if (m_Reader.name() == "wordcard") {
                 WordCard curr;
-                m_Cards->push_back(curr);
+                m_Cards.push_back(curr);
                 readWordCard();
             } else {
                 skipUnknownElement();
@@ -101,7 +105,7 @@ void XmlReader::readWordsSet()
 
 void XmlReader::readWordCard()
 {
-    WordCard & card = m_Cards->last();
+    WordCard & card = m_Cards.last();
     m_Reader.readNext();
     skipWhitespaces();
 
@@ -145,6 +149,11 @@ void XmlReader::readWordCard()
                 skipWhitespaces();
             } else if (m_Reader.name() == "example") {
                 readExample();
+            } else if (m_Reader.name() == "tag") {
+                card.addTag(
+                        m_Reader.attributes().value("value").toString());
+                m_Reader.readNext();
+                skipWhitespaces();
             } else {
                 skipUnknownElement();
             }
@@ -158,7 +167,7 @@ void XmlReader::readWordCard()
 }
 
 void XmlReader::readExample() {
-    WordCard & card = m_Cards->last();
+    WordCard & card = m_Cards.last();
 
     m_Reader.readNext();
     skipWhitespaces();
