@@ -29,7 +29,7 @@
 #ifndef WORDSCHOOSER_H
 #define WORDSCHOOSER_H
 
-#include "wordscard.h"
+#include "wordcard.h"
 
 // Utility class for choosing words to be tested.
 class WordsChooser

@@ -30,7 +30,7 @@
 #define VIEWCARDDIALOG_H
 
 #include <QDialog>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class CardWidget;
 

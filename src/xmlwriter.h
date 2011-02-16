@@ -33,7 +33,7 @@
 #include <QtGui>
 #include <QVector>
 #include <QPair>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class XmlWriter
 {

@@ -11,7 +11,7 @@ TARGET = ../bin/wordtrain
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    wordscard.cpp \
+    wordcard.cpp \
     xmlreader.cpp \
     xmlwriter.cpp \
     neweditcarddialog.cpp \
@@ -32,11 +32,11 @@ SOURCES += main.cpp \
     wordfilter.cpp \
     searchwordfilter.cpp \
     tagwordfilter.cpp \
-    quizwordchooserdialog.cpp \
+    quizwordschooserdialog.cpp \
     tagsscrollarea.cpp \
     quizwordschoosertable.cpp
 HEADERS += mainwindow.h \
-    wordscard.h \
+    wordcard.h \
     xmlreader.h \
     xmlwriter.h \
     neweditcarddialog.h \
@@ -58,7 +58,7 @@ HEADERS += mainwindow.h \
     wordfilter.h \
     searchwordfilter.h \
     tagwordfilter.h \
-    quizwordchooserdialog.h \
+    quizwordschooserdialog.h \
     tagsscrollarea.h \
     quizwordschoosertable.h
 RESOURCES += resources.qrc

@@ -1,7 +1,7 @@
 #ifndef WORDFILTER_H
 #define WORDFILTER_H
 
-#include "wordscard.h"
+#include "wordcard.h"
 
 // Abstract class for filtering words in different ways
 class WordFilter

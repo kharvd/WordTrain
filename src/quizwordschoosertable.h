@@ -2,7 +2,7 @@
 #define QUIZWORDSCHOOSERTABLE_H
 
 #include <QTableWidget>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QuizWordsChooserTable : public QTableWidget
 {
@@ -10,6 +10,7 @@ class QuizWordsChooserTable : public QTableWidget
 
 public:
     explicit QuizWordsChooserTable(const WordsPtrSet &cards, QWidget *parent = 0);
+    virtual ~QuizWordsChooserTable() { }
 
     WordsPtrSet selectedCards();
     void setCheckedAt(int index, bool checked);

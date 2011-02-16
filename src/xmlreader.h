@@ -30,7 +30,7 @@
 #define XMLSTREAMREADER_H
 
 #include <QXmlStreamReader>
-#include "wordscard.h"
+#include "wordcard.h"
 
 /* XML reader for words training files (wsf) */
 class XmlReader

@@ -2,7 +2,7 @@
 #define SEARCHWORDFILTER_H
 
 #include "wordfilter.h"
-#include "wordscard.h"
+#include "wordcard.h"
 
 class SearchWordFilter : public WordFilter
 {

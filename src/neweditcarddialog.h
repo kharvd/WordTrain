@@ -30,7 +30,7 @@
 #define NEWCARDDIALOG_H
 
 #include <QDialog>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QLineEdit;
 class QComboBox;

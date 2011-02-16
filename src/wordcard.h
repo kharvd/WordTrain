@@ -26,8 +26,8 @@
 **
 ******************************************************************************/
 
-#ifndef WORDSCARD_H
-#define WORDSCARD_H
+#ifndef WORDCARD_H
+#define WORDCARD_H
 
 #include <QtCore>
 
@@ -134,4 +134,4 @@ private:
     int m_CorrectAnswers;
 };
 
-#endif // WORDSCARD_H
+#endif // WORDCARD_H

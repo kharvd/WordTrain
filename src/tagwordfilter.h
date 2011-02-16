@@ -2,7 +2,7 @@
 #define TAGWORDFILTER_H
 
 #include "wordfilter.h"
-#include "wordscard.h"
+#include "wordcard.h"
 
 class TagWordFilter : public WordFilter
 {

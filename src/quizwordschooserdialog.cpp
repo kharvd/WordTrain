@@ -26,56 +26,51 @@
 **
 ******************************************************************************/
 
-#include <QLayout>
-#include <QCheckBox>
+#include "quizwordschooserdialog.h"
 
+#include <QPushButton>
+#include <QLayout>
+#include <QLabel>
+
+#include "quizwordschoosertable.h"
 #include "tagsscrollarea.h"
 
-TagsScrollArea::TagsScrollArea(const Tags &tags, QWidget *parent) :
-    QScrollArea(parent), m_Tags(tags)
+QuizWordsChooserDialog::QuizWordsChooserDialog(const WordsPtrSet &words, QWidget *parent) :
+    QDialog(parent), m_Cards(words)
 {
-    // Contains the layout with checkboxes
-    QWidget *container = new QWidget;
-    ltTags = new QVBoxLayout;
-    container->setLayout(ltTags);
-
-    setWidget(container);
-    fillTags();
-
-    setLayout(ltTags);
+    createInterface();
 }
 
-void TagsScrollArea::fillTags()
+void QuizWordsChooserDialog::createInterface()
 {
-    foreach (QString tag, m_Tags) {
-        QCheckBox *ch = new QCheckBox(tag);
-        connect(ch, SIGNAL(clicked()), SIGNAL(stateChanged()));
-        ltTags->addWidget(ch);
-    }
+    tblWords = new QuizWordsChooserTable(m_Cards);
 
-    ltTags->addStretch(1);
-}
-
-Tags TagsScrollArea::selectedTags()
-{
     Tags tmp;
-    for (int i = 0, size = m_Tags.size(); i < size; i++) {
-        if (chckBoxClickedAt(i))
-            tmp << chckBoxTextAt(i);
+
+    foreach (WordCard *card, m_Cards) {
+        tmp += card->tags();
     }
 
-    return tmp;
-}
+    tagsArea = new TagsScrollArea(tmp);
 
-QString TagsScrollArea::chckBoxTextAt(int index)
-{
-    QCheckBox *tmp = qobject_cast<QCheckBox*>(ltTags->itemAt(index)->widget());
-    return tmp->text();
-}
+    QPushButton *ok = new QPushButton(tr("OK"));
+    connect(ok, SIGNAL(clicked()), SLOT(accept()));
+    QPushButton *cancel = new QPushButton(tr("Cancel"));
+    connect(ok, SIGNAL(clicked()), SLOT(reject()));
 
-bool TagsScrollArea::chckBoxClickedAt(int index)
-{
-    QCheckBox *tmp = qobject_cast<QCheckBox*>(ltTags->itemAt(index)->widget());
-    return tmp->isChecked();
-}
+    QVBoxLayout *ltLeft = new QVBoxLayout;
+    ltLeft->addWidget(new QLabel(tr("Available words")));
+    ltLeft->addWidget(tblWords);
 
+    QVBoxLayout *ltRight = new QVBoxLayout;
+    ltRight->addWidget(ok);
+    ltRight->addWidget(cancel);
+    ltRight->addWidget(new QLabel(tr("Choose words by tag")));
+    ltRight->addWidget(tagsArea);
+
+    QHBoxLayout *lt = new QHBoxLayout;
+    lt->addLayout(ltLeft);
+    lt->addLayout(ltRight);
+
+    setLayout(lt);
+}

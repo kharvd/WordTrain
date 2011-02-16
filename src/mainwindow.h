@@ -30,7 +30,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QWidget;
 class QObject;

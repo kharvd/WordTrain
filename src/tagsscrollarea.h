@@ -30,7 +30,7 @@
 #define TAGSSCROLLAREA_H
 
 #include <QScrollArea>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QVBoxLayout;
 class QCheckBox;
@@ -42,6 +42,7 @@ class TagsScrollArea : public QScrollArea
 
 public:
     explicit TagsScrollArea(const Tags &tags, QWidget *parent = 0);
+    virtual ~TagsScrollArea() { }
 
     Tags selectedTags();
 

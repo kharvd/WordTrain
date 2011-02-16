@@ -30,7 +30,7 @@
 #define STARTQUIZDIALOG_H
 
 #include <QDialog>
-#include "wordscard.h"
+#include "wordcard.h"
 #include "quizdialog.h"
 
 class QButtonGroup;
@@ -59,6 +59,8 @@ private slots:
     /* Enables or disables line edit with number of words depending on
      chckAllWords */
     void toggleTxtNumWords(bool disable);
+
+    void openWordsChooserDialog();
 
 private:
     void createInterface();

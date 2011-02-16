@@ -29,7 +29,7 @@
 #define EXAMPLESWIDGET_H
 
 #include <QWidget>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QFormLayout;
 

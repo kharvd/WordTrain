@@ -26,15 +26,40 @@
 **
 ******************************************************************************/
 
-#include "quizwordchooserdialog.h"
+#ifndef QUIZWORDCHOOSERDIALOG_H
+#define QUIZWORDCHOOSERDIALOG_H
 
-//QuizWordChooserDialog::QuizWordChooserDialog(const WordsPtrSet &words, QWidget *parent) :
-//    QDialog(parent), m_Cards(words)
-//{
-//    createInterface();
-//}
+#include <QDialog>
+#include "wordcard.h"
 
-//void QuizWordChooserDialog::createInterface()
-//{
+class QTableWidget;
+class QScrollArea;
+class QCheckBox;
+class TagsScrollArea;
+class QuizWordsChooserTable;
 
-//}
+class QuizWordsChooserDialog : public QDialog
+{
+    Q_OBJECT
+
+public:
+    QuizWordsChooserDialog(const WordsPtrSet &words, QWidget *parent = 0);
+    ~QuizWordsChooserDialog() { }
+
+    WordsPtrSet cards();
+
+private slots:
+
+private:
+    static const int kDefaultWidth = 400;
+    static const int kDefaultHeight = 500;
+
+    void createInterface();
+
+    WordsPtrSet m_Cards;
+
+    QuizWordsChooserTable *tblWords;
+    TagsScrollArea *tagsArea;
+};
+
+#endif // QUIZWORDCHOOSERDIALOG_H

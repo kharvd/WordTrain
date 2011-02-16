@@ -26,7 +26,7 @@
 **
 ******************************************************************************/
 
-#include "wordscard.h"
+#include "wordcard.h"
 
 bool WordCard::operator==(const WordCard &card)
 {

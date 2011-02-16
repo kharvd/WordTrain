@@ -29,6 +29,8 @@
 #include "startquizdialog.h"
 
 #include "wordschooser.h"
+#include "quizwordschooserdialog.h"
+
 #include <QButtonGroup>
 #include <QRadioButton>
 #include <QCheckBox>
@@ -133,10 +135,13 @@ void StartQuizDialog::createInterface()
     connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
     QPushButton *btnCancel = new QPushButton(tr("Cancel"));
     connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
+    QPushButton *btnChooser = new QPushButton(tr("Blah"));
+    connect(btnChooser, SIGNAL(clicked()), SLOT(openWordsChooserDialog()));
 
     QVBoxLayout *ltBtns = new QVBoxLayout();
     ltBtns->addWidget(btnOk);
     ltBtns->addWidget(btnCancel);
+    ltBtns->addWidget(btnChooser);
     ltBtns->addStretch(1);
 
     QHBoxLayout *ltMain = new QHBoxLayout();
@@ -144,6 +149,13 @@ void StartQuizDialog::createInterface()
     ltMain->addLayout(ltBtns);
 
     setLayout(ltMain);
+}
+
+void StartQuizDialog::openWordsChooserDialog()
+{
+    QuizWordsChooserDialog *dlg = new QuizWordsChooserDialog(m_Cards);
+    dlg->exec();
+    delete dlg;
 }
 
 void StartQuizDialog::toggleTxtNumWords(bool disable)
