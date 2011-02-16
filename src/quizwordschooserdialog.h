@@ -49,6 +49,7 @@ public:
     WordsPtrSet cards();
 
 private slots:
+    void chooseWordsByTag(const QString& tag, bool checked);
 
 private:
     static const int kDefaultWidth = 400;

@@ -20,7 +20,6 @@ SOURCES += main.cpp \
     answerwidget.cpp \
     viewcarddialog.cpp \
     cardwidget.cpp \
-    wordschooser.cpp \
     lineanswerwidget.cpp \
     quizdialog.cpp \
     multianswerwidget.cpp \
@@ -34,7 +33,8 @@ SOURCES += main.cpp \
     tagwordfilter.cpp \
     quizwordschooserdialog.cpp \
     tagsscrollarea.cpp \
-    quizwordschoosertable.cpp
+    quizwordschoosertable.cpp \
+    learnedwordfilter.cpp
 HEADERS += mainwindow.h \
     wordcard.h \
     xmlreader.h \
@@ -45,7 +45,6 @@ HEADERS += mainwindow.h \
     answerwidget.h \
     viewcarddialog.h \
     cardwidget.h \
-    wordschooser.h \
     lineanswerwidget.h \
     quizdialog.h \
     multianswerwidget.h \
@@ -60,7 +59,8 @@ HEADERS += mainwindow.h \
     tagwordfilter.h \
     quizwordschooserdialog.h \
     tagsscrollarea.h \
-    quizwordschoosertable.h
+    quizwordschoosertable.h \
+    learnedwordfilter.h
 RESOURCES += resources.qrc
 TRANSLATIONS = wordtrain_de.ts \
                wordtrain_ru.ts

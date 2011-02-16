@@ -14,6 +14,12 @@ public:
     virtual void setWords(const WordsPtrSet &set);
     virtual WordsPtrSet filter(const QString &parameter) = 0;
 
+    virtual WordsPtrSet shuffled();
+    virtual WordsPtrSet shuffled(const WordsPtrSet &set);
+
+    virtual WordsPtrSet getFirstN(int n);
+    virtual WordsPtrSet getFirstN(int n, const WordsPtrSet &set);
+
 protected:
     WordsPtrSet m_Words;
 };

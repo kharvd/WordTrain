@@ -37,6 +37,7 @@ class QButtonGroup;
 class QRadioButton;
 class QCheckBox;
 class QLineEdit;
+class QuizWordsChooserDialog;
 
 // Dialog for selecting quiz options and starting the quiz
 class StartQuizDialog : public QDialog
@@ -56,10 +57,7 @@ public:
     HideMode hideMode();
 
 private slots:
-    /* Enables or disables line edit with number of words depending on
-     chckAllWords */
-    void toggleTxtNumWords(bool disable);
-
+    void toggleTxtNumWords(bool state);
     void openWordsChooserDialog();
 
 private:
@@ -67,6 +65,8 @@ private:
 
     QButtonGroup *grpChoiceMode;
     QButtonGroup *grpHideMode;
+    QButtonGroup *grpWords;
+
     QRadioButton *radioMultiChoiceMode;
     QRadioButton *radioNoChoiceMode;
     QRadioButton *radioRandomMode;
@@ -75,9 +75,14 @@ private:
     QRadioButton *radioWordHide;
     QRadioButton *radioTranslationHide;
     QRadioButton *radioRandomHide;
+    QRadioButton *radioNumWords;
+    QRadioButton *radioAllWords;
+    QRadioButton *radioChooseManually;
+
     QCheckBox *chckIncLearned;
-    QCheckBox *chckAllWords;
     QLineEdit *txtNumWords;
+
+    QuizWordsChooserDialog *dlgWordsChooser;
 
     WordsPtrSet m_Cards;
 };

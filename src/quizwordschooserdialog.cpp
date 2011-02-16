@@ -35,10 +35,13 @@
 #include "quizwordschoosertable.h"
 #include "tagsscrollarea.h"
 
-QuizWordsChooserDialog::QuizWordsChooserDialog(const WordsPtrSet &words, QWidget *parent) :
+QuizWordsChooserDialog::QuizWordsChooserDialog(const WordsPtrSet &words,
+                                               QWidget *parent) :
     QDialog(parent), m_Cards(words)
 {
     createInterface();
+    setWindowTitle(tr("Choose words for the quiz"));
+    resize(kDefaultWidth, kDefaultHeight);
 }
 
 void QuizWordsChooserDialog::createInterface()
@@ -52,20 +55,19 @@ void QuizWordsChooserDialog::createInterface()
     }
 
     tagsArea = new TagsScrollArea(tmp);
+    connect(tagsArea, SIGNAL(stateChanged(const QString&, bool)),
+            SLOT(chooseWordsByTag(const QString&, bool)));
 
     QPushButton *ok = new QPushButton(tr("OK"));
     connect(ok, SIGNAL(clicked()), SLOT(accept()));
-    QPushButton *cancel = new QPushButton(tr("Cancel"));
-    connect(ok, SIGNAL(clicked()), SLOT(reject()));
 
     QVBoxLayout *ltLeft = new QVBoxLayout;
-    ltLeft->addWidget(new QLabel(tr("Available words")));
+    ltLeft->addWidget(new QLabel(tr("Available words:")));
     ltLeft->addWidget(tblWords);
 
     QVBoxLayout *ltRight = new QVBoxLayout;
     ltRight->addWidget(ok);
-    ltRight->addWidget(cancel);
-    ltRight->addWidget(new QLabel(tr("Choose words by tag")));
+    ltRight->addWidget(new QLabel(tr("Choose words by tag:")));
     ltRight->addWidget(tagsArea);
 
     QHBoxLayout *lt = new QHBoxLayout;
@@ -73,4 +75,17 @@ void QuizWordsChooserDialog::createInterface()
     lt->addLayout(ltRight);
 
     setLayout(lt);
+}
+
+void QuizWordsChooserDialog::chooseWordsByTag(const QString& tag, bool checked)
+{
+    for (int i = 0, size = m_Cards.size(); i < size; i++) {
+        if (m_Cards.at(i)->tags().contains(tag))
+            tblWords->setCheckedAt(i, checked);
+    }
+}
+
+WordsPtrSet QuizWordsChooserDialog::cards()
+{
+    return tblWords->selectedCards();
 }

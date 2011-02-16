@@ -49,11 +49,21 @@ void TagsScrollArea::fillTags()
 {
     foreach (QString tag, m_Tags) {
         QCheckBox *ch = new QCheckBox(tag);
-        connect(ch, SIGNAL(clicked()), SIGNAL(stateChanged()));
+        connect(ch, SIGNAL(clicked()), SLOT(emitStateChanged()));
         ltTags->addWidget(ch);
     }
 
     ltTags->addStretch(1);
+}
+
+void TagsScrollArea::emitStateChanged()
+{
+    Tags now = selectedTags();
+    bool isNowChecked = (now.size() > m_Selected.size());
+    Tags justSelected = (isNowChecked) ? now - m_Selected
+                                       : m_Selected - now;
+    m_Selected = now;
+    emit stateChanged(justSelected.values().at(0), isNowChecked);
 }
 
 Tags TagsScrollArea::selectedTags()

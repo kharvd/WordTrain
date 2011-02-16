@@ -6,7 +6,7 @@ WordsPtrSet TagWordFilter::filter(const QString &tag)
 
     foreach (WordCard *card, m_Words) {
         if (card->tags().contains(tag)) {
-            result.push_back(card);
+            result << card;
         }
     }
 

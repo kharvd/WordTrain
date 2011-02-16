@@ -48,7 +48,12 @@ public:
 
 signals:
     // Emitted when one of the checkboxes has been clicked
-    void stateChanged();
+    // First parameter is the name of the selected tag, and second is its
+    // current state
+    void stateChanged(const QString&, bool);
+
+private slots:
+    void emitStateChanged();
 
 private:
     QString chckBoxTextAt(int index);
@@ -57,6 +62,7 @@ private:
     void fillTags();
 
     Tags m_Tags;
+    Tags m_Selected; // Previously selected tags
 
     QScrollArea *scrlArea;
     QVBoxLayout *ltTags;
