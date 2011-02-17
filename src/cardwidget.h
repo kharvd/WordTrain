@@ -43,6 +43,7 @@ class CardWidget : public QWidget
     Q_OBJECT
 
 public:
+    // Defines what should be shown on the card
     enum CardElement {
         Nothing = 0,
         Word = 0x1,
@@ -78,15 +79,27 @@ public slots:
     void showOtherSide(CardElements elements = BackAll);
 
 private:
+    //== Static members ==========================
+
     static const int kDefaultWidth = 370;
     static const int kDefaultHeight = 265;
 
+    //============================================
+
+
+    //== Private member functions=================
+
     // Get CSS from resource
     QString getCSS();
-    void showFace(const WordCard& card, CardElements elements);
 
     // showForeign - if true, shows 'word', 'plural', 'transcription' etc
     void showBack(const WordCard& card, CardElements elements);
+    void showFace(const WordCard& card, CardElements elements);
+
+    //============================================
+
+
+    //== Private member variables ================
 
     CardSide m_Side;
     WordCard m_Card;
@@ -94,7 +107,14 @@ private:
     // Displayed content
     QString m_CardHtml;
 
+    //============================================
+
+
+    //== Private widgets =========================
+
     QTextEdit *txtCard;
+
+    //============================================
 };
 
 #endif // CARDWIDGET_H

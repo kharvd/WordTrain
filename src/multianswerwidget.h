@@ -55,10 +55,19 @@ private:
     void createRadios();
 
 protected:
-    QButtonGroup *grpAnswers;
-    QVBoxLayout *ltRadios;
+    //== Protected member variables =============
 
     QStringList m_Answers;
+
+    //===========================================
+
+
+    //== Protected widgets and other QObjects ===
+
+    QButtonGroup *grpAnswers;
+    QVBoxLayout  *ltRadios;
+
+    //===========================================
 };
 
 #endif // MULTIANSWERWIDGET_H

@@ -61,7 +61,19 @@ private slots:
     void openWordsChooserDialog();
 
 private:
+    //== Private member functions =======================================
+
     void createInterface();
+
+    //===================================================================
+
+    //== Private member variables =======================================
+
+    WordsPtrSet m_Cards;
+
+    //===================================================================
+
+    //== Private widgets and other QObjects =============================
 
     QButtonGroup *grpChoiceMode;
     QButtonGroup *grpHideMode;
@@ -84,7 +96,7 @@ private:
 
     QuizWordsChooserDialog *dlgWordsChooser;
 
-    WordsPtrSet m_Cards;
+    //===================================================================
 };
 
 #endif // STARTQUIZDIALOG_H

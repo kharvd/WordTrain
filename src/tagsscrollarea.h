@@ -56,16 +56,30 @@ private slots:
     void emitStateChanged();
 
 private:
+    //== Private member functions =======================================
+
     QString chckBoxTextAt(int index);
-    bool chckBoxClickedAt(int index);
+    bool    chckBoxClickedAt(int index);
 
     void fillTags();
+
+    //===================================================================
+
+
+    //== Private member variables =======================================
 
     Tags m_Tags;
     Tags m_Selected; // Previously selected tags
 
+    //===================================================================
+
+
+    //== Private widgets and other QObjects =============================
+
     QScrollArea *scrlArea;
     QVBoxLayout *ltTags;
+
+    //===================================================================
 };
 
 #endif // TAGSSCROLLAREA_H

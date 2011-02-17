@@ -38,8 +38,8 @@ class XmlReader
 public:
     XmlReader();
 
-    bool readFile(const QString &fileName);
-    QString getErrorMessage();
+    bool     readFile(const QString &fileName);
+    QString  getErrorMessage();
     WordsSet getNewSet();
 
 private:
@@ -49,9 +49,9 @@ private:
     void skipUnknownElement();
     void skipWhitespaces();
 
-    WordsSet m_Cards;
+    WordsSet         m_Cards;
     QXmlStreamReader m_Reader;
-    QString m_ErrorMessage;
+    QString          m_ErrorMessage;
 };
 
 #endif // XMLSTREAMREADER_H

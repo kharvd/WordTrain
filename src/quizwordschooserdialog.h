@@ -52,15 +52,34 @@ private slots:
     void chooseWordsByTag(const QString& tag, bool checked);
 
 private:
+    //== Static constants ===============================================
+
     static const int kDefaultWidth = 400;
     static const int kDefaultHeight = 500;
 
+    //===================================================================
+
+
+    //== Private member functions =======================================
+
     void createInterface();
+
+    //===================================================================
+
+
+    //== Private member variables =======================================
 
     WordsPtrSet m_Cards;
 
+    //===================================================================
+
+
+    //== Private widgets and other QObjects =============================
+
     QuizWordsChooserTable *tblWords;
-    TagsScrollArea *tagsArea;
+    TagsScrollArea        *tagsArea;
+
+    //===================================================================
 };
 
 #endif // QUIZWORDCHOOSERDIALOG_H

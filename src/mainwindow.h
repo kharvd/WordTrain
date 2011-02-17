@@ -82,11 +82,18 @@ private slots:
     void tagFilter(int index);
 
 private:
+    //== Static constant members ========================================
+
     // Some constants
     static const int kDefaultWidth = 640;
     static const int kDefaultHeight = 480;
     static const int kDefaultXPosition = 200;
     static const int kDefaultYPosition = 200;
+
+    //===================================================================
+
+
+    //== Private member functions =======================================
 
     // Creating interface
     void createStartingWidget();
@@ -99,6 +106,7 @@ private:
     void createSearchTags();
     void createInterface();
 
+    // Settings
     void readSettings();
     void writeSettings();
 
@@ -126,10 +134,12 @@ private:
 
     // Returns set of the pointers to all words in the main set
     WordsPtrSet getPointersSet();
+    WordsSet    ptrsToWordsSet(const WordsPtrSet &ptrs);
 
-    WordsSet ptrsToWordsSet(const WordsPtrSet &ptrs);
+    //===================================================================
 
-    //=============================================================
+
+    //== Private member variables =======================================
 
     // Word is learned after this number of correct answers
     int m_CorrAnsForLearned;
@@ -137,18 +147,20 @@ private:
     // True if words are being filtered
     bool m_Filtering;
 
-    QComboBox *cmbTags;
-
     // All the words of the current set.
     WordsSet m_Cards;
-
-    Tags m_Tags;
+    Tags     m_Tags;
 
     // Pointers to results of search
     WordsPtrSet m_FilteredSet;
 
     // Path to current file
     QString m_CurrentFile;
+
+    //===================================================================
+
+
+    //== Private widgets and other QObjects =============================
 
     GettingStartedWidget *wgtGettingStarted;
 
@@ -185,8 +197,11 @@ private:
     // Main toolbar
     QToolBar *toolBar;
 
-    // Search bar
+    // Search bar and tags box
     QLineEdit *txtSearch;
+    QComboBox *cmbTags;
+
+    //===================================================================
 };
 
 #endif  // MAINWINDOW_H

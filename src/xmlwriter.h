@@ -39,7 +39,8 @@ class XmlWriter
 {
 public:
     XmlWriter(const WordsSet &cards);
-    bool writeFile(const QString & fileName);
+
+    bool    writeFile(const QString & fileName);
     QString getErrorMessage();
 
 private:
@@ -47,8 +48,8 @@ private:
     void writeExample(const Example &ex);
 
     QXmlStreamWriter m_Writer;
-    WordsSet m_Cards;
-    QString m_ErrorMessage;
+    WordsSet         m_Cards;
+    QString          m_ErrorMessage;
 };
 
 #endif // XMLWRITER_H
