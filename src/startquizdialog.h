@@ -45,7 +45,7 @@ class StartQuizDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit StartQuizDialog(WordsSet * words, QWidget *parent = 0);
+    explicit StartQuizDialog(const WordsPtrSet &words, QWidget *parent = 0);
 
     // Returns chosen words
     WordsPtrSet cards();

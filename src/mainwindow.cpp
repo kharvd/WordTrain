@@ -270,7 +270,7 @@ void MainWindow::startQuiz()
 {
     // Set mustn't be empty
     if (tableWords->rowCount()) {
-        StartQuizDialog* dlg = new StartQuizDialog(&m_Cards, this);
+        StartQuizDialog* dlg = new StartQuizDialog(getPointersSet(), this);
 
         if (dlg->exec()) {
             txtSearch->clear();
@@ -879,7 +879,7 @@ void MainWindow::showCard(int index)
         if (m_Filtering)
             viewDlg = new ViewCardDialog(m_FilteredSet, this);
         else
-            viewDlg = new ViewCardDialog(&m_Cards, this);
+            viewDlg = new ViewCardDialog(getPointersSet(), this);
 
         viewDlg->setCurrentCard(index);
 

@@ -248,7 +248,7 @@ void QuizDialog::dontKnow()
     nextCheckWord();
 }
 
-QList<QString> QuizDialog::getAnswersMultiChoice(QString correct, bool translation)
+QStringList QuizDialog::getAnswersMultiChoice(QString correct, bool translation)
 {
     // Shuffle words
     WordsPtrSet wrds = Utilities::shuffleContainer(m_AllCards, m_AllCards.size());

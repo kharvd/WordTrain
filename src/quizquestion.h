@@ -84,8 +84,8 @@ QuizQuestion<Task, Answer>::QuizQuestion(const Task &_task,
                                          const Answer &_correctAnswer,
                                          const QList<Answer> &_choices,
                                          QuestionType _type)
-    : m_Task(_task), m_Choices(_choices),
-      m_CorrectAnswer(_correctAnswer), m_Type(_type)
+    : m_Task(_task), m_CorrectAnswer(_correctAnswer), m_Choices(_choices),
+    m_Type(_type)
 {
 }
 

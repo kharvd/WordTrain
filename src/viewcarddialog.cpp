@@ -43,18 +43,6 @@ ViewCardDialog::ViewCardDialog(const WordsPtrSet & cards, QWidget *parent) :
     setCurrentCard(0);
 }
 
-ViewCardDialog::ViewCardDialog(WordsSet *cards, QWidget *parent) :
-    QDialog(parent)
-{
-    Q_ASSERT(cards->size());
-    for (int i = 0; i < cards->size(); i++)
-        m_Cards.push_back(&cards[0][i]);
-
-    m_Modified = false;
-    createInterface();
-    setCurrentCard(0);
-}
-
 void ViewCardDialog::createInterface()
 {
     setWindowTitle(tr("View card"));

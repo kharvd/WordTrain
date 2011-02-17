@@ -42,7 +42,6 @@ class ViewCardDialog : public QDialog
 public:
     // This class should be able to edit contents of the cards
     ViewCardDialog(const WordsPtrSet & cards, QWidget *parent = 0);
-    ViewCardDialog(WordsSet *cards, QWidget *parent = 0);
 
     void setCurrentCard(int index);
     bool isModified();

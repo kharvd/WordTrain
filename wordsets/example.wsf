@@ -7,7 +7,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="8"/>
+        <answers value="9"/>
         <example>
             <ex>Jack proposed going to the cinema.</ex>
             <tr>Джек предложил сходить в кино.</tr>
@@ -182,7 +182,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="9"/>
+        <answers value="10"/>
         <example>
             <ex>Keep your receipt in case you need to return anything.</ex>
             <tr>Сохраняйте чек, чтобы в случае чего можно было бы вернуть товар</tr>
@@ -360,7 +360,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="1"/>
+        <answers value="2"/>
     </wordcard>
     <wordcard>
         <word value="corduroy"/>

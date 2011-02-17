@@ -74,7 +74,7 @@ private:
     void createInterface();
 
     // Selects some words for choices in MultiAnswerWidget
-    QList<QString> getAnswersMultiChoice(QString correct, bool translation);
+    QStringList getAnswersMultiChoice(QString correct, bool translation);
 
     // Checks answer
     void checkAnswer();

@@ -41,12 +41,9 @@
 #include <QLabel>
 #include <QPushButton>
 
-StartQuizDialog::StartQuizDialog(WordsSet * words, QWidget *parent) :
-    QDialog(parent)
+StartQuizDialog::StartQuizDialog(const WordsPtrSet &words, QWidget *parent) :
+    QDialog(parent), m_Cards(words)
 {
-    for (int i = 0; i < words->size(); i++)
-        m_Cards.push_back(&words[0][i]);
-
     dlgWordsChooser = new QuizWordsChooserDialog(m_Cards, this);
 
     setWindowTitle(tr("Start test"));
