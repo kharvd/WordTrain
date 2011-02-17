@@ -7,7 +7,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="6"/>
+        <answers value="8"/>
         <example>
             <ex>Jack proposed going to the cinema.</ex>
             <tr>Джек предложил сходить в кино.</tr>
@@ -25,7 +25,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="6"/>
+        <answers value="8"/>
         <example>
             <ex>He was ecstatic when he heard that he was going to be a father.</ex>
             <tr>Он был в восторге, когда услышал, что станет отцом.</tr>
@@ -43,7 +43,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="7"/>
+        <answers value="9"/>
         <example>
             <ex>I got a $100 fine for speeding.</ex>
             <tr>Я получил штраф в $100 за превышение скорости.</tr>
@@ -62,7 +62,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="3"/>
-        <answers value="7"/>
+        <answers value="9"/>
         <example>
             <ex>The boss was livid when yet another deadline was missed.</ex>
             <tr>Босс был в ярости, когда очередной дедлайн был пропущен.</tr>
@@ -128,7 +128,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="2"/>
-        <answers value="10"/>
+        <answers value="11"/>
         <example>
             <ex>The fare was nothing like as much as that</ex>
             <tr>Мы заплатили гораздо меньшую сумму за проезд</tr>
@@ -151,7 +151,7 @@
         <plural value="forgeries"/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="5"/>
+        <answers value="6"/>
         <example>
             <ex>That is a cheap forgery, not an authentic Ming Dynasty vase</ex>
             <tr>Это дешевая подделка, а не ваза династии Минь</tr>
@@ -182,7 +182,7 @@
         <plural value=""/>
         <gender value="0"/>
         <category value="1"/>
-        <answers value="8"/>
+        <answers value="9"/>
         <example>
             <ex>Keep your receipt in case you need to return anything.</ex>
             <tr>Сохраняйте чек, чтобы в случае чего можно было бы вернуть товар</tr>

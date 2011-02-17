@@ -9,10 +9,9 @@ class SearchWordFilter : public WordFilter
 public:
     SearchWordFilter():
             WordFilter() { }
-    SearchWordFilter(const WordsPtrSet &set):
-            WordFilter(set) { }
 
-    virtual WordsPtrSet filter(const QString &searchString);
+    virtual WordsPtrSet filter(const QString &searchString,
+                               const WordsPtrSet &set);
 };
 
 #endif // SEARCHWORDFILTER_H

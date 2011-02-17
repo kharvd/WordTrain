@@ -319,19 +319,22 @@ void MainWindow::tagFilter(int index)
         m_Filtering = true;
 
         TagWordFilter filter;
+        WordsPtrSet tmp;
 
         if (txtSearch->text().isEmpty()) {
-            filter.setWords(getPointersSet());
+            tmp = getPointersSet();
         } else {
             m_FilteredSet.clear();
             search(txtSearch->text());
-            filter.setWords(m_FilteredSet);
+            tmp = m_FilteredSet;
         }
 
         if (index != 0)
-            m_FilteredSet = filter.filter(cmbTags->itemData(index).toString());
+            m_FilteredSet = filter.filter(cmbTags->itemData(index).toString(),
+                                          tmp);
 
         updateTable(ptrsToWordsSet(m_FilteredSet));
+
     }
 }
 
@@ -345,16 +348,16 @@ void MainWindow::search(const QString &str)
 
         int index = cmbTags->currentIndex();
         if (index != 0) {
-            TagWordFilter filter(getPointersSet());
-            m_FilteredSet = filter.filter(cmbTags->itemData(index).toString());
+            TagWordFilter filter;
+            m_FilteredSet = filter.filter(cmbTags->itemData(index).toString(),
+                                          getPointersSet());
         } else {
             m_FilteredSet = getPointersSet();
         }
 
         if (!txtSearch->text().isEmpty()) {
             SearchWordFilter filter;
-            filter.setWords(m_FilteredSet);
-            m_FilteredSet = filter.filter(str);
+            m_FilteredSet = filter.filter(str, m_FilteredSet);
         }
 
         updateTable(ptrsToWordsSet(m_FilteredSet));
@@ -761,8 +764,9 @@ void MainWindow::updateTags()
     m_Tags.clear();
 
     if (m_Filtering && !txtSearch->text().isEmpty()) {
-        SearchWordFilter filter(getPointersSet());
-        words = ptrsToWordsSet(filter.filter(txtSearch->text()));
+        SearchWordFilter filter;
+        words = ptrsToWordsSet(filter.filter(txtSearch->text(),
+                                              getPointersSet()));
     } else {
         words = m_Cards;
     }

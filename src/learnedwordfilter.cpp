@@ -1,6 +1,7 @@
 #include "learnedwordfilter.h"
 
-WordsPtrSet LearnedWordFilter::filter(const QString &lrnd)
+WordsPtrSet LearnedWordFilter::filter(const QString &lrnd,
+                                      const WordsPtrSet &set)
 {
     bool learned = (lrnd == "true");
 
@@ -8,7 +9,7 @@ WordsPtrSet LearnedWordFilter::filter(const QString &lrnd)
     int corrAnsForLearned = settings.value("corr_answers", 10).toInt();
 
     WordsPtrSet result;
-    foreach (WordCard *c, m_Words) {
+    foreach (WordCard *c, set) {
         if ((c->correctAnswers() >= corrAnsForLearned) == learned) {
             result << c;
         }

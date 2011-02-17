@@ -41,7 +41,6 @@
 #include "answerwidget.h"
 #include "lineanswerwidget.h"
 #include "multianswerwidget.h"
-#include "wordschooser.h"
 
 #include <QApplication>
 

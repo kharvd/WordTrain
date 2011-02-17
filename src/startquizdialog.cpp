@@ -183,15 +183,13 @@ WordsPtrSet StartQuizDialog::cards()
     WordsPtrSet tmp;
 
     if (radioChooseManually->isChecked())
-        filter.setWords(dlgWordsChooser->cards());
+        tmp = dlgWordsChooser->cards();
     else
-        filter.setWords(m_Cards);
+        tmp = m_Cards;
 
     // Do not include learned
     if (!chckIncLearned->isChecked()) {
-        tmp = filter.filter("false");
-    } else {
-        tmp = m_Cards;
+        tmp = filter.filter("false", tmp);
     }
 
     // Random

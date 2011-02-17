@@ -9,10 +9,8 @@ class TagWordFilter : public WordFilter
 public:
     TagWordFilter():
             WordFilter() { }
-    TagWordFilter(const WordsPtrSet &set):
-            WordFilter(set) { }
 
-    virtual WordsPtrSet filter(const QString &tag);
+    virtual WordsPtrSet filter(const QString &tag, const WordsPtrSet &set);
 };
 
 #endif // TAGWORDFILTER_H
