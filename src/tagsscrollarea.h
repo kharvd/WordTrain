@@ -26,49 +26,60 @@
 **
 ******************************************************************************/
 
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#ifndef TAGSSCROLLAREA_H
+#define TAGSSCROLLAREA_H
 
-#include <QDialog>
+#include <QScrollArea>
+#include "wordcard.h"
 
-class QComboBox;
-class QLineEdit;
+class QVBoxLayout;
 class QCheckBox;
-class QPushButton;
 
-// Dialog with settings
-class SettingsDialog : public QDialog
+// Displays checkboxes in scrollarea for tags. Used in QuizWordChooserDialog
+class TagsScrollArea : public QScrollArea
 {
     Q_OBJECT
+
 public:
-    explicit SettingsDialog(QWidget *parent = 0);
+    explicit TagsScrollArea(const Tags &tags, QWidget *parent = 0);
+    virtual ~TagsScrollArea() { }
+
+    Tags selectedTags();
+
+signals:
+    // Emitted when one of the checkboxes has been clicked
+    // First parameter is the name of the selected tag, and second is its
+    // current state
+    void stateChanged(const QString&, bool);
 
 private slots:
-    void writeSettings();
+    void emitStateChanged();
 
 private:
-    //== Static constants ===============================================
+    //== Private member functions =======================================
 
-    static const int kDefaultWidth = 300;
-    static const int kDefaultHeight = 200;
+    QString chckBoxTextAt(int index);
+    bool    chckBoxClickedAt(int index);
+
+    void fillTags();
 
     //===================================================================
 
-    //== Private member functions =======================================
 
-    // Dynamically gets available languages from resources
-    void fillLanguages();
+    //== Private member variables =======================================
+
+    Tags m_Tags;
+    Tags m_Selected; // Previously selected tags
 
     //===================================================================
 
 
     //== Private widgets and other QObjects =============================
 
-    QComboBox *cmbLanguages;
-    QLineEdit *txtCorrAnswers;
-    QCheckBox *chckSaveWinPosition;
+    QScrollArea *scrlArea;
+    QVBoxLayout *ltTags;
 
     //===================================================================
 };
 
-#endif // SETTINGSDIALOG_H
+#endif // TAGSSCROLLAREA_H

@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -30,13 +30,14 @@
 #define STARTQUIZDIALOG_H
 
 #include <QDialog>
-#include "wordscard.h"
+#include "wordcard.h"
 #include "quizdialog.h"
 
 class QButtonGroup;
 class QRadioButton;
 class QCheckBox;
 class QLineEdit;
+class QuizWordsChooserDialog;
 
 // Dialog for selecting quiz options and starting the quiz
 class StartQuizDialog : public QDialog
@@ -44,7 +45,7 @@ class StartQuizDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit StartQuizDialog(WordsSet * words, QWidget *parent = 0);
+    explicit StartQuizDialog(const WordsPtrSet &words, QWidget *parent = 0);
 
     // Returns chosen words
     WordsPtrSet cards();
@@ -56,15 +57,28 @@ public:
     HideMode hideMode();
 
 private slots:
-    /* Enables or disables line edit with number of words depending on
-     chckAllWords */
-    void toggleTxtNumWords(bool disable);
+    void toggleTxtNumWords(bool state);
+    void openWordsChooserDialog();
 
 private:
+    //== Private member functions =======================================
+
     void createInterface();
+
+    //===================================================================
+
+    //== Private member variables =======================================
+
+    WordsPtrSet m_Cards;
+
+    //===================================================================
+
+    //== Private widgets and other QObjects =============================
 
     QButtonGroup *grpChoiceMode;
     QButtonGroup *grpHideMode;
+    QButtonGroup *grpWords;
+
     QRadioButton *radioMultiChoiceMode;
     QRadioButton *radioNoChoiceMode;
     QRadioButton *radioRandomMode;
@@ -73,11 +87,16 @@ private:
     QRadioButton *radioWordHide;
     QRadioButton *radioTranslationHide;
     QRadioButton *radioRandomHide;
+    QRadioButton *radioNumWords;
+    QRadioButton *radioAllWords;
+    QRadioButton *radioChooseManually;
+
     QCheckBox *chckIncLearned;
-    QCheckBox *chckAllWords;
     QLineEdit *txtNumWords;
 
-    WordsPtrSet m_Cards;
+    QuizWordsChooserDialog *dlgWordsChooser;
+
+    //===================================================================
 };
 
 #endif // STARTQUIZDIALOG_H

@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -30,16 +30,18 @@
 #define XMLSTREAMREADER_H
 
 #include <QXmlStreamReader>
-#include "wordscard.h"
+#include "wordcard.h"
 
 /* XML reader for words training files (wsf) */
 class XmlReader
 {
 public:
-    XmlReader(WordsSet *cards);
+    XmlReader();
 
-    bool readFile(const QString &fileName);
-    QString getErrorMessage();
+    bool     readFile(const QString &fileName);
+    QString  getErrorMessage();
+    WordsSet getNewSet();
+
 private:
     void readWordsSet();
     void readWordCard();
@@ -47,9 +49,9 @@ private:
     void skipUnknownElement();
     void skipWhitespaces();
 
-    WordsSet *m_Cards;
+    WordsSet         m_Cards;
     QXmlStreamReader m_Reader;
-    QString m_ErrorMessage;
+    QString          m_ErrorMessage;
 };
 
 #endif // XMLSTREAMREADER_H

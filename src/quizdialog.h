@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -30,7 +30,7 @@
 #define QUIZDIALOG_H
 
 #include <QDialog>
-#include "wordscard.h"
+#include "wordcard.h"
 #include "quiz.h"
 
 class QProgressBar;
@@ -61,20 +61,26 @@ private slots:
     void dontKnow();
 
 private:
+    //== Static constants ===============================================
+
     static const int kDefaultWidth = 400;
     static const int kDefaultHeight = 360;
     static const int kNumOfChoices = 4;
+
+    //===================================================================
+
+
+    //== Private member functions =======================================
 
     // Changes buttons' text to appropriate, when something is clicked
     void switchButtons();
 
     // Sets current displayed card
     void setCurrentCard(int index);
-
     void createInterface();
 
     // Selects some words for choices in MultiAnswerWidget
-    QList<QString> getAnswersMultiChoice(QString correct, bool translation);
+    QStringList getAnswersMultiChoice(QString correct, bool translation);
 
     // Checks answer
     void checkAnswer();
@@ -87,27 +93,25 @@ private:
 
     // Changes the type of the current answer widget
     // and returns pointer to current widget
-    AnswerWidget * switchAnsWidget(QuestionType type);
+    AnswerWidget* switchAnsWidget(QuestionType type);
 
-    QPushButton *btnDontKnow;
-    QProgressBar *prgProgress;
-    QLabel *lblProgress;
-    QPushButton *btnCheckNext;
-    CardWidget *wgtCard;
-    AnswerWidget *wgtAnswer;
-    QList<AnswerWidget*> answerWgts;
+    //===================================================================
+
+    //== Private member variables =======================================
 
     // If user answered correctly at least one question
     bool m_Modified;
-
-    HideMode m_HideMode;
-    QuestionType m_ChoiceMode;
 
     // If user answered all words
     bool m_ThatsAll;
 
     // If "Check" has been clicked
     bool m_Answered;
+
+    HideMode            m_HideMode;
+    QuestionType        m_ChoiceMode;
+    QList<HideMode>     m_HideModes;
+    QList<QuestionType> m_QuestionTypes;
 
     int m_CurrentCard;
 
@@ -118,8 +122,23 @@ private:
     WordsPtrSet m_AllCards;
 
     Quiz<WordCard, QString> m_Quiz;
-    QList<HideMode> m_HideModes;
-    QList<QuestionType> m_QuestionTypes;
+
+    //===================================================================
+
+
+    //== Private widgets and other QObjects =============================
+
+    QPushButton *btnDontKnow;
+    QPushButton *btnCheckNext;
+
+    QProgressBar *prgProgress;
+    QLabel       *lblProgress;
+    CardWidget   *wgtCard;
+    AnswerWidget *wgtAnswer;
+
+    QList<AnswerWidget*> answerWgts;
+
+    //===================================================================
 };
 
 #endif // QUIZDIALOG_H

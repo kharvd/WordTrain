@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -26,26 +26,17 @@
 **
 ******************************************************************************/
 
-#ifndef WORDSCHOOSER_H
-#define WORDSCHOOSER_H
+#include "tagwordfilter.h"
 
-#include "wordscard.h"
-
-// Utility class for choosing words to be tested.
-class WordsChooser
+WordsPtrSet TagWordFilter::filter(const QString &tag, const WordsPtrSet &set)
 {
-public:
-    WordsChooser(const WordsPtrSet & cards, bool random = true,
-                 bool includeLearned = true, int number = -1);
+    WordsPtrSet result;
 
-    // Returns chosen set of cards
-    WordsPtrSet getCards();
+    foreach (WordCard *card, set) {
+        if (card->tags().contains(tag)) {
+            result << card;
+        }
+    }
 
-private:
-    // Returns first N elements from mCards
-    WordsPtrSet getFirstN(int number, bool includeLearned);
-
-    WordsPtrSet m_Cards;
-};
-
-#endif // WORDSCHOOSER_H
+    return result;
+}

@@ -26,25 +26,20 @@
 **
 ******************************************************************************/
 
-#include "quiz.h"
+#ifndef LEARNEDWORDFILTER_H
+#define LEARNEDWORDFILTER_H
 
-// Specialization for Quiz<WordCard, QString>. Allows to check answer imprecisely
-template <>
-bool Quiz<WordCard, QString>::isUsersAnswerCorrectAt(int index) const
+#include "wordfilter.h"
+
+class LearnedWordFilter : public WordFilter
 {
-    bool correct;
+public:
+    LearnedWordFilter():
+            WordFilter() { }
 
-    if (m_exactComparison) {
-        correct = (m_Questions.at(index).usersAnswer()
-                  == m_Questions.at(index).correctAnswer());
-    } else {
-        correct = !m_Questions.at(index).usersAnswer().isEmpty()
-                  && m_Questions.at(index).correctAnswer().
-                  contains(m_Questions.at(index).usersAnswer(),
-                           Qt::CaseInsensitive);
-    }
+    // Parameter is used as bool. Shows which words we should put into result.
+    // If "true" we put only learned words, otherwise only not learned
+    virtual WordsPtrSet filter(const QString &lrnd, const WordsPtrSet &set);
+};
 
-    return correct;
-}
-
-// Definition is in the header file because Quiz is a template class
+#endif // LEARNEDWORDFILTER_H

@@ -3,16 +3,14 @@
 # -------------------------------------------------
 QT += core \
     gui \
-    xml \
-    testlib
-CONFIG += release \
-    warn_on \
+    xml
+CONFIG += warn_on \
     qt
 TARGET = ../bin/wordtrain
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    wordscard.cpp \
+    wordcard.cpp \
     xmlreader.cpp \
     xmlwriter.cpp \
     neweditcarddialog.cpp \
@@ -21,7 +19,6 @@ SOURCES += main.cpp \
     answerwidget.cpp \
     viewcarddialog.cpp \
     cardwidget.cpp \
-    wordschooser.cpp \
     lineanswerwidget.cpp \
     quizdialog.cpp \
     multianswerwidget.cpp \
@@ -29,9 +26,16 @@ SOURCES += main.cpp \
     aboutdialog.cpp \
     gettingstartedwidget.cpp \
     quiz.cpp \
-    quizquestion.cpp
+    quizquestion.cpp \
+    wordfilter.cpp \
+    searchwordfilter.cpp \
+    tagwordfilter.cpp \
+    quizwordschooserdialog.cpp \
+    tagsscrollarea.cpp \
+    quizwordschoosertable.cpp \
+    learnedwordfilter.cpp
 HEADERS += mainwindow.h \
-    wordscard.h \
+    wordcard.h \
     xmlreader.h \
     xmlwriter.h \
     neweditcarddialog.h \
@@ -40,7 +44,6 @@ HEADERS += mainwindow.h \
     answerwidget.h \
     viewcarddialog.h \
     cardwidget.h \
-    wordschooser.h \
     lineanswerwidget.h \
     quizdialog.h \
     multianswerwidget.h \
@@ -49,10 +52,17 @@ HEADERS += mainwindow.h \
     aboutdialog.h \
     gettingstartedwidget.h \
     quiz.h \
-    quizquestion.h
+    quizquestion.h \
+    wordfilter.h \
+    searchwordfilter.h \
+    tagwordfilter.h \
+    quizwordschooserdialog.h \
+    tagsscrollarea.h \
+    quizwordschoosertable.h \
+    learnedwordfilter.h
 RESOURCES += resources.qrc
-TRANSLATIONS = wordtrain_de.ts \
-               wordtrain_ru.ts
+TRANSLATIONS = wordtrain_ru.ts #wordtrain_de.ts
+
 RC_FILE = wordtrain.rc
 icon.files += wordtrain.png
 desc.files += ../WordTrain.desktop

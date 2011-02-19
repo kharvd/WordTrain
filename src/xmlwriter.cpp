@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -28,7 +28,7 @@
 
 #include "xmlwriter.h"
 
-XmlWriter::XmlWriter(const WordsSet *cards)
+XmlWriter::XmlWriter(const WordsSet &cards)
 {
     m_Cards = cards;
     m_Writer.setAutoFormatting(true);
@@ -48,52 +48,53 @@ bool XmlWriter::writeFile(const QString & fileName) {
     m_Writer.writeStartDocument();
     m_Writer.writeStartElement("wordsset");
 
-    WordsSet::const_iterator it = m_Cards->begin();
-    for ( ; it != m_Cards->end(); it++) {
-        writeCard(it);
-    }
+    foreach (WordCard card, m_Cards)
+        writeCard(card);
 
     m_Writer.writeEndElement();
 
     return true;
 }
 
-void XmlWriter::writeCard(WordsSet::const_iterator it) {
+void XmlWriter::writeCard(const WordCard &card) {
     m_Writer.writeStartElement("wordcard");
 
     m_Writer.writeEmptyElement("word");
-    m_Writer.writeAttribute("value", it->word());
+    m_Writer.writeAttribute("value", card.word());
 
     m_Writer.writeEmptyElement("transcription");
-    m_Writer.writeAttribute("value", it->transcription());
+    m_Writer.writeAttribute("value", card.transcription());
 
     m_Writer.writeEmptyElement("translation");
-    m_Writer.writeAttribute("value", it->translation());
+    m_Writer.writeAttribute("value", card.translation());
 
     m_Writer.writeEmptyElement("plural");
-    m_Writer.writeAttribute("value", it->plural());
+    m_Writer.writeAttribute("value", card.plural());
 
     m_Writer.writeEmptyElement("gender");
-    m_Writer.writeAttribute("value", QString::number(it->gender()));
+    m_Writer.writeAttribute("value", QString::number(card.gender()));
 
     m_Writer.writeEmptyElement("category");
-    m_Writer.writeAttribute("value", QString::number(it->category()));
+    m_Writer.writeAttribute("value", QString::number(card.category()));
 
     m_Writer.writeEmptyElement("answers");
-    m_Writer.writeAttribute("value", QString::number(it->correctAnswers()));
+    m_Writer.writeAttribute("value", QString::number(card.correctAnswers()));
 
-    Examples::const_iterator exIt = it->examples().begin();
-    for ( ; exIt != it->examples().end(); exIt++) {
-        writeExample(exIt);
+    foreach (Example ex, card.examples())
+        writeExample(ex);
+
+    foreach (QString tag, card.tags()) {
+        m_Writer.writeEmptyElement("tag");
+        m_Writer.writeAttribute("value", tag);
     }
 
     m_Writer.writeEndElement();
 }
 
-void XmlWriter::writeExample(Examples::const_iterator it) {
+void XmlWriter::writeExample(const Example &ex) {
     m_Writer.writeStartElement("example");
-    m_Writer.writeTextElement("ex", it->first);
-    m_Writer.writeTextElement("tr", it->second);
+    m_Writer.writeTextElement("ex", ex.first);
+    m_Writer.writeTextElement("tr", ex.second);
     m_Writer.writeEndElement();
 }
 

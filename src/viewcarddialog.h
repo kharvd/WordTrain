@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -30,7 +30,7 @@
 #define VIEWCARDDIALOG_H
 
 #include <QDialog>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class CardWidget;
 
@@ -40,9 +40,7 @@ class ViewCardDialog : public QDialog
     Q_OBJECT
 
 public:
-    // This class should be able to edit contents of the cards
     ViewCardDialog(const WordsPtrSet & cards, QWidget *parent = 0);
-    ViewCardDialog(WordsSet *cards, QWidget *parent = 0);
 
     void setCurrentCard(int index);
     bool isModified();
@@ -53,23 +51,43 @@ private slots:
     void editCard();
 
 private:
+    //== Static constants ===============================================
+
     static const int kDefaultWidth = 400;
     static const int kDefaultHeight = 360;
+
+    //===================================================================
+
+
+    //== Private member functions =======================================
 
     void createInterface();
 
     // Switches Previous and Next buttons according to mCurrentCard
     void switchButtons();
 
+    //===================================================================
+
+
+    //== Private member variables =======================================
+
+    bool m_Modified;
+    int  m_CurrentCard;
+
+    WordsPtrSet m_Cards;
+
+    //===================================================================
+
+    //== Private widgets and other QObjects =============================
+
     QPushButton *btnPrevious;
     QPushButton *btnTurn;
     QPushButton *btnNext;
     QPushButton *btnEdit;
-    CardWidget *wgtCard;
 
-    bool m_Modified;
-    int m_CurrentCard;
-    WordsPtrSet m_Cards;
+    CardWidget  *wgtCard;
+
+    //===================================================================
 };
 
 #endif // VIEWCARDDIALOG_H

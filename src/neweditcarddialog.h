@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -30,7 +30,7 @@
 #define NEWCARDDIALOG_H
 
 #include <QDialog>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QLineEdit;
 class QComboBox;
@@ -43,12 +43,17 @@ class NewEditCardDialog : public QDialog
 {
     Q_OBJECT
 public:
+    //== Constructors =======================================
+
     /* If we want to add new card (you should use getNewCard() to get values) */
     NewEditCardDialog(QWidget *parent = 0);
 
     /* If we want to edit existing card (we don't change value of card directly,
        you should use getNewCard() to get new values) */
     NewEditCardDialog(const WordCard &card, QWidget *parent = 0);
+
+    //=======================================================
+
 
     WordCard newCard();
 
@@ -62,34 +67,58 @@ public slots:
     void resetProgress();
 
 private:
-    static const int kDefaultWidth = 550;
+    //== Static constant members ============================
+
+    static const int kDefaultWidth = 610;
     static const int kDefaultHeight = 250;
     static const int kExampleHeight = 50;
     static const int kMaxAutoHeight = 420;
+
+    //=======================================================
+
+
+    //== Private member functions ===========================
 
     void createInterface();
 
     // Fills the form with current card's contents
     void fillForm();
 
-    QFormLayout *ltFields;
-    QLineEdit *txtWord;
-    QLineEdit *txtTranscription;
-    QLineEdit *txtTranslation;
-    QLineEdit *txtPlural;
-    QLineEdit *txtProgress;
-    QComboBox *cmbCategory;
-    QComboBox *cmbGender;
-    QPushButton *btnAddExample;
-    QPushButton *btnOk;
-    QPushButton *btnCancel;
-    ExamplesWidget *wgtExamples;
-    QScrollArea *scrollExamples;
+    //=======================================================
+
+
+    //== Private member variables ===========================
 
     bool m_isNew;
 
     // Temporary card for holding new values
     WordCard m_NewCard;
+
+    //=======================================================
+
+
+    //== Private widgets and other QObjects =================
+
+    QFormLayout *ltFields;
+
+    QLineEdit *txtWord;
+    QLineEdit *txtTranscription;
+    QLineEdit *txtTranslation;
+    QLineEdit *txtPlural;
+    QLineEdit *txtProgress;
+    QLineEdit *txtTags;
+
+    QComboBox *cmbCategory;
+    QComboBox *cmbGender;
+
+    QPushButton *btnAddExample;
+    QPushButton *btnOk;
+    QPushButton *btnCancel;
+
+    QScrollArea    *scrollExamples;
+    ExamplesWidget *wgtExamples;
+
+    //=======================================================
 };
 
 #endif // NEWCARDDIALOG_H

@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -30,7 +30,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class QWidget;
 class QObject;
@@ -42,6 +42,7 @@ class QAction;
 class QMenu;
 class QMenuBar;
 class QLineEdit;
+class QComboBox;
 class GettingStartedWidget;
 
 // Main window class.
@@ -51,7 +52,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    ~MainWindow() { }
 
     // If import is true, we append existing file to current
     void loadFile(const QString & fileName, bool import = false);
@@ -77,14 +78,22 @@ private slots:
     void startTraining();
     void startQuiz();
     void about();
-    void search(QString str);
+    void search(const QString &str);
+    void tagFilter(int index);
 
 private:
+    //== Static constant members ========================================
+
     // Some constants
     static const int kDefaultWidth = 640;
     static const int kDefaultHeight = 480;
     static const int kDefaultXPosition = 200;
     static const int kDefaultYPosition = 200;
+
+    //===================================================================
+
+
+    //== Private member functions =======================================
 
     // Creating interface
     void createStartingWidget();
@@ -94,9 +103,10 @@ private:
     void createContextMenu();
     void createToolbars();
     void createStatusBar();
-    void createSearchBar();
+    void createSearchTags();
     void createInterface();
 
+    // Settings
     void readSettings();
     void writeSettings();
 
@@ -110,8 +120,8 @@ private:
     bool isFileOpened();
 
     // Fills the table with words
-    void updateTable(WordsSet words);
-    void updateTable(WordsPtrSet words);
+    void updateTable(const WordsSet &words);
+    void updateTags();
 
     // Shows card with index 'index'
     void showCard(int index);
@@ -124,23 +134,33 @@ private:
 
     // Returns set of the pointers to all words in the main set
     WordsPtrSet getPointersSet();
+    WordsSet    ptrsToWordsSet(const WordsPtrSet &ptrs);
 
-    //=============================================================
+    //===================================================================
+
+
+    //== Private member variables =======================================
 
     // Word is learned after this number of correct answers
     int m_CorrAnsForLearned;
 
-    // True if search box is not empty
-    bool m_Searching;
+    // True if words are being filtered
+    bool m_Filtering;
 
     // All the words of the current set.
     WordsSet m_Cards;
+    Tags     m_Tags;
 
     // Pointers to results of search
-    WordsPtrSet m_SearchResults;
+    WordsPtrSet m_FilteredSet;
 
     // Path to current file
     QString m_CurrentFile;
+
+    //===================================================================
+
+
+    //== Private widgets and other QObjects =============================
 
     GettingStartedWidget *wgtGettingStarted;
 
@@ -169,6 +189,7 @@ private:
     QMenu *menuEdit;
     QMenu *menuTraining;
     QMenu *menuAbout;
+    QMenu *menuTableContextMenu;
 
     // Main menu
     QMenuBar *menubar;
@@ -176,8 +197,11 @@ private:
     // Main toolbar
     QToolBar *toolBar;
 
-    // Search bar
+    // Search bar and tags box
     QLineEdit *txtSearch;
+    QComboBox *cmbTags;
+
+    //===================================================================
 };
 
 #endif  // MAINWINDOW_H

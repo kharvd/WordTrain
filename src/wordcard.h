@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -26,8 +26,8 @@
 **
 ******************************************************************************/
 
-#ifndef WORDSCARD_H
-#define WORDSCARD_H
+#ifndef WORDCARD_H
+#define WORDCARD_H
 
 #include <QtCore>
 
@@ -39,7 +39,8 @@ typedef QList<WordCard *> WordsPtrSet;
 /* The first element in the pair is
  * example itself and the second is its translation */
 typedef QPair<QString, QString> Example;
-typedef QVector<Example> Examples;
+typedef QList<Example> Examples;
+typedef QSet<QString> Tags;
 
 enum LexicalCategory {
     CategoryFirst = 0,
@@ -80,55 +81,58 @@ public:
     void setGender(int gender);
     void setCorrectAnswers(int num);
     void incCorrectAnswers();
-    void setExamples(const Examples & examples);
-    void setExampleAt(int index, const Example & example);
     void addExample(const QString & example, const QString & translation);
     void addExample(const Example & example);
-    void clearAll();
     void clearExamples();
+    void setTags(const QStringList &tags);
+    void addTag(const QString &tag);
+    void clearTags();
 
     /* Getters */
-    const QString word() const { return m_Word; }
-    const QString transcription() const { return m_Transcription; }
-    const QString translation() const { return m_Translation; }
-    const QString plural() const { return m_Plural; }
+    const QString   word() const { return m_Word; }
+    const QString   transcription() const { return m_Transcription; }
+    const QString   translation() const { return m_Translation; }
+    const QString   plural() const { return m_Plural; }
     LexicalCategory category() const { return m_Category; }
-    Gender gender() const { return m_Gender; }
-    int correctAnswers() const { return m_CorrectAnswers; }
-    const Example exampleAt(int index) const { return m_Examples[index]; }
-    const Examples examples() const { return m_Examples; }
-    int examplesSize() const { return m_Examples.size(); }
+    Gender          gender() const { return m_Gender; }
+    int             correctAnswers() const { return m_CorrectAnswers; }
+    const Example   exampleAt(int index) const { return m_Examples[index]; }
+    const Examples  examples() const { return m_Examples; }
+    int             examplesSize() const { return m_Examples.size(); }
+    const Tags      tags() const { return m_Tags; }
 
     // Returns short string interpretations of LexicalCategory
     QString lexCategoriesShortString() const;
+
     // String short interpretations of Gender
     QString genderShortString() const;
 
     // Returns string representations of LexicalCategory enum values
     static QStringList lexCategoriesStrings();
-    static QString lexCategoriesString(LexicalCategory cat);
+    static QString     lexCategoriesString(LexicalCategory cat);
 
     // String representations of Gender enum values
     static QStringList genderStrings();
-    static QString genderString(Gender gen);
+    static QString     genderString(Gender gen);
 
     // Returns short string representations of LexicalCategory enum values
     static QStringList lexCategoriesShortStrings();
-    static QString lexCategoriesShortString(LexicalCategory cat);
+    static QString     lexCategoriesShortString(LexicalCategory cat);
 
     // String short representations of Gender enum values
     static QStringList genderShortStrings();
-    static QString genderShortString(Gender gen);
+    static QString     genderShortString(Gender gen);
 
 private:
-    QString m_Word;
-    Gender m_Gender;
+    QString         m_Word;
+    Gender          m_Gender;
     LexicalCategory m_Category;
-    QString m_Transcription;
-    QString m_Translation;
-    QString m_Plural;
-    Examples m_Examples;
-    int m_CorrectAnswers;
+    QString         m_Transcription;
+    QString         m_Translation;
+    QString         m_Plural;
+    Examples        m_Examples;
+    Tags            m_Tags;
+    int             m_CorrectAnswers;
 };
 
-#endif // WORDSCARD_H
+#endif // WORDCARD_H

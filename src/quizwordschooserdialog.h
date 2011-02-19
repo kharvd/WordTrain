@@ -26,49 +26,60 @@
 **
 ******************************************************************************/
 
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#ifndef QUIZWORDCHOOSERDIALOG_H
+#define QUIZWORDCHOOSERDIALOG_H
 
 #include <QDialog>
+#include "wordcard.h"
 
-class QComboBox;
-class QLineEdit;
+class QTableWidget;
+class QScrollArea;
 class QCheckBox;
-class QPushButton;
+class TagsScrollArea;
+class QuizWordsChooserTable;
 
-// Dialog with settings
-class SettingsDialog : public QDialog
+class QuizWordsChooserDialog : public QDialog
 {
     Q_OBJECT
+
 public:
-    explicit SettingsDialog(QWidget *parent = 0);
+    QuizWordsChooserDialog(const WordsPtrSet &words, QWidget *parent = 0);
+    ~QuizWordsChooserDialog() { }
+
+    WordsPtrSet cards();
 
 private slots:
-    void writeSettings();
+    void chooseWordsByTag(const QString& tag, bool checked);
 
 private:
     //== Static constants ===============================================
 
-    static const int kDefaultWidth = 300;
-    static const int kDefaultHeight = 200;
+    static const int kDefaultWidth = 400;
+    static const int kDefaultHeight = 500;
 
     //===================================================================
 
+
     //== Private member functions =======================================
 
-    // Dynamically gets available languages from resources
-    void fillLanguages();
+    void createInterface();
+
+    //===================================================================
+
+
+    //== Private member variables =======================================
+
+    WordsPtrSet m_Cards;
 
     //===================================================================
 
 
     //== Private widgets and other QObjects =============================
 
-    QComboBox *cmbLanguages;
-    QLineEdit *txtCorrAnswers;
-    QCheckBox *chckSaveWinPosition;
+    QuizWordsChooserTable *tblWords;
+    TagsScrollArea        *tagsArea;
 
     //===================================================================
 };
 
-#endif // SETTINGSDIALOG_H
+#endif // QUIZWORDCHOOSERDIALOG_H

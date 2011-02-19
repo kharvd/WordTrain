@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -33,22 +33,23 @@
 #include <QtGui>
 #include <QVector>
 #include <QPair>
-#include "wordscard.h"
+#include "wordcard.h"
 
 class XmlWriter
 {
 public:
-    XmlWriter(const WordsSet *cards);
-    bool writeFile(const QString & fileName);
+    XmlWriter(const WordsSet &cards);
+
+    bool    writeFile(const QString & fileName);
     QString getErrorMessage();
 
 private:
-    void writeCard(WordsSet::const_iterator it);
-    void writeExample(Examples::const_iterator it);
+    void writeCard(const WordCard &card);
+    void writeExample(const Example &ex);
 
     QXmlStreamWriter m_Writer;
-    const WordsSet *m_Cards;
-    QString m_ErrorMessage;
+    WordsSet         m_Cards;
+    QString          m_ErrorMessage;
 };
 
 #endif // XMLWRITER_H

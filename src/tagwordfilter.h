@@ -26,25 +26,19 @@
 **
 ******************************************************************************/
 
-#include "quiz.h"
+#ifndef TAGWORDFILTER_H
+#define TAGWORDFILTER_H
 
-// Specialization for Quiz<WordCard, QString>. Allows to check answer imprecisely
-template <>
-bool Quiz<WordCard, QString>::isUsersAnswerCorrectAt(int index) const
+#include "wordfilter.h"
+#include "wordcard.h"
+
+class TagWordFilter : public WordFilter
 {
-    bool correct;
+public:
+    TagWordFilter():
+            WordFilter() { }
 
-    if (m_exactComparison) {
-        correct = (m_Questions.at(index).usersAnswer()
-                  == m_Questions.at(index).correctAnswer());
-    } else {
-        correct = !m_Questions.at(index).usersAnswer().isEmpty()
-                  && m_Questions.at(index).correctAnswer().
-                  contains(m_Questions.at(index).usersAnswer(),
-                           Qt::CaseInsensitive);
-    }
+    virtual WordsPtrSet filter(const QString &tag, const WordsPtrSet &set);
+};
 
-    return correct;
-}
-
-// Definition is in the header file because Quiz is a template class
+#endif // TAGWORDFILTER_H

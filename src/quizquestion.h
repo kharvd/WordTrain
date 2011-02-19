@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -84,8 +84,8 @@ QuizQuestion<Task, Answer>::QuizQuestion(const Task &_task,
                                          const Answer &_correctAnswer,
                                          const QList<Answer> &_choices,
                                          QuestionType _type)
-    : m_Task(_task), m_Choices(_choices),
-      m_CorrectAnswer(_correctAnswer), m_Type(_type)
+    : m_Task(_task), m_CorrectAnswer(_correctAnswer), m_Choices(_choices),
+    m_Type(_type)
 {
 }
 

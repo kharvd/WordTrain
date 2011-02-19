@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -41,7 +41,6 @@
 #include "answerwidget.h"
 #include "lineanswerwidget.h"
 #include "multianswerwidget.h"
-#include "wordschooser.h"
 
 #include <QApplication>
 
@@ -249,7 +248,7 @@ void QuizDialog::dontKnow()
     nextCheckWord();
 }
 
-QList<QString> QuizDialog::getAnswersMultiChoice(QString correct, bool translation)
+QStringList QuizDialog::getAnswersMultiChoice(QString correct, bool translation)
 {
     // Shuffle words
     WordsPtrSet wrds = Utilities::shuffleContainer(m_AllCards, m_AllCards.size());

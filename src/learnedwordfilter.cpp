@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -26,51 +26,22 @@
 **
 ******************************************************************************/
 
-#include "wordschooser.h"
-#include "utilities.h"
+#include "learnedwordfilter.h"
 
-WordsChooser::WordsChooser(const WordsPtrSet & cards, bool random,
-                           bool includeLearned, int number)
+WordsPtrSet LearnedWordFilter::filter(const QString &lrnd,
+                                      const WordsPtrSet &set)
 {
-    // Init PRNG
-    qsrand(time(0));
-
-    m_Cards = cards;
-
-    if (random)
-        m_Cards = Utilities::shuffleContainer(m_Cards, m_Cards.size());
-
-    m_Cards = getFirstN(number, includeLearned);
-}
-
-WordsPtrSet WordsChooser::getCards()
-{
-    return m_Cards;
-}
-
-WordsPtrSet WordsChooser::getFirstN(int number, bool includeLearned)
-{
-    WordsPtrSet tmp;
-
-    // -1 means all words
-    number = (number == -1) ? m_Cards.size() : number;
+    bool learned = (lrnd == "true");
 
     QSettings settings;
     int corrAnsForLearned = settings.value("corr_answers", 10).toInt();
 
-    // i goes through all elements of list, n counts 'number'
-    for (int i = 0, n = 0; (i < m_Cards.size()) && (n < number); i++) {
-        bool learned = (m_Cards.at(i)->correctAnswers() / corrAnsForLearned
-                       == 1);
-
-        // If we include learned words or word is not learned
-        if (includeLearned || !learned) {
-            tmp.push_back(m_Cards.at(i));
-            n++;
+    WordsPtrSet result;
+    foreach (WordCard *c, set) {
+        if ((c->correctAnswers() >= corrAnsForLearned) == learned) {
+            result << c;
         }
     }
 
-    return tmp;
+    return result;
 }
-
-

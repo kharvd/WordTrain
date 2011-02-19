@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -28,7 +28,7 @@
 
 #include "cardwidget.h"
 
-#include "wordscard.h"
+#include "wordcard.h"
 #include <QLayout>
 #include <QTextEdit>
 #include <QFile>

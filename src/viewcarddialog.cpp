@@ -1,5 +1,5 @@
 /******************************************************************************
-** WordTrain 0.9.2 -- Foreign words trainer
+** WordTrain 0.9.3 -- Foreign words trainer
 ** Copyright (C) 2010  Valery Kharitonov <kharvd@gmail.com>
 **
 ** This file is part of WordTrain.
@@ -39,18 +39,6 @@ ViewCardDialog::ViewCardDialog(const WordsPtrSet & cards, QWidget *parent) :
     Q_ASSERT(cards.size());
     m_Modified = false;
     m_Cards = cards;
-    createInterface();
-    setCurrentCard(0);
-}
-
-ViewCardDialog::ViewCardDialog(WordsSet *cards, QWidget *parent) :
-    QDialog(parent)
-{
-    Q_ASSERT(cards->size());
-    for (int i = 0; i < cards->size(); i++)
-        m_Cards.push_back(&cards[0][i]);
-
-    m_Modified = false;
     createInterface();
     setCurrentCard(0);
 }
