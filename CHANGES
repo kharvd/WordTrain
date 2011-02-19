@@ -1,3 +1,8 @@
+0.9.3 Released 19 February 2011
+    * Added "tags" field for cards
+    * Added filtering by tag
+    * Added manual choosing words for quiz
+
 0.9.2 Released 31 January 2011
     * Small bugfixes
     * Added "Random" quiz mode
