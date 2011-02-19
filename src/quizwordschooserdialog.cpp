@@ -58,6 +58,9 @@ void QuizWordsChooserDialog::createInterface()
     connect(tagsArea, SIGNAL(stateChanged(const QString&, bool)),
             SLOT(chooseWordsByTag(const QString&, bool)));
 
+    QLabel *lblTags = new QLabel(tr("Choose words by tag:"));
+    lblTags->setWordWrap(true);
+
     QPushButton *ok = new QPushButton(tr("OK"));
     connect(ok, SIGNAL(clicked()), SLOT(accept()));
 
@@ -67,7 +70,7 @@ void QuizWordsChooserDialog::createInterface()
 
     QVBoxLayout *ltRight = new QVBoxLayout;
     ltRight->addWidget(ok);
-    ltRight->addWidget(new QLabel(tr("Choose words by tag:")));
+    ltRight->addWidget(lblTags);
     ltRight->addWidget(tagsArea);
 
     QHBoxLayout *lt = new QHBoxLayout;

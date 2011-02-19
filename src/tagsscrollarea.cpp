@@ -34,15 +34,12 @@
 TagsScrollArea::TagsScrollArea(const Tags &tags, QWidget *parent) :
     QScrollArea(parent), m_Tags(tags)
 {
-    // Contains the layout with checkboxes
-    QWidget *container = new QWidget;
-    ltTags = new QVBoxLayout;
-    container->setLayout(ltTags);
-
-    setWidget(container);
+    QWidget *w = new QWidget;
+    ltTags = new QVBoxLayout();
+    w->setLayout(ltTags);
     fillTags();
 
-    setLayout(ltTags);
+    setWidget(w);
 }
 
 void TagsScrollArea::fillTags()
