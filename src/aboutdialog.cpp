@@ -65,7 +65,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     labelDescription->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
     QString descr
-            = tr("<b>WordTrain</b> - a simple program for learning foreign"
+            = tr("<b>WordTrain</b> is a simple program for learning foreign"
                  " words. You can test yourself with a quiz mode or just"
                  " store word cards. If you have any questions or wishes,"
                  " feel free to contact me at "

@@ -5,7 +5,8 @@
     <name>AboutDialog</name>
     <message>
         <location filename="aboutdialog.cpp" line="68"/>
-        <source>&lt;b&gt;WordTrain&lt;/b&gt; - a simple program for learning foreign words. You can test yourself with a quiz mode or just store word cards. If you have any questions or wishes, feel free to contact me at &lt;a href=&quot;mailto:kharvd@gmail.com&quot;&gt;kharvd@gmail.com&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;http://sourceforge.net/projects/wordtrain&quot;&gt;Web site&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Copyright Â© 2010 Valery Kharitonov &lt;br/&gt;&lt;br/&gt;This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. See &apos;License&apos; tab or &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; for details</source>
+        <source>&lt;b&gt;WordTrain&lt;/b&gt; is a simple program for learning foreign words. You can test yourself with a quiz mode or just store word cards. If you have any questions or wishes, feel free to contact me at &lt;a href=&quot;mailto:kharvd@gmail.com&quot;&gt;kharvd@gmail.com&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;http://sourceforge.net/projects/wordtrain&quot;&gt;Web site&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Copyright Â© 2010 Valery Kharitonov &lt;br/&gt;&lt;br/&gt;This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. See &apos;License&apos; tab or &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; for details</source>
+        <oldsource>&lt;b&gt;WordTrain&lt;/b&gt; - a simple program for learning foreign words. You can test yourself with a quiz mode or just store word cards. If you have any questions or wishes, feel free to contact me at &lt;a href=&quot;mailto:kharvd@gmail.com&quot;&gt;kharvd@gmail.com&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;http://sourceforge.net/projects/wordtrain&quot;&gt;Web site&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Copyright Â© 2010 Valery Kharitonov &lt;br/&gt;&lt;br/&gt;This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. See &apos;License&apos; tab or &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt; for details</oldsource>
         <translation>&lt;b&gt;WordTrain&lt;/b&gt; - простая программа для изучения иностранных слов. Вы можете проверять себя с помощью режима теста или просто хранить слова. Если у вас есть какие-либо вопросы или пожелания, вы можете связаться со мной по e-mail: &lt;a href=&quot;mailto:kharvd@gmail.com&quot;&gt;kharvd@gmail.com&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;a href=&quot;http://sourceforge.net/projects/wordtrain&quot;&gt;Веб-сайт&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;Copyright © 2010 Валерий Харитонов &lt;br/&gt;&lt;br/&gt;Это программа распространяется БЕЗ ВСЯКИХ ГАРАНТИЙ. Это свободное программное обеспечение, и Вы можете распространять её в соответствии с конкретными условиями. Для дополнительной информации смотрите вкладку &quot;Лицензия&quot; или &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;http://www.gnu.org/licenses/gpl.html&lt;/a&gt;</translation>
     </message>
     <message>
@@ -549,17 +550,17 @@ Do you want to save your changes?</source>
         <translation>Выбрать слова для викторины</translation>
     </message>
     <message>
-        <location filename="quizwordschooserdialog.cpp" line="61"/>
+        <location filename="quizwordschooserdialog.cpp" line="64"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="quizwordschooserdialog.cpp" line="65"/>
+        <location filename="quizwordschooserdialog.cpp" line="68"/>
         <source>Available words:</source>
         <translation>Доступные слова:</translation>
     </message>
     <message>
-        <location filename="quizwordschooserdialog.cpp" line="70"/>
+        <location filename="quizwordschooserdialog.cpp" line="61"/>
         <source>Choose words by tag:</source>
         <translation>Выбрать все слова на тему:</translation>
     </message>
