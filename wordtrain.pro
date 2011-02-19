@@ -1,5 +1,4 @@
 SUBDIRS += src
 TEMPLATE = subdirs
-CONFIG += release \
-          warn_on \
+CONFIG += warn_on \
           qt

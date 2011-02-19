@@ -3,8 +3,7 @@
 # -------------------------------------------------
 QT += core \
     gui \
-    xml \
-    testlib
+    xml
 CONFIG += warn_on \
     qt
 TARGET = ../bin/wordtrain
