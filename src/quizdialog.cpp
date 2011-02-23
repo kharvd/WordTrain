@@ -62,6 +62,8 @@ QuizDialog::QuizDialog(const WordsPtrSet & cards, QuestionType choice,
 
     fillQuiz();
 
+    m_QuizSize = m_Quiz.size();
+
     createInterface();
     setCurrentCard(0);
 }
@@ -83,10 +85,10 @@ void QuizDialog::createInterface()
 
     prgProgress = new QProgressBar();
     prgProgress->setMinimum(0);
-    prgProgress->setMaximum(m_Cards.size());
+    prgProgress->setMaximum(m_QuizSize);
     prgProgress->setValue(0);
 
-    lblProgress = new QLabel(QString("0/%1").arg(m_Cards.size()));
+    lblProgress = new QLabel(QString("0/%1").arg(m_QuizSize));
 
     answerWgts.push_back(new MultiAnswerWidget(this));
     answerWgts[QuestionTypeMultiChoice]->hide();
@@ -132,7 +134,7 @@ void QuizDialog::switchButtons()
     if (m_Answered) {
         btnDontKnow->setEnabled(false);
 
-        if (m_CurrentCard == m_Cards.size() - 1) {
+        if (m_CurrentQuestion == m_QuizSize - 1) {
             btnCheckNext->setText(tr("Finish"));
             m_ThatsAll = true;
         } else {
@@ -155,24 +157,23 @@ AnswerWidget * QuizDialog::switchAnsWidget(QuestionType type)
 
 void QuizDialog::setCurrentCard(int index)
 {
-    m_CurrentCard = index;
+    m_CurrentQuestion = index;
 
     wgtAnswer = switchAnsWidget(m_QuestionTypes.at(index));
     wgtAnswer->clear();
 
     switchButtons();
 
-    CardWidget::CardElements WOCategory = CardWidget::BackAll;
-    WOCategory &= ~CardWidget::Category;
-
     switch (m_HideModes.at(index)) {
     case HideTranslation:
-        // Don't show category
-        wgtCard->showCard(*m_Cards.at(index), CardWidget::FaceSide, WOCategory);
+        // Shows face without category
+        wgtCard->showCard(m_Quiz.taskAt(index), CardWidget::FaceSide,
+                          CardWidget::FaceNoCategory);
         break;
 
     case HideWord:
-        wgtCard->showCard(*m_Cards.at(index), CardWidget::BackSide,
+        // Shows back side only with translation and translated examples
+        wgtCard->showCard(m_Quiz.taskAt(index), CardWidget::BackSide,
                            CardWidget::BackNoForeign);
         break;
 
@@ -191,14 +192,14 @@ void QuizDialog::nextCheckWord()
         close();
     } else {
         if (m_Answered) {
-            m_CurrentCard++;
+            m_CurrentQuestion++;
             m_Answered = false;
-            lblProgress->setText(QString("%1/%2").arg(m_CurrentCard).
-                                 arg(m_Cards.size()));
+            lblProgress->setText(QString("%1/%2").arg(m_CurrentQuestion).
+                                 arg(m_QuizSize));
             prgProgress->setValue(prgProgress->value() + 1);
-            setCurrentCard(m_CurrentCard);
+            setCurrentCard(m_CurrentQuestion);
         } else {
-            if (m_HideModes.at(m_CurrentCard) == HideTranslation)
+            if (m_HideModes.at(m_CurrentQuestion) == HideTranslation)
                 wgtCard->showOtherSide();
             else
                 wgtCard->showCard(CardWidget::BackSide, CardWidget::BackAll);
@@ -213,11 +214,11 @@ void QuizDialog::nextCheckWord()
 
 void QuizDialog::checkAnswer()
 {
-    bool correct = m_Quiz.setUsersAnswerAt(m_CurrentCard, wgtAnswer->answer());
+    bool correct = m_Quiz.setUsersAnswerAt(m_CurrentQuestion, wgtAnswer->answer());
     wgtAnswer->setCorrect(correct);
 
     if (correct) {
-        m_Cards.at(m_CurrentCard)->incCorrectAnswers();
+        m_Cards.at(m_CurrentQuestion)->incCorrectAnswers();
         m_Modified = true;
     }
 }
@@ -227,11 +228,11 @@ void QuizDialog::showResult()
     QMessageBox msgBox;
     QString msg;
 
-    double mark = (m_Quiz.correctAnswers() * 5.0) / m_Cards.size();
+    double mark = (m_Quiz.correctAnswers() * 5.0) / m_QuizSize;
     mark = (mark < 2) ? 2 : mark;
 
     msg.append(tr("Correct answers: %1/%2\n").arg(m_Quiz.correctAnswers())
-                  .arg(m_Cards.size()));
+                  .arg(m_QuizSize));
     msg.append(tr("Your mark: %1").arg(mark));
 
     msgBox.setText(msg);

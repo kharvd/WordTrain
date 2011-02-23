@@ -113,7 +113,8 @@ private:
     QList<HideMode>     m_HideModes;
     QList<QuestionType> m_QuestionTypes;
 
-    int m_CurrentCard;
+    int m_CurrentQuestion;
+    int m_QuizSize;
 
     // Cards to be tested
     WordsPtrSet m_Cards;

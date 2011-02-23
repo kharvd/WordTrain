@@ -55,6 +55,8 @@ public:
     void removeQuestionAt(int index);
     void clear();
 
+    int size();
+
     Task taskAt(int index) const;
     void setTaskAt(int index, const Task &_task);
 
@@ -116,6 +118,11 @@ template <class Task, class Answer>
 void Quiz<Task, Answer>::clear()
 {
     m_Questions.clear();
+}
+
+template <class Task, class Answer>
+int Quiz<Task, Answer>::size() {
+    return m_Questions.size();
 }
 
 template <class Task, class Answer>

@@ -55,7 +55,8 @@ public:
         Examples = 0x40,
         ExamplesTranslation = 0x80,
 
-        FaceDefault = Word | Transcription | Category | Gender,
+        FaceAll = Word | Transcription | Category | Gender,
+        FaceNoCategory = FaceAll & ~Category,
         BackNoForeign = Translation | ExamplesTranslation,
         BackAll = Translation | ExamplesTranslation | Word | Transcription
                   | Category | Gender | Plural | Examples
