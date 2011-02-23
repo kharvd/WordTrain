@@ -253,7 +253,9 @@ void MainWindow::settings()
     SettingsDialog *dlgSettings = new SettingsDialog(this);
 
     if (dlgSettings->exec()) {
-        readSettings();
+        QSettings settings;
+        m_CorrAnsForLearned = settings.value("corr_answers", 10).toInt();
+
         if (isFileOpened())
             updateTable(m_Cards);
     }
