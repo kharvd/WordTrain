@@ -36,12 +36,15 @@ class WordCard;
 typedef QList<WordCard> WordsSet;
 typedef QList<WordCard *> WordsPtrSet;
 
-/* The first element in the pair is
- * example itself and the second is its translation */
+/** @brief Example of word's use.
+ *  The first element of the pair is an example itself, the second is
+ *  its translation
+ */
 typedef QPair<QString, QString> Example;
 typedef QList<Example> Examples;
 typedef QSet<QString> Tags;
 
+/** @brief Represents different lexical categories (parts of speech) */
 enum LexicalCategory {
     CategoryFirst = 0,
     CategoryNone = 0, CategoryNoun, CategoryVerb,
@@ -51,31 +54,50 @@ enum LexicalCategory {
     CategoryLast = CategoryParticle
 };
 
+/** @brief Represents word's gender */
 enum Gender {
     GenderFirst = 0, GenderNone = 0, GenderMasculine, GenderFemenine,
     GenderNeuter, GenderCommon, GenderLast = GenderCommon
 };
 
-/* Word card class */
+/** @brief Word card class
+ *  WordCard class contains information about word, such as word itself,
+ *  its translation, transcription, gender, plural, part of speech, number
+ *  of correct answers, tags and examples of use
+ */
 class WordCard
 {
     // For using 'tr()'
     Q_DECLARE_TR_FUNCTIONS(WordCard)
 
 public:
-    /* Constructors */
+    /** @brief Constructs empty card */
     WordCard():
         m_Gender(GenderNone), m_Category(CategoryNone), m_CorrectAnswers(0) {}
 
-    /* Operators */
+    /** @brief Comparison operator */
     bool operator==(const WordCard &card);
 
-    /* Setters */
+    /** @brief Sets field @b Word
+        @param word New word */
     void setWord(const QString & word);
+
+    /** @brief Sets field @b Transcription
+        @param transcription New transcription */
     void setTranscription(const QString & transcription);
+
+    /** @brief Sets field @b Translation
+        @param translation New translation */
     void setTranslation(const QString & translation);
+
+    /** @brief Sets field @b Plural
+        @param plural New plural form */
     void setPlural(const QString & plural);
+
+    /** @brief Sets field <b>Lexical category</b> (part of speech)
+        @param category New part of speech */
     void setCategory(LexicalCategory category);
+
     void setGender(Gender gender);
     void setCategory(int category);
     void setGender(int gender);

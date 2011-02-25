@@ -34,7 +34,7 @@ void QuizWordsChooserTable::fillTable()
         setItem(i, 1, item);
     }
 
-    setColumnWidth(0, cellWidget(0, 0)->width());
+    setColumnWidth(0, cellWidget(0, 0)->width() + 10);
 }
 
 WordsPtrSet QuizWordsChooserTable::selectedCards()

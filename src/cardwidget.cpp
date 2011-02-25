@@ -85,13 +85,14 @@ void CardWidget::showOtherSide(CardElements elements)
 
 QString CardWidget::getCSS() {
     QFile file(":/style.css");
+    QString style;
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
-        return stream.readAll();
+        style = stream.readAll();
     }
 
-    return QString();
+    return style;
 }
 
 void CardWidget::showFace(const WordCard& card, CardElements elements)

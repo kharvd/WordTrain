@@ -67,10 +67,12 @@ void MultiAnswerWidget::createRadios()
 
 QString MultiAnswerWidget::answer()
 {
-    if (grpAnswers->checkedId() != -1)
-        return m_Answers.at(grpAnswers->checkedId());
+    QString ans;
 
-    return "";
+    if (grpAnswers->checkedId() != -1)
+        ans =  m_Answers.at(grpAnswers->checkedId());
+
+    return ans;
 }
 
 void MultiAnswerWidget::clear()

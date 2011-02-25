@@ -235,6 +235,7 @@ void NewEditCardDialog::fillForm()
     foreach (QString tag, m_NewCard.tags()) {
         tags += tag + ", ";
     }
+
     // Chop ", " from the end
     tags.chop(2);
     txtTags->setText(tags);

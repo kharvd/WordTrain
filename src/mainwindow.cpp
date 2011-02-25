@@ -144,10 +144,12 @@ bool MainWindow::saveSetAs()
                                          tr("Words set file (*.wsf);;"
                                             "XML files (*.xml);;"
                                             "All files (*)"));
-    if (!fileName.isEmpty())
-        return saveFile(fileName);
+    bool success = false;
 
-    return false;
+    if (!fileName.isEmpty())
+        success = saveFile(fileName);
+
+    return success;
 }
 
 void MainWindow::addCard()
@@ -733,17 +735,18 @@ bool MainWindow::saveFile(const QString & fileName)
     if (noError) {
         setCurrentFile(fileName);
         statusBar()->showMessage(tr("File saved"), 2000);
-
-        return true;
+    } else {
+        QMessageBox::critical(this, tr("Error"), writer.getErrorMessage(),
+                              QMessageBox::Ok);
     }
 
-    QMessageBox::critical(this, tr("Error"), writer.getErrorMessage(),
-                          QMessageBox::Ok);
-    return false;
+    return noError;
 }
 
 bool MainWindow::maybeSave()
 {
+    bool save = true; // Discard changes w/o saving or successfully saved
+
     if (isWindowModified()) {
         QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this, qApp->applicationName(),
@@ -751,12 +754,15 @@ bool MainWindow::maybeSave()
                                       "Do you want to save your changes?"),
                                    QMessageBox::Save | QMessageBox::Discard
                                    | QMessageBox::Cancel);
+
         if (ret == QMessageBox::Save)
-            return saveSet();
-        else if (ret == QMessageBox::Cancel)
-            return false;
+            save = saveSet();
+
+        if (ret == QMessageBox::Cancel)
+            save = false;
     }
-    return true;
+
+    return save;
 }
 
 void MainWindow::updateTags()
@@ -777,6 +783,7 @@ void MainWindow::updateTags()
         m_Tags.unite(card.tags());
     }
 
+    // Selected at the moment
     QString currTag = cmbTags->itemData(cmbTags->currentIndex()).toString();
 
     disconnect(cmbTags, SIGNAL(currentIndexChanged(int)), this, SLOT(tagFilter(int)));
@@ -797,11 +804,13 @@ void MainWindow::updateTags()
         cmbTags->addItem(QIcon(), item, tag);
     }
 
-    for (int i = 0; i < cmbTags->count(); i++) {
-        if (cmbTags->itemData(i).toString() == currTag) {
-            cmbTags->setCurrentIndex(i);
-            break;
-        }
+    // Searching for selected tag
+    int i;
+    for (i = 0; i < cmbTags->count()
+        && (cmbTags->itemData(i).toString() != currTag); i++) ;
+
+    if (i < cmbTags->count()) {
+        cmbTags->setCurrentIndex(i);
     }
 
     connect(cmbTags, SIGNAL(currentIndexChanged(int)), SLOT(tagFilter(int)));
