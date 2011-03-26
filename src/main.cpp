@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + lang,
                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    app.installTranslator(&qtTranslator);
+    a.installTranslator(&qtTranslator);
 
     QTranslator translator;
     translator.load(QString(":/translations/wordtrain_") + lang);

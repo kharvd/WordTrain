@@ -20,8 +20,6 @@
         <file>icons/new-48.png</file>
         <file>icons/help-48.png</file>
         <file>icons/exit-48.png</file>
-    </qresource>
-    <qresource prefix="/translations">
-        <file>wordtrain_ru.qm</file>
+        <file>translations/wordtrain_ru.qm</file>
     </qresource>
 </RCC>

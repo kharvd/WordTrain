@@ -61,7 +61,7 @@ HEADERS += mainwindow.h \
     quizwordschoosertable.h \
     learnedwordfilter.h
 RESOURCES += resources.qrc
-TRANSLATIONS = wordtrain_ru.ts #wordtrain_de.ts
+TRANSLATIONS = translations/wordtrain_ru.ts #wordtrain_de.ts
 
 RC_FILE = wordtrain.rc
 icon.files += wordtrain.png
