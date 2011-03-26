@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     }
 
     QTranslator qtTranslator;
-    qtTranslator.load("qt_" + QLocale::system().name(),
+    qtTranslator.load("qt_" + lang,
                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     app.installTranslator(&qtTranslator);
 
