@@ -72,7 +72,7 @@ private:
 
     //== Private member functions =======================================
 
-    // Changes buttons' text to appropriate, when something is clicked
+    // Changes buttons' text to appropriate when something is clicked
     void switchButtons();
 
     // Sets current displayed card

@@ -144,7 +144,7 @@ void StartQuizDialog::createInterface()
     QGroupBox *grpBox = new QGroupBox(windowTitle());
     grpBox->setLayout(ltFormQuiz);
 
-    QPushButton *btnOk = new QPushButton(tr("OK"));
+    QPushButton *btnOk = new QPushButton(tr("Start"));
     connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
 
     QPushButton *btnCancel = new QPushButton(tr("Cancel"));

@@ -49,9 +49,10 @@ int main(int argc, char *argv[])
         lang = QLocale::system().name();
     }
 
-    QTranslator translatorQt;
-    translatorQt.load(QString(":/translations/qt_") + lang);
-    a.installTranslator(&translatorQt);
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(),
+                      QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    app.installTranslator(&qtTranslator);
 
     QTranslator translator;
     translator.load(QString(":/translations/wordtrain_") + lang);
@@ -59,7 +60,6 @@ int main(int argc, char *argv[])
     //====================
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf-8"));
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf-8"));
 
     a.setWindowIcon(QIcon(":/icons/icon.png"));
