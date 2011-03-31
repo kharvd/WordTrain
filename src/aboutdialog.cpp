@@ -72,7 +72,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
                  "<a href=\"mailto:kharvd@gmail.com\">kharvd@gmail.com</a>"
                  "<br/><br/><a href=\"http://sourceforge.net/projects/wordtrain\">"
                  "Web site</a><br/><br/>"
-                 "Copyright © 2010 Valery Kharitonov <br/><br/>"
+                 "Copyright © 2010-2011 Valery Kharitonov <br/><br/>"
                  "This program comes with ABSOLUTELY NO WARRANTY. "
                  "This is free software, and you are welcome to redistribute it"
                  " under certain conditions. See 'License' tab or "
