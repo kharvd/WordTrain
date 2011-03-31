@@ -65,6 +65,7 @@ public slots:
 
     // Set cards answers field to 0
     void resetProgress();
+    void getTranscription();
 
 private:
     //== Static constant members ============================
@@ -114,6 +115,7 @@ private:
     QPushButton *btnAddExample;
     QPushButton *btnOk;
     QPushButton *btnCancel;
+    QPushButton *btnGetTranscription;
 
     QScrollArea    *scrollExamples;
     ExamplesWidget *wgtExamples;

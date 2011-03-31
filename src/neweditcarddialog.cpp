@@ -35,6 +35,8 @@
 #include <QGroupBox>
 #include <QScrollBar>
 #include <QPushButton>
+
+#include "wordnikendictionary.h"
 #include "exampleswidget.h"
 
 /* Add card */
@@ -161,6 +163,11 @@ void NewEditCardDialog::createInterface()
     btnCancel = new QPushButton(tr("Cancel"));
     connect(btnCancel, SIGNAL(clicked()), SLOT(reject()));
 
+    btnGetTranscription = new QPushButton(tr("Get transcription"));
+    btnGetTranscription->setToolTip(tr("Gets transcription for a word in the internet"
+                                       "(only English words at the moment)"));
+    connect(btnGetTranscription, SIGNAL(clicked()), SLOT(getTranscription()));
+
     QHBoxLayout *progressLayout = NULL;
     QPushButton *btnResetProgress = NULL;
 
@@ -207,6 +214,7 @@ void NewEditCardDialog::createInterface()
     QVBoxLayout *hButtonsLayout = new QVBoxLayout();
     hButtonsLayout->addWidget(btnOk);
     hButtonsLayout->addWidget(btnCancel);
+    hButtonsLayout->addWidget(btnGetTranscription);
     hButtonsLayout->addStretch(1);
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
@@ -244,5 +252,17 @@ void NewEditCardDialog::fillForm()
             && (i <= ExamplesWidget::kMaxExamples); i++) {
         addExample();
         wgtExamples->setExampleAt(i, m_NewCard.exampleAt(i));
+    }
+}
+
+void NewEditCardDialog::getTranscription()
+{
+    WordnikEnDictionary *dict = new WordnikEnDictionary(this);
+
+    QString word = txtWord->text();
+    if (!word.isEmpty()) {
+        btnGetTranscription->setEnabled(false);
+        txtTranscription->setText(dict->getPronunciation(word));
+        btnGetTranscription->setEnabled(true);
     }
 }

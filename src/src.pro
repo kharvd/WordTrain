@@ -3,7 +3,8 @@
 # -------------------------------------------------
 QT += core \
     gui \
-    xml
+    xml \
+    network
 CONFIG += warn_on \
     qt
 TARGET = ../bin/wordtrain
@@ -33,7 +34,9 @@ SOURCES += main.cpp \
     quizwordschooserdialog.cpp \
     tagsscrollarea.cpp \
     quizwordschoosertable.cpp \
-    learnedwordfilter.cpp
+    learnedwordfilter.cpp \
+    wordnikendictionary.cpp \
+    abstractdictionary.cpp
 HEADERS += mainwindow.h \
     wordcard.h \
     xmlreader.h \
@@ -59,7 +62,9 @@ HEADERS += mainwindow.h \
     quizwordschooserdialog.h \
     tagsscrollarea.h \
     quizwordschoosertable.h \
-    learnedwordfilter.h
+    learnedwordfilter.h \
+    wordnikendictionary.h \
+    abstractdictionary.h
 RESOURCES += resources.qrc
 TRANSLATIONS = translations/wordtrain_ru.ts #wordtrain_de.ts
 
