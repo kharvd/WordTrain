@@ -3,7 +3,7 @@ src/Makefile
 deb
 bin
 tmp
-wordtrain.pro.user
+*.user*
 make_deb.sh
 Doxyfile
 doc
